@@ -1,0 +1,22 @@
+{
+    "name": "Alex Palmer",
+    "short_name": "palmer.earth",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "orientation": "portrait",
+    "display": "standalone",
+    "start_url": ".",
+    "description": "Alex Palmer’s Personal Website",
+    "background_color": "#2d2f33",
+    "theme_color": "#BA382C"
+}

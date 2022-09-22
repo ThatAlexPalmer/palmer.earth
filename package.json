@@ -1,0 +1,45 @@
+{
+    "name": "palmer.earth",
+    "version": "4.0.0",
+    "private": true,
+    "author": "Alex Palmer <alex@palmer.earth",
+    "license": "UNLICENSED",
+    "description": "Personal website.",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "postbuild": "next-sitemap",
+        "start": "next start",
+        "start:ci": "INSECURE_AUTH=true yarn run start",
+        "eslint": "eslint --cache --cache-location=node_modules/.cache/.eslintcache --fix",
+        "lint": "next lint",
+        "test": "jest",
+        "typecheck": "concurrently --raw yarn:typecheck:*",
+        "typecheck:app": "tsc --noEmit",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "next": "latest",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "styled-components": "^5.3.5",
+		"browserlist": "^1.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^18.0.0",
+        "@types/react": "^18.0.14",
+        "@types/react-dom": "^18.0.5",
+        "@types/styled-components": "^5.1.25",
+        "eslint": "^8.23.1",
+        "eslint-config-prettier": "^8.5.0",
+        "husky": "^8.0.1",
+        "lint-staged": "^13.0.3",
+        "prettier": "^2.7.1",
+        "typescript": "^4.7.4"
+    },
+    "browserslist": [
+        "defaults",
+        "not IE 11",
+        "maintained node versions"
+    ]
+}

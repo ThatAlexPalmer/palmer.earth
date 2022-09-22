@@ -1,0 +1,17 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Allow: /
+Allow: /writing
+Allow: /startups
+Disallow: /app*
+Disallow: /_next/*
+
+# Host
+Host: https://palmer.earth
+
+# Sitemaps
+Sitemap: https://palmer.earth/sitemap.xml
