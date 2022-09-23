@@ -17,6 +17,6 @@
     "display": "standalone",
     "start_url": ".",
     "description": "Alex Palmer’s Personal Website",
-    "background_color": "#2d2f33",
+    "background_color": "#1A1B1E",
     "theme_color": "#BA382C"
 }

@@ -98,9 +98,9 @@ const StylizedHeading = styled.h2`
 	align-self: center;
   	width: 24rem;
   	font-size: 2rem;
-  	font-weight: 400;
+  	font-weight: 300;
   	text-align: justify;
-  	margin: 150px auto 1px;
+  	margin: 150px auto -2px;
   	text-transform: uppercase;
 
 	/** iPad portrait mode and equivalent devices */
