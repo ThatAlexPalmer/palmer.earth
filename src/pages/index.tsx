@@ -52,10 +52,10 @@ export default function Home() {
 				</RedBlock>
 				<H2>— My intellectual curiosty is unambiguous human communication.</H2>
 				<P>
-					Co-founder of <a href="https://poet.network">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at Lienfluent and Tribe. In the past, founded two startups and shipped first-in-class on Google Home for Bayer Pharmaceuticals. I'm a full-stack designer, developer, and occasionally writer.
+					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a>. In the past, founded two startups and shipped first-in-class voice bot <a href="https://assistant.google.com/services/a/uid/000000be147a02dc">on Google Home for Bayer Pharmaceutical</a>. I'm a full-stack designer, developer, and occasionally writer.
 				</P>
 				<P>
-					I mentor founders for <a href="https://www.nextcanada.com/">Next Canada</a> and <a href="https://www.nextcanada.com/next-ai/">NextAI</a>, helping with reasoning through the journey towards product/market fit. That includes refining product messaging, improving value proposition copy, ICP discovery, and focusing on things that matter most.
+					I mentor founders at <a href="https://www.nextcanada.com/">Next Canada</a> and <a href="https://www.nextcanada.com/next-ai/">NextAI</a>, helping them with reasoning through the journey towards product/market fit. That includes refining product messaging, improving value proposition copy, ICP discovery, and focusing on things that matter most.
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
