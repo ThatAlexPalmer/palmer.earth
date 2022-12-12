@@ -22,7 +22,7 @@ export default function Home() {
 					property="og:description"
 					content="Co-founder of Poet Network. Former director of product at Lienfluent, Tribe. Angel investing small cheques at the earliest stages."
 				/>
-				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
+				<meta property="og:image" content="/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
 				<meta property="og:image:width" content="279" />
 				<meta property="og:image:height" content="279" />
