@@ -13,7 +13,6 @@
         "start:ci": "INSECURE_AUTH=true yarn run start",
         "eslint": "eslint --cache --cache-location=node_modules/.cache/.eslintcache --fix",
         "lint": "next lint",
-        "test": "jest",
         "typecheck": "concurrently --raw yarn:typecheck:*",
         "typecheck:app": "tsc --noEmit",
         "prepare": "husky install"
