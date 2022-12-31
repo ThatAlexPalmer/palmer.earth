@@ -11,7 +11,7 @@ export default function Home() {
 				<meta name="author" content="Alex Palmer" />
 				<meta
 					name="description"
-					content="Co-founder of Poet Network. Former director of product at Lienfluent, Tribe. Angel investing small cheques at the earliest stages."
+					content="Co-founder of Poet Network. Former director of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
 				/>
 
 				<meta property="og:type" content="website" />
@@ -20,7 +20,7 @@ export default function Home() {
 				<meta property="og:title" content="Alex Palmer" />
 				<meta
 					property="og:description"
-					content="Co-founder of Poet Network. Former director of product at Lienfluent, Tribe. Angel investing small cheques at the earliest stages."
+					content="Co-founder of Poet Network. Former director of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
 				/>
 				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
@@ -52,7 +52,7 @@ export default function Home() {
 				</RedBlock>
 				<H2>— My intellectual curiosty is unambiguous human communication.</H2>
 				<P>
-					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a>. In the past, founded two startups and shipped first-in-class voice bot <a href="https://assistant.google.com/services/a/uid/000000be147a02dc">on Google Home for Bayer Pharmaceutical</a>. I'm a full-stack designer, developer, and occasionally writer.
+					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot <a href="https://assistant.google.com/services/a/uid/000000be147a02dc">on Google Home for Bayer Pharmaceutical</a>. I code, design, and write.
 				</P>
 				<P>
 					I mentor founders at <a href="https://www.nextcanada.com/">Next Canada</a> and <a href="https://www.nextcanada.com/next-ai/">NextAI</a>, helping them with reasoning through the journey towards product/market fit. That includes refining product messaging, improving value proposition copy, ICP discovery, and focusing on things that matter most.
