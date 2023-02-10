@@ -3,8 +3,7 @@
     "recommendations": [
         "dbaeumer.vscode-eslint",
         "mikestead.dotenv",
-        "eamodio.gitlens",
-        "graphql.vscode-graphql",
+		"eamodio.gitlens",
         "christian-kohler.npm-intellisense",
         "esbenp.prettier-vscode",
         "prisma.prisma",
