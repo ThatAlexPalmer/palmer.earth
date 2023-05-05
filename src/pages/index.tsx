@@ -52,10 +52,7 @@ export default function Home() {
 				</RedBlock>
 				<H2>— My intellectual curiosty is unambiguous human communication.</H2>
 				<P>
-					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot <a href="https://assistant.google.com/services/a/uid/000000be147a02dc">on Google Home for Bayer Pharmaceutical</a>. I code, design, and write.
-				</P>
-				<P>
-					I mentor founders at <a href="https://www.nextcanada.com/">Next Canada</a> and <a href="https://www.nextcanada.com/next-ai/">NextAI</a>, helping them with reasoning through the journey towards product/market fit. That includes ICP discovery, GTM strategy shaping, and product development.
+					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot on Google Home for Bayer Pharmaceutical. I code, design, and write.
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
