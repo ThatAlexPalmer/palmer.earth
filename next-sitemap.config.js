@@ -11,7 +11,7 @@ const config = {
             },
             {
                 userAgent: "*",
-                allow: ["/", "/login"],
+                allow: ["/"],
                 disallow: ["/app*", "/_next/*"],
             },
         ],

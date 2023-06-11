@@ -39,9 +39,10 @@ const Main = styled.main`
 `;
 
 const H1 = styled.h1`
-    margin: 3rem 0;
+	position: relative;
+	display: inline-flex;
     line-height: 1.25;
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: left;
     text-decoration: none;
 
@@ -53,8 +54,51 @@ const H1 = styled.h1`
 
     /** iPhone portrait mode and equivalent devices */
     @media only screen and (max-width: 512px) {
-        font-size: 1.6rem;
+        font-size: 1.2rem;
     }
+`;
+
+const Nav = styled.nav`
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-self: center;
+	align-items: baseline;
+	width: 100%;
+	height: auto;
+
+	.controls {
+		display: flex;
+		margin: 3rem 0;
+		font-size: 1.2rem;
+		
+
+		/** iPhone portrait mode and equivalent devices */
+    @media only screen and (max-width: 512px) {
+		align-items: center;
+        font-size: 1rem;
+    }
+	}
+
+	a {
+		color: ${({ theme }) => theme.colors.text};
+		&:hover,
+        :focus,
+        :active {
+			color: ${({ theme }) => theme.colors.accent};
+            text-decoration: underline solid 1.5rem;
+        }
+		padding: 0 1rem 0 0;
+		
+		&:last-child {
+			padding: 0;
+		}
+	}
+
+	@media screen and (max-width: 512px) {
+		width: 98%;
+	}
 `;
 
 const H2 = styled.h2`
@@ -100,7 +144,7 @@ const StylizedHeading = styled.h2`
   	font-size: 2rem;
   	font-weight: 300;
   	text-align: justify;
-  	margin: 150px auto -2px;
+  	margin: 150px auto -1px;
   	text-transform: uppercase;
 
 	/** iPad portrait mode and equivalent devices */
@@ -197,4 +241,4 @@ const Footer = styled.footer`
 	}
 `;
 
-export { Container, Main, H1, H2, StylizedHeading, RedBlock, P, CodeTag, Footer };
+export { Container, Main, H1, Nav, H2, StylizedHeading, RedBlock, P, CodeTag, Footer };

@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { Container, Main, H1, H2, StylizedHeading, RedBlock, P, Footer } from "../components/mainstyles";
+import { Container, Main, H1, Nav, H2, StylizedHeading, RedBlock, P, Footer } from "../components/mainstyles";
+import Script from "next/script";
 
 export default function Home() {
 	return (
@@ -11,7 +12,7 @@ export default function Home() {
 				<meta name="author" content="Alex Palmer" />
 				<meta
 					name="description"
-					content="Co-founder of Poet Network. Former director of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
+					content="Co-founder of Poet Network - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
 				/>
 
 				<meta property="og:type" content="website" />
@@ -20,7 +21,7 @@ export default function Home() {
 				<meta property="og:title" content="Alex Palmer" />
 				<meta
 					property="og:description"
-					content="Co-founder of Poet Network. Former director of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
+					content="Co-founder of Poet Network - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
 				/>
 				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
@@ -46,23 +47,27 @@ export default function Home() {
 				</noscript>
 			</Head>
 			<Main>
-				<H1>Alex Palmer</H1>
+				<Nav>
+					<H1>Alex Palmer</H1>
+					<span className="controls">
+						<a href="https://twitter.com/thatalexpalmer" target="_blank">Twitter</a>
+						<a href="https://linkedin.com/in/thatalexpalmer" target="_blank">LinkedIn</a>
+						<a href="https://nf.td/thatalexpalmer" target="_blank">NF.TD</a>
+					</span>
+				</Nav>
 				<RedBlock>
-					<StylizedHeading>— I'm focused on tech that builds bridges, not chasms.</StylizedHeading>
+					<StylizedHeading>— Focused on tech that builds bridges, not chasms.</StylizedHeading>
 				</RedBlock>
-				<H2>— My intellectual curiosty is unambiguous human communication.</H2>
+				<H2>— Curious about unambiguous human communication.</H2>
 				<P>
-					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>. Investing small angel cheques at the earliest stages. Former Director of Product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot on Google Home for Bayer Pharmaceutical. I code, design, and write.
+					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>,  where we're building infrastructure for tokenzied capital markets. Investing small angel cheques at the earliest stages. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot on Google Home for Bayer Pharmaceutical. I code, design, and write.
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
 				</P>
 			</Main>
 			<Footer>
-				<a href="https://twitter.com/thatalexpalmer" target="_blank">Twitter</a>
-				<a href="https://medium.com/@thatalexpalmer" target="_blank">Medium</a>
-				<a href="https://nf.td/thatalexpalmer" target="_blank">NF.TD</a>
-				<a href="https://linkedin.com/in/thatalexpalmer" target="_blank">LinkedIn</a>
+
 			</Footer>
 		</Container>
 	);
