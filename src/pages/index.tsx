@@ -50,8 +50,7 @@ export default function Home() {
 				<Nav>
 					<H1>Alex Palmer</H1>
 					<span className="controls">
-						<a href="https://twitter.com/thatalexpalmer" target="_blank">Twitter</a>
-						<a href="https://linkedin.com/in/thatalexpalmer" target="_blank">LinkedIn</a>
+						<a href="https://warpcast.com/thatalexpalmer.eth" target="_blank">Farcaster</a>
 						<a href="https://nf.td/thatalexpalmer" target="_blank">NF.TD</a>
 					</span>
 				</Nav>
@@ -67,7 +66,9 @@ export default function Home() {
 				</P>
 			</Main>
 			<Footer>
-
+				<a href="https://linkedin.com/in/thatalexpalmer" target="_blank">LinkedIn</a>
+				<a href="https://twitter.com/thatalexpalmer" target="_blank">X</a>
+				<a href="https://github.com/thatalexpalmer" target="_blank">GitHub</a>
 			</Footer>
 		</Container>
 	);
