@@ -70,6 +70,7 @@ const Nav = styled.nav`
 
 	.controls {
 		display: flex;
+		flex-flow: row nowrap;
 		margin: 3rem 0;
 		font-size: 1.2rem;
 		
@@ -79,6 +80,7 @@ const Nav = styled.nav`
 		align-items: center;
         font-size: 1rem;
     }
+
 	}
 
 	a {
@@ -87,7 +89,7 @@ const Nav = styled.nav`
         :focus,
         :active {
 			color: ${({ theme }) => theme.colors.accent};
-            text-decoration: underline solid 1.5rem;
+            text-decoration: underline solid 1rem;
         }
 		padding: 0 1rem 0 0;
 		
@@ -223,12 +225,12 @@ const Footer = styled.footer`
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	align-self: center;
 	width: 100%;
 	height: 8rem;
 	margin: 0 auto;
-	padding: 0 1rem;
+	padding: 0;
 
 	a {
 		color: ${({ theme }) => theme.colors.text};
@@ -236,7 +238,7 @@ const Footer = styled.footer`
         :focus,
         :active {
 			color: ${({ theme }) => theme.colors.accent};
-            text-decoration: underline solid 0.3rem;
+            text-decoration: underline solid 1rem;
         }
 	}
 `;
