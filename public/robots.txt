@@ -5,7 +5,6 @@ Allow: /
 # *
 User-agent: *
 Allow: /
-Allow: /login
 Disallow: /app*
 Disallow: /_next/*
 
