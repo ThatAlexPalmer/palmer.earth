@@ -1,11 +1,3 @@
-## What?
+## What changes does this bring?
 
-## Why?
-
-## How?
-
-## Testing?
-
-## Screenshots (optional)
-
-## Anything Else?
+## Why is this needed?
