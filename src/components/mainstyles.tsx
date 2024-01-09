@@ -180,7 +180,7 @@ const RedBlock = styled.span`
     position: absolute;
     width: 100%;
     height: 98%;
-    background-color: #ba382c;
+    background-color: ${({ theme }) => theme.colors.accent};
   }
 
   @media screen and (max-width: 512px) {
@@ -189,7 +189,7 @@ const RedBlock = styled.span`
 `;
 
 const P = styled.p`
-	max-width:680px;
+	max-width: 696px;
     text-align: left;
 	margin: 1.618rem auto;
     line-height: 1.618;

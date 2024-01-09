@@ -12,7 +12,7 @@ export default function Home() {
 				<meta name="author" content="Alex Palmer" />
 				<meta
 					name="description"
-					content="Co-founder of Poet Network - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
+					content="Co-founder of Transfer Agent Protocol - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode."
 				/>
 
 				<meta property="og:type" content="website" />
@@ -21,14 +21,14 @@ export default function Home() {
 				<meta property="og:title" content="Alex Palmer" />
 				<meta
 					property="og:description"
-					content="Co-founder of Poet Network - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode. Angel investing small cheques at the earliest stages."
+					content="Co-founder of Transfer Agent Protocol - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode."
 				/>
 				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
 				<meta property="og:image:width" content="279" />
 				<meta property="og:image:height" content="279" />
 
-				<meta name="theme-color" content="#ba382c" />
+				<meta name="theme-color" content="#161414" />
 				<link rel="canonical" href="https://palmer.earth" />
 				<link rel="manifest" href="/site.webmanifest" />
 
@@ -36,10 +36,10 @@ export default function Home() {
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 
-				<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2d2f33" />
+				<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#161414" />
 				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-				<meta name="theme-color" content="#2d2f33" />
-				<meta name="msapplication-TileColor" content="#2d2f33" />
+				<meta name="theme-color" content="#161414" />
+				<meta name="msapplication-TileColor" content="#161414" />
 				<noscript>
 					If you're seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>. Please{" "}
 					<strong>enable JS</strong> to make this website work. If you're not sure how to do that, you can go to{" "}
@@ -59,7 +59,7 @@ export default function Home() {
 				</RedBlock>
 				<H2>— Curious about unambiguous human communication.</H2>
 				<P>
-					Co-founder of <a href="https://poet.network" target="_blank">Poet Network</a>,  where we're building infrastructure for tokenized capital markets. Investing small angel cheques at the earliest stages. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot on Google Home for Bayer Pharmaceutical. I code, design, and write.
+					Co-founder of <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a> - open source infrastructure for tokenized capital markets. 2x founder. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot on Google Home for Bayer Pharmaceutical. I code, design, and write.
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
