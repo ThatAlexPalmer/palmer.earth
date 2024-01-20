@@ -3,7 +3,7 @@ import { ThemeProvider, DefaultTheme } from "styled-components";
 import GlobalStyle from "../components/globalstyles";
 import { Noto_Sans } from 'next/font/google';
 
-const ibmPlexMono = Noto_Sans({
+const noto = Noto_Sans({
 	weight: '400',
 	style: 'normal',
 	display: 'swap',
@@ -17,7 +17,7 @@ const theme: DefaultTheme = {
 		accent: "#ba382c",
 	},
 	typography: {
-		fontFamily: ibmPlexMono.style.fontFamily,
+		fontFamily: noto.style.fontFamily,
 		fontWeight: {
 			thin: 200,
 			normal: 400,
@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
 		<>
 			<style jsx global>{`
         html {
-          font-family: ${ibmPlexMono.style.fontFamily};
+          font-family: ${noto.style.fontFamily};
         }
       `}</style>
 			<ThemeProvider theme={theme}>
