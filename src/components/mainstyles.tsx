@@ -42,19 +42,18 @@ const H1 = styled.h1`
 	position: relative;
 	display: inline-flex;
     line-height: 1.25;
-    font-size: 2rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.heading};
     text-align: left;
     text-decoration: none;
 
 	/** iPad portrait mode and equivalent devices */
     @media only screen and (max-width: 768px) {
-        font-size: 2rem;
 		margin: 2rem 0;
     }
 
     /** iPhone portrait mode and equivalent devices */
     @media only screen and (max-width: 512px) {
-        font-size: 1.2rem;
+        font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
     }
 `;
 
@@ -72,13 +71,13 @@ const Nav = styled.nav`
 		display: flex;
 		flex-flow: row nowrap;
 		margin: 3rem 0;
-		font-size: 1.2rem;
+		font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
 		
 
 		/** iPhone portrait mode and equivalent devices */
     @media only screen and (max-width: 512px) {
 		align-items: center;
-        font-size: 1rem;
+        font-size: ${({ theme }) => theme.typography.fontSize.uiCopyMobile};
     }
 
 	}
@@ -89,7 +88,7 @@ const Nav = styled.nav`
         :focus,
         :active {
 			color: ${({ theme }) => theme.colors.accent};
-            text-decoration: underline solid 1rem;
+            text-decoration: underline solid 0.8rem;
         }
 		padding: 0 1rem 0 0;
 		
@@ -111,7 +110,7 @@ const H2 = styled.h2`
 	justify-content: center;
 	align-self: center;
 	width: 24rem;
-  	font-size: 2rem;
+  	font-size: ${({ theme }) => theme.typography.fontSize.heading};
   	font-weight: 300;
     margin: 2rem 0;
     line-height: 1.25;
@@ -143,24 +142,22 @@ const StylizedHeading = styled.h2`
 	justify-content: center;
 	align-self: center;
   	width: 24rem;
-  	font-size: 2rem;
+  	font-size: ${({ theme }) => theme.typography.fontSize.heading};
   	font-weight: 300;
   	text-align: justify;
-  	margin: 150px auto -1px;
+  	margin: 150px auto 0px;
   	text-transform: uppercase;
 
 	/** iPad portrait mode and equivalent devices */
     @media only screen and (max-width: 768px) {
-        font-size: 1.6rem;
+        font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
     }
 
   	@media screen and (max-width: 512px) {
-    	font-size: 1.4rem;
     	width: 16rem;
 	}
 
   	@media screen and (max-width: 414px) {
-    	font-size: 1.3rem;
     	width: 14rem;
   	}
 `;
@@ -193,7 +190,7 @@ const P = styled.p`
     text-align: left;
 	margin: 1.618rem auto;
     line-height: 1.618;
-    font-size: 1.3rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
 	letter-spacing: 0.01618rem;
 
 	a {
@@ -206,7 +203,7 @@ const P = styled.p`
     }
 
 	@media screen and (max-width: 512px) {
-    	font-size: 1rem;
+    	font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
 		margin: 1rem auto;
 		text-align: justify;
 		line-height: 1.318;
@@ -217,7 +214,7 @@ const CodeTag = styled.code`
     border-radius: 5px;
     margin: 0 0.75rem;
     padding: 0.75rem;
-    font-size: 1.1rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
 `;
 
