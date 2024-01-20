@@ -59,7 +59,7 @@ export default function Home() {
 				</RedBlock>
 				<H2>— Curious about unambiguous human communication.</H2>
 				<P>
-					Co-founder of <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a> - open source infrastructure for tokenized capital markets. 2x founder. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>). In the past, founded two startups and shipped first-in-class voice bot on Google Home for Bayer Pharmaceutical. I code, design, and write.
+					Onboarding RWAs onto public blockchains in a compliant way. Co-founder of <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a> - open source infrastructure for tokenized capital markets. 2x founder before that. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>).
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
