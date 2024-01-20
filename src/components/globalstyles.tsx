@@ -11,8 +11,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
 	background: ${({ theme }) => theme.colors.background};
 	font-weight: 400;
-	font-family: Archivo, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: normal;
     color: ${({ theme }) => theme.colors.text};
     overflow-y: scroll;
