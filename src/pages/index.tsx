@@ -12,7 +12,7 @@ export default function Home() {
 				<meta name="author" content="Alex Palmer" />
 				<meta
 					name="description"
-					content="Co-founder of Transfer Agent Protocol - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode."
+					content="Head of Product and Special Projects at Plume Network. Co-founder of Transfer Agent Protocol - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode."
 				/>
 
 				<meta property="og:type" content="website" />
@@ -21,7 +21,7 @@ export default function Home() {
 				<meta property="og:title" content="Alex Palmer" />
 				<meta
 					property="og:description"
-					content="Co-founder of Transfer Agent Protocol - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode."
+					content="Head of Product and Special Projects at Plume Network. Co-founder of Transfer Agent Protocol - infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode."
 				/>
 				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
@@ -59,7 +59,7 @@ export default function Home() {
 				</RedBlock>
 				<H2>— Curious about unambiguous human communication.</H2>
 				<P>
-					Onboarding RWAs onto public blockchains in a compliant way. Co-founder of <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a> - open source infrastructure for tokenized capital markets. 2x founder before that. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a> and <a href="https://tribe.so">Tribe</a> (now <a href="https://bettermode.com">Bettermode</a>).
+					Onboarding tokenized RWAs onto public blockchains in a compliant way. Head of Product and Special Projects at <a href="https://plumenetwork.xyz">Plume</a>, where we're building a modular and global L2 chain for tokenized real world assets. Co-founder of <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a>, where we're building open source infrastructure for tokenized capital markets. 2x founder before that. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a>, and <a href="https://bettermode.com">Bettermode</a>.
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
