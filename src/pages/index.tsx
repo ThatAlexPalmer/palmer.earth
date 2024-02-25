@@ -51,7 +51,7 @@ export default function Home() {
 					<H1>Alex Palmer</H1>
 					<span className="controls">
 						<a href="https://warpcast.com/thatalexpalmer.eth" target="_blank">Farcaster</a>
-						<a href="https://nf.td/thatalexpalmer" target="_blank">NF.TD</a>
+						<a href="https://twitter.com/thatalexpalmer" target="_blank">X</a>
 					</span>
 				</Nav>
 				<RedBlock>
@@ -66,9 +66,9 @@ export default function Home() {
 				</P>
 			</Main>
 			<Footer>
-				<a href="https://linkedin.com/in/thatalexpalmer" target="_blank">LinkedIn</a>
-				<a href="https://twitter.com/thatalexpalmer" target="_blank">X</a>
 				<a href="https://github.com/thatalexpalmer" target="_blank">GitHub</a>
+				<a href="https://paragraph.xyz/@thatalexpalmer" target="_blank">Paragraph</a>
+				<a href="https://linkedin.com/in/thatalexpalmer" target="_blank">LinkedIn</a>
 			</Footer>
 		</Container>
 	);
