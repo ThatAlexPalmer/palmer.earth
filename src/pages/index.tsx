@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Container, Main, H1, Nav, H2, StylizedHeading, RedBlock, P, Footer } from "../components/mainstyles";
-import Script from "next/script";
 
 export default function Home() {
 	return (
