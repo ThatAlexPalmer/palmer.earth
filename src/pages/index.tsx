@@ -59,7 +59,10 @@ export default function Home() {
 				</RedBlock>
 				<H2>— Productizing RWAfi on Plume.</H2>
 				<P>
-					Onboarding tokenized RWAs onto public blockchains in a compliant way. Head of Product at <a href="https://plumenetwork.xyz">Plume</a>, an L2 built for the rapid adoption of real world assets. Built <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a>, open source infrastructure for tokenized capital markets which runs natively on it. 2x founder before that. Former dir. of product at <a href="https://lienfluent.com">Lienfluent</a>, and <a href="https://bettermode.com">Bettermode</a>.
+					Onboarding productive assets onto public blockchains, and making them useful for crypto native users.
+				</P>
+				<P>
+					Head of Product at <a href="https://plumenetwork.xyz">Plume</a>, a public blockchain for scaling RWAs. Building <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a>, open source infra for tokenized cap tables which runs natively on it. 2x founder before that. Ran payments infra, led products in pharma and AI.
 				</P>
 				<P>
 					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
