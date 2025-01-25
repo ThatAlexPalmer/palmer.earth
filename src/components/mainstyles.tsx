@@ -4,13 +4,15 @@ const Container = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-    align-self: flex-start;
     justify-content: flex-start;
-    width: auto;
-    max-width: 2450px;
+    max-width: 1200px;
     min-height: 100%;
-    margin: auto;
-    padding: 0 4%;
+    margin: 0 auto;
+    padding: 2rem 4%;
+
+    @media (max-width: 768px) {
+        padding: 1.5rem 3%;
+    }
 `;
 
 const Main = styled.main`
@@ -38,25 +40,6 @@ const Main = styled.main`
     }
 `;
 
-const H1 = styled.h1`
-	position: relative;
-	display: inline-flex;
-    line-height: 1.25;
-    font-size: ${({ theme }) => theme.typography.fontSize.heading};
-    text-align: left;
-    text-decoration: none;
-
-	/** iPad portrait mode and equivalent devices */
-    @media only screen and (max-width: 768px) {
-		margin: 2rem 0;
-    }
-
-    /** iPhone portrait mode and equivalent devices */
-    @media only screen and (max-width: 512px) {
-        font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
-    }
-`;
-
 const Nav = styled.nav`
 	position: relative;
 	display: flex;
@@ -68,9 +51,11 @@ const Nav = styled.nav`
 	height: auto;
 
 	.controls {
+		width: 100%;
 		display: flex;
 		flex-flow: row nowrap;
-		margin: 3rem 0;
+		justify-content: space-between;
+		margin: 0.5rem 0;
 		font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
 		
 
@@ -102,38 +87,30 @@ const Nav = styled.nav`
 	}
 `;
 
-const H2 = styled.h2`
+const H1 = styled.h1`
 	position: relative;
-  	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	justify-content: center;
-	align-self: center;
-	width: 24rem;
-  	font-size: ${({ theme }) => theme.typography.fontSize.heading};
-  	font-weight: 300;
-    margin: 2rem 0;
+	display: inline-flex;
     line-height: 1.25;
-    text-align: justify;
-    text-transform: uppercase;
+    font-size: ${({ theme }) => theme.typography.fontSize.heading};
+    text-align: center;
+    text-decoration: none;
+	margin: 0 auto;
+	max-width: 24rem;
 
 	/** iPad portrait mode and equivalent devices */
     @media only screen and (max-width: 768px) {
-        font-size: 1.6rem;
+		margin: 2rem auto;
     }
 
-  	@media screen and (max-width: 512px) {
-    	font-size: 1.4rem;
-    	width: 16rem;
-	}
-
-  	@media screen and (max-width: 414px) {
-    	font-size: 1.3rem;
-    	width: 14rem;
-  	}
+    /** iPhone portrait mode and equivalent devices */
+    @media only screen and (max-width: 512px) {
+        font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
+    }
 `;
 
-const StylizedHeading = styled.h2`
+
+
+const H2 = styled.h2`
 	z-index: 2;
   	position: relative;
   	display: flex;
@@ -145,7 +122,7 @@ const StylizedHeading = styled.h2`
   	font-size: ${({ theme }) => theme.typography.fontSize.heading};
   	font-weight: 300;
   	text-align: justify;
-  	margin: 150px auto 0px;
+  	margin: 200px auto 0px;
   	text-transform: uppercase;
 
 	/** iPad portrait mode and equivalent devices */
@@ -156,10 +133,6 @@ const StylizedHeading = styled.h2`
   	@media screen and (max-width: 512px) {
     	width: 16rem;
 	}
-
-  	@media screen and (max-width: 414px) {
-    	width: 14rem;
-  	}
 `;
 
 const RedBlock = styled.span`
@@ -176,7 +149,7 @@ const RedBlock = styled.span`
     display: block;
     position: absolute;
     width: 100%;
-    height: 98%;
+    height: 87%;
     background-color: ${({ theme }) => theme.colors.accent};
   }
 
@@ -240,4 +213,4 @@ const Footer = styled.footer`
 	}
 `;
 
-export { Container, Main, H1, Nav, H2, StylizedHeading, RedBlock, P, CodeTag, Footer };
+export { Container, Main, H1, Nav, H2, RedBlock, P, CodeTag, Footer };
