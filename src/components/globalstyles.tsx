@@ -9,15 +9,26 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100%;
     padding: 0;
     margin: 0;
-	background: ${({ theme }) => theme.colors.background};
 	font-weight: 400;
     font-size: 16px;
     letter-spacing: normal;
-    color: ${({ theme }) => theme.colors.text};
     overflow-y: scroll;
     overflow-x: hidden;
     scroll-behavior: smooth;
+	font-family: ${({ theme }) => theme.typography.fontFamily};
+    background: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+	letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+    line-height: ${({ theme }) => theme.typography.lineHeight.paragraph};
   }
+
+	h1, h2, h3 {
+        font-family: ${({ theme }) => theme.typography.headingFont};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+        line-height: ${({ theme }) => theme.typography.lineHeight.heading};
+        text-transform: uppercase;
+        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
+	}
 
   #__next {
     flex: 1;
