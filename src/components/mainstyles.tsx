@@ -149,7 +149,7 @@ const RedBlock = styled.span`
     display: block;
     position: absolute;
     width: 100%;
-    height: 87%;
+    height: 83%;
     background-color: ${({ theme }) => theme.colors.accent};
   }
 
