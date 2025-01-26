@@ -182,14 +182,6 @@ const P = styled.p`
 		line-height: 1.318;
 	}
 `;
-const CodeTag = styled.code`
-    background: #000000;
-    border-radius: 5px;
-    margin: 0 0.75rem;
-    padding: 0.75rem;
-    font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-`;
 
 const Footer = styled.footer`
 	display: flex;
@@ -213,4 +205,4 @@ const Footer = styled.footer`
 	}
 `;
 
-export { Container, Main, H1, Nav, H2, RedBlock, P, CodeTag, Footer };
+export { Container, Main, H1, Nav, H2, RedBlock, P, Footer };
