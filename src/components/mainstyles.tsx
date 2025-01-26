@@ -108,8 +108,6 @@ const H1 = styled.h1`
     }
 `;
 
-
-
 const H2 = styled.h2`
 	z-index: 2;
   	position: relative;
@@ -120,7 +118,6 @@ const H2 = styled.h2`
 	align-self: center;
   	width: 24rem;
   	font-size: ${({ theme }) => theme.typography.fontSize.heading};
-  	font-weight: 300;
   	text-align: justify;
   	margin: 200px auto 0px;
   	text-transform: uppercase;

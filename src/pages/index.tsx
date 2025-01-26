@@ -52,7 +52,7 @@ export default function Home() {
 					<H2>— Head of Product at Plume, a public blockchain for scaling RWAs</H2>
 				</RedBlock>
 				<P>
-					Onboarding productive assets onto public blockchains using <a href="https://plumenetwork.xyz/arc" target="_blank">Arc</a>, and letting anyone with a wallet earn from them using <a href="https://nest.credit" target="_blank">Nest</a>.
+					Onboarding yield bearing assets onto public blockchains using <a href="https://plumenetwork.xyz/arc" target="_blank">Arc</a>, and letting anyone with a wallet earn from them using <a href="https://nest.credit" target="_blank">Nest</a>.
 				</P>
 				<P>
 					Building <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a>, open source infra for tokenized cap tables. 2x founder before that. Ran payments infra, led products in pharma and AI.
