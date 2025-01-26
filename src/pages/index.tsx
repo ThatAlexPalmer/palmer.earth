@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Container, Main, H1, Nav, H2, StylizedHeading, RedBlock, P, Footer } from "../components/mainstyles";
+import { Container, Main, H1, Nav, H2, RedBlock, P, Footer } from "../components/mainstyles";
 
 export default function Home() {
 	return (
@@ -11,7 +11,7 @@ export default function Home() {
 				<meta name="author" content="Alex Palmer" />
 				<meta
 					name="description"
-					content="Head of Product at Plume Network. Built Transfer Agent Protocol - open source infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode. Led product for Bayer, Merck, Eli Lilly."
+					content="Head of Product at Plume Network. Onboarding productive assets to Plume via the tokenization superapp Arc, enabling anyone with a wallet to earn through yield-bearing vaults on Nest."
 				/>
 
 				<meta property="og:type" content="website" />
@@ -20,51 +20,45 @@ export default function Home() {
 				<meta property="og:title" content="Alex Palmer" />
 				<meta
 					property="og:description"
-					content="Head of Product at Plume Network. Built Transfer Agent Protocol - open source infrastructure for tokenized capital markets. Former dir. of product at Lienfluent, Bettermode. Led product for Bayer, Merck, Eli Lilly."
+					content="Head of Product at Plume Network. Onboarding productive assets to Plume via the tokenization superapp Arc, enabling anyone with a wallet to earn through yield-bearing vaults on Nest."
 				/>
 				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
 				<meta property="og:image:width" content="279" />
 				<meta property="og:image:height" content="279" />
 
-				<meta name="theme-color" content="#161414" />
+				<meta name="theme-color" content="#08080a" />
 				<link rel="canonical" href="https://palmer.earth" />
 				<link rel="manifest" href="/site.webmanifest" />
 
-				<link rel="icon" href="/favicon.ico" />
-				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-
-				<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#161414" />
+				<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+				<link rel="shortcut icon" href="/favicon.ico" />
 				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-				<meta name="theme-color" content="#161414" />
-				<meta name="msapplication-TileColor" content="#161414" />
+				<meta name="apple-mobile-web-app-title" content="palmer.earth" />
 				<noscript>
-					If you're seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>. Please{" "}
-					<strong>enable JS</strong> to make this website work. If you're not sure how to do that, you can go to{" "}
-					<a href="https://www.enable-javascript.com/">https://www.enable-javascript.com/</a> for a quick reminder!
+					If you're seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>.
 				</noscript>
 			</Head>
 			<Main>
+				<H1>Alex Palmer</H1>
 				<Nav>
-					<H1>Alex Palmer</H1>
 					<span className="controls">
 						<a href="https://warpcast.com/thatalexpalmer.eth" target="_blank">Farcaster</a>
 						<a href="https://twitter.com/thatalexpalmer" target="_blank">X</a>
 					</span>
 				</Nav>
 				<RedBlock>
-					<StylizedHeading>— Focused on tech that builds bridges, not chasms.</StylizedHeading>
+					<H2>— Head of Product at Plume, a public blockchain for scaling RWAs</H2>
 				</RedBlock>
-				<H2>— Productizing RWAfi on Plume.</H2>
 				<P>
-					Onboarding productive assets onto public blockchains, and making them useful for crypto native users.
+					Onboarding productive assets onto public blockchains using <a href="https://plumenetwork.xyz/arc" target="_blank">Arc</a>, and letting anyone with a wallet earn from them using <a href="https://nest.credit" target="_blank">Nest</a>.
 				</P>
 				<P>
-					Head of Product at <a href="https://plumenetwork.xyz">Plume</a>, a public blockchain for scaling RWAs. Building <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a>, open source infra for tokenized cap tables which runs natively on it. 2x founder before that. Ran payments infra, led products in pharma and AI.
+					Building <a href="https://transferagentprotocol.xyz" target="_blank">Transfer Agent Protocol</a>, open source infra for tokenized cap tables. 2x founder before that. Ran payments infra, led products in pharma and AI.
 				</P>
 				<P>
-					A few of my strong beliefs are: people are always more important than software; cynicism pays no dividends; one should always reason from the fundamental principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
+					A few of my strong beliefs are: technology always wins; cynicism pays no dividends; first, principles; and, "questions are places in the mind where answers fit". Clayton Christensen said that and I never forgot.
 				</P>
 			</Main>
 			<Footer>
