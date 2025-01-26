@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="512" height="512"><svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_0_2)">
+<rect width="512" height="512" fill="white"></rect>
+<path d="M512 0V512H0L0 0L512 0Z" fill="#08080A"></path>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M341.5 222C357.24 222 370 209.464 370 194C370 178.536 357.24 166 341.5 166C325.76 166 313 178.536 313 194C313 209.464 325.76 222 341.5 222ZM142 240C142 238.895 142.895 238 144 238H368C369.105 238 370 238.895 370 240V282C370 283.105 369.105 284 368 284H144C142.895 284 142 283.105 142 282V240ZM142 307C142 305.895 142.895 305 144 305H368C369.105 305 370 305.895 370 307V349C370 350.105 369.105 351 368 351H144C142.895 351 142 350.105 142 349V307ZM285 194C285 209.464 272.24 222 256.5 222C240.76 222 228 209.464 228 194C228 178.536 240.76 166 256.5 166C272.24 166 285 178.536 285 194ZM170.5 222C186.24 222 199 209.464 199 194C199 178.536 186.24 166 170.5 166C154.76 166 142 178.536 142 194C142 209.464 154.76 222 170.5 222Z" fill="#A32D15"></path>
+</g>
+<defs>
+<clipPath id="SvgjsClipPath1008">
+<rect width="512" height="512" fill="white"></rect>
+</clipPath>
+</defs>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
