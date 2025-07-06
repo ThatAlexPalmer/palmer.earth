@@ -5,6 +5,7 @@
     "author": "Alex Palmer",
     "license": "UNLICENSED",
     "description": "Personal website.",
+    "packageManager": "pnpm@9.9.0",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
