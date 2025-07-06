@@ -10,7 +10,7 @@
         "build": "next build",
         "postbuild": "next-sitemap",
         "start": "next start",
-        "start:ci": "INSECURE_AUTH=true yarn run start",
+        "start:ci": "INSECURE_AUTH=true pnpm run start",
         "lint": "next lint",
         "prepare": "husky install"
     },
