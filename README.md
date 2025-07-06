@@ -4,12 +4,12 @@ Live site lives at [`palmer.earth`](https://palmer.earth)
 
 ## Development
 
-1. Start by cloning the repo and installing dependencies:
+1. Clone the repo and install dependencies:
 
-`yarn install`
+`pnpm install`
 
-2. Then, run the development server:
+2. Run the development server:
 
-`yarn dev`
+`pnpm run dev`
 
-3. Open [http://localhost:3000](http://localhost:3000) to see the result.
+3. Open [http://localhost:3000](http://localhost:3000)
