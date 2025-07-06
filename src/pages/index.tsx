@@ -11,7 +11,7 @@ export default function Home() {
 				<meta name="author" content="Alex Palmer" />
 				<meta
 					name="description"
-					content="Head of Product at Plume Network. Onboarding productive assets to Plume via the tokenization superapp Arc, enabling anyone with a wallet to earn through yield-bearing vaults on Nest."
+					content="Head of Institutional Products at Plume Network. Tokenizing yield bearing assets using Arc, letting anyone with a wallet earn from them using Nest."
 				/>
 
 				<meta property="og:type" content="website" />
@@ -20,7 +20,7 @@ export default function Home() {
 				<meta property="og:title" content="Alex Palmer" />
 				<meta
 					property="og:description"
-					content="Head of Product at Plume Network. Onboarding productive assets to Plume via the tokenization superapp Arc, enabling anyone with a wallet to earn through yield-bearing vaults on Nest."
+					content="Head of Institutional Products at Plume Network. Tokenizing yield bearing assets using Arc, letting anyone with a wallet earn from them using Nest."
 				/>
 				<meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
 				<meta property="og:image:type" content="image/jpg" />
