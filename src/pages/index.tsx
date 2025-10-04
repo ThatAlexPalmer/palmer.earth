@@ -11,7 +11,7 @@ export default function Home() {
                 <meta name="author" content="Alex Palmer" />
                 <meta
                     name="description"
-                    content="Head of Institutional Products at Plume Network. Tokenizing yield bearing assets using Arc, letting anyone with a wallet earn from them using Nest."
+                    content="Head of Regulatory Strategy at Plume Network. Onboarding yield bearing assets onto public blockchains using Arc, and letting anyone with a wallet earn from them using Nest."
                 />
 
                 <meta property="og:type" content="website" />
@@ -20,7 +20,7 @@ export default function Home() {
                 <meta property="og:title" content="Alex Palmer" />
                 <meta
                     property="og:description"
-                    content="Head of Institutional Products at Plume Network. Tokenizing yield bearing assets using Arc, letting anyone with a wallet earn from them using Nest."
+                    content="Head of Regulatory Strategy at Plume Network. Onboarding yield bearing assets onto public blockchains using Arc, and letting anyone with a wallet earn from them using Nest."
                 />
                 <meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
                 <meta property="og:image:type" content="image/jpg" />
@@ -44,10 +44,10 @@ export default function Home() {
                 <H1>Alex Palmer</H1>
                 <Nav>
                     <span className="controls">
-                        <a href="https://warpcast.com/thatalexpalmer.eth" target="_blank">
+                        <a href="https://farcaster.com/thatalexpalmer.eth" target="_blank" rel="noopener noreferrer">
                             Farcaster
                         </a>
-                        <a href="https://twitter.com/thatalexpalmer" target="_blank">
+                        <a href="https://twitter.com/thatalexpalmer" target="_blank" rel="noopener noreferrer">
                             X
                         </a>
                     </span>
@@ -57,18 +57,18 @@ export default function Home() {
                 </RedBlock>
                 <P>
                     Onboarding yield bearing assets onto public blockchains using{" "}
-                    <a href="https://plumenetwork.xyz/arc" target="_blank">
+                    <a href="https://plumenetwork.xyz/arc" target="_blank" rel="noopener noreferrer">
                         Arc
                     </a>
                     , and letting anyone with a wallet earn from them using{" "}
-                    <a href="https://nest.credit" target="_blank">
+                    <a href="https://nest.credit" target="_blank" rel="noopener noreferrer">
                         Nest
                     </a>
                     .
                 </P>
                 <P>
                     Building{" "}
-                    <a href="https://transferagentprotocol.xyz" target="_blank">
+                    <a href="https://transferagentprotocol.xyz" target="_blank" rel="noopener noreferrer">
                         Transfer Agent Protocol
                     </a>
                     , open source infra for tokenized cap tables. 2x founder before that. Ran payments infra, led products in pharma and AI.
@@ -79,13 +79,13 @@ export default function Home() {
                 </P>
             </Main>
             <Footer>
-                <a href="https://github.com/thatalexpalmer" target="_blank">
+                <a href="https://github.com/thatalexpalmer" target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>
-                <a href="https://paragraph.xyz/@thatalexpalmer" target="_blank">
+                <a href="https://paragraph.xyz/@thatalexpalmer" target="_blank" rel="noopener noreferrer">
                     Paragraph
                 </a>
-                <a href="https://linkedin.com/in/thatalexpalmer" target="_blank">
+                <a href="https://linkedin.com/in/thatalexpalmer" target="_blank" rel="noopener noreferrer">
                     LinkedIn
                 </a>
             </Footer>
