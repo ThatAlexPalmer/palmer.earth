@@ -11,7 +11,7 @@ export default function Home() {
                 <meta name="author" content="Alex Palmer" />
                 <meta
                     name="description"
-                    content="Head of Regulatory Strategy at Plume Network. Onboarding yield bearing assets onto public blockchains using Arc, and letting anyone with a wallet earn from them using Nest."
+                    content="Head of Regulatory Strategy at Plume Network. Launched Nest to let anyone earn from real world assets. Building Transfer Agent Protocol to power Plume's transfer agent."
                 />
 
                 <meta property="og:type" content="website" />
@@ -20,7 +20,7 @@ export default function Home() {
                 <meta property="og:title" content="Alex Palmer" />
                 <meta
                     property="og:description"
-                    content="Head of Regulatory Strategy at Plume Network. Onboarding yield bearing assets onto public blockchains using Arc, and letting anyone with a wallet earn from them using Nest."
+                    content="Head of Regulatory Strategy at Plume Network. Launched Nest to let anyone earn from real world assets. Building Transfer Agent Protocol to power Plume's transfer agent."
                 />
                 <meta property="og:image" content="https://palmer.earth/og-avatar-v4.jpg" />
                 <meta property="og:image:type" content="image/jpg" />
@@ -36,6 +36,37 @@ export default function Home() {
                 <link rel="shortcut icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <meta name="apple-mobile-web-app-title" content="palmer.earth" />
+
+                {/* JSON-LD Structured Data */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "Person",
+                            name: "Alex Palmer",
+                            url: "https://palmer.earth",
+                            image: "https://palmer.earth/og-avatar-v4.jpg",
+                            jobTitle: "Head of Regulatory Strategy",
+                            worksFor: {
+                                "@type": "Organization",
+                                name: "Plume Network",
+                                url: "https://plume.org",
+                            },
+                            sameAs: [
+                                "https://twitter.com/thatalexpalmer",
+                                "https://github.com/thatalexpalmer",
+                                "https://linkedin.com/in/thatalexpalmer",
+                                "https://paragraph.xyz/@thatalexpalmer",
+                                "https://farcaster.com/thatalexpalmer.eth",
+                            ],
+                            description:
+                                "Head of Regulatory Strategy at Plume Network. Launched Nest to let anyone earn from real world assets. Building Transfer Agent Protocol to power Plume's transfer agent.",
+                            knowsAbout: ["Blockchain", "Real World Assets", "Regulatory Strategy", "Product Development", "Web3"],
+                        }),
+                    }}
+                />
+
                 <noscript>
                     If you're seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>.
                 </noscript>
@@ -47,7 +78,7 @@ export default function Home() {
                         <a href="https://farcaster.com/thatalexpalmer.eth" target="_blank" rel="noopener noreferrer">
                             Farcaster
                         </a>
-                        <a href="https://twitter.com/thatalexpalmer" target="_blank" rel="noopener noreferrer">
+                        <a href="https://farcaster.com/thatalexpalmer.eth" target="_blank" rel="noopener noreferrer">
                             X
                         </a>
                     </span>
@@ -56,23 +87,17 @@ export default function Home() {
                     <H2>— Head of Regulatory Strategy at Plume, a public blockchain for scaling RWAs</H2>
                 </RedBlock>
                 <P>
-                    Onboarding yield bearing assets onto public blockchains using{" "}
-                    <a href="https://plumenetwork.xyz/arc" target="_blank" rel="noopener noreferrer">
-                        Arc
-                    </a>
-                    , and letting anyone with a wallet earn from them using{" "}
+                    Launched{" "}
                     <a href="https://nest.credit" target="_blank" rel="noopener noreferrer">
                         Nest
-                    </a>
-                    .
-                </P>
-                <P>
-                    Building{" "}
+                    </a>{" "}
+                    to let anyone with a wallet earn from real world assets. Building{" "}
                     <a href="https://transferagentprotocol.xyz" target="_blank" rel="noopener noreferrer">
                         Transfer Agent Protocol
                     </a>
-                    , open source infra for tokenized cap tables. 2x founder before that. Ran payments infra, led products in pharma and AI.
+                    , open source infrastructure for tokenized cap tables that will power Plume's transfer agent.
                 </P>
+                <P>2x founder before this. Ran payments infra, led products in pharma and AI.</P>
                 <P>
                     A few of my strong beliefs are: technology always wins; cynicism pays no dividends; first, principles; and, "questions are places
                     in the mind where answers fit". Clayton Christensen said that and I never forgot.
