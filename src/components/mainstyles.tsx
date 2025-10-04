@@ -178,12 +178,16 @@ const RedBlock = styled.span`
 const P = styled.p`
     max-width: 696px;
     text-align: left;
-    margin: 1.618rem auto;
+    margin: 1rem auto;
     line-height: 1.618;
     font-family: ${({ theme }) => theme.typography.fontFamily};
     font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
     font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
     letter-spacing: 0.01618rem;
+
+    &:first-of-type {
+        margin-top: 2.5rem;
+    }
 
     a {
         color: ${({ theme }) => theme.colors.accent};
@@ -199,7 +203,7 @@ const P = styled.p`
 
     @media screen and (max-width: ${breakpoints.phone}) {
         font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
-        margin: 1rem auto;
+        margin: 0.75rem auto;
         text-align: justify;
         line-height: 1.318;
     }
