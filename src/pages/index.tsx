@@ -69,7 +69,13 @@ export default function Home() {
                     </a>
                     , open source infrastructure for tokenized cap tables that will power Plume's transfer agent.
                 </P>
-                <P>2x founder before this. Ran payments infra, led products in pharma and AI. I build things and write about them.</P>
+                <P>
+                    2x founder before this. Ran payments infra, led products in pharma and AI. I build things and write about them on{" "}
+                    <a href={socialLinks.paragraph} target="_blank" rel="noopener noreferrer">
+                        Paragraph
+                    </a>
+                    .
+                </P>
                 <P>
                     A few of my strong beliefs are: technology always wins; cynicism pays no dividends; first, principles; and, "questions are places
                     in the mind where answers fit". Clayton Christensen said that and I never forgot.
@@ -78,9 +84,6 @@ export default function Home() {
             <Footer>
                 <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
                     GitHub
-                </a>
-                <a href={socialLinks.paragraph} target="_blank" rel="noopener noreferrer">
-                    Paragraph
                 </a>
                 <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
                     LinkedIn
