@@ -44,7 +44,6 @@ export const theme: DefaultTheme = {
             paragraph: "1.6",
         },
         letterSpacing: {
-            tight: "-0.03em",
             normal: "0",
             wide: "0.05em",
         },

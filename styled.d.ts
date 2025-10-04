@@ -9,7 +9,7 @@ declare module "styled-components" {
             fontWeight: { light: number; normal: number; medium: number; semibold: number; bold: number };
             fontSize: { heading: string; headingMobile: string; paragraph: string; paragraphMobile: string; uiCopy: string; uiCopyMobile: string };
             lineHeight: { heading: string; paragraph: string };
-            letterSpacing: { tight: string; normal: string; wide: string };
+            letterSpacing: { normal: string; wide: string };
         };
     }
 }
