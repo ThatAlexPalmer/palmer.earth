@@ -1,16 +1,17 @@
 import { DefaultTheme } from "styled-components";
-import { Noto_Sans, Oswald } from "next/font/google";
+import { Oswald, Noto_Sans } from "next/font/google";
 
-export const noto = Noto_Sans({
-    weight: "400",
+export const oswald = Oswald({
+    weight: ["400", "600", "700"],
     style: "normal",
     display: "swap",
     subsets: ["latin"],
 });
 
-export const oswald = Oswald({
-    weight: ["400", "700"],
+export const noto = Noto_Sans({
+    weight: ["300", "400", "500", "600"],
     style: "normal",
+    display: "swap",
     subsets: ["latin"],
 });
 
@@ -24,8 +25,10 @@ export const theme: DefaultTheme = {
         fontFamily: noto.style.fontFamily,
         headingFont: oswald.style.fontFamily,
         fontWeight: {
-            thin: 200,
+            light: 300,
             normal: 400,
+            medium: 500,
+            semibold: 600,
             bold: 700,
         },
         fontSize: {
@@ -43,7 +46,7 @@ export const theme: DefaultTheme = {
         letterSpacing: {
             tight: "-0.03em",
             normal: "0",
-            wide: "0.1em",
+            wide: "0.05em",
         },
     },
 };

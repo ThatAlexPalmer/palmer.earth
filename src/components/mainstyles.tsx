@@ -77,6 +77,7 @@ const Nav = styled.nav`
 
     a {
         color: ${({ theme }) => theme.colors.text};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         text-decoration: none;
         transition:
             color 120ms ease-in-out,
@@ -106,7 +107,9 @@ const H1 = styled.h1`
     position: relative;
     display: inline-flex;
     line-height: 1.25;
+    font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     text-align: center;
     text-decoration: none;
     margin: 0 auto;
@@ -132,7 +135,9 @@ const H2 = styled.h2`
     justify-content: center;
     align-self: center;
     width: 24rem;
+    font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     text-align: justify;
     margin: 12.5rem auto 0; /* 200px -> 12.5rem for scalability */
     text-transform: uppercase;
@@ -175,11 +180,14 @@ const P = styled.p`
     text-align: left;
     margin: 1.618rem auto;
     line-height: 1.618;
+    font-family: ${({ theme }) => theme.typography.fontFamily};
     font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
     letter-spacing: 0.01618rem;
 
     a {
         color: ${({ theme }) => theme.colors.accent};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
         text-decoration: underline;
         text-underline-offset: 0.12rem;
         &:hover,

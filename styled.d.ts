@@ -6,7 +6,7 @@ declare module "styled-components" {
         typography: {
             fontFamily: string;
             headingFont: string;
-            fontWeight: { thin: number; normal: number; bold: number };
+            fontWeight: { light: number; normal: number; medium: number; semibold: number; bold: number };
             fontSize: { heading: string; headingMobile: string; paragraph: string; paragraphMobile: string; uiCopy: string; uiCopyMobile: string };
             lineHeight: { heading: string; paragraph: string };
             letterSpacing: { tight: string; normal: string; wide: string };
