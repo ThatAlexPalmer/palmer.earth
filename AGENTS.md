@@ -28,11 +28,21 @@ There is **no test framework or test suite** in this repo; CI only runs lint + t
 
 **Styling is the core of this codebase** and follows a deliberate layered pattern:
 
-- `src/config/theme.ts` defines the single source of truth `theme` object (colors, typography, font sizes, breakpoints-adjacent values) plus Google fonts (`Oswald` for headings, `Noto_Sans` for body) loaded via `next/font/google`.
-- `styled.d.ts` augments styled-components' `DefaultTheme` so theme values are fully typed in every `styled` template. **When you add a field to `theme.ts`, also update the `DefaultTheme` interface in `styled.d.ts`** or typecheck will fail.
+- `src/config/theme.ts` defines the single source of truth `theme` object (colors, typography, breakpoints, transitions, layout tokens) plus Google fonts (`Oswald` for headings, `Noto_Sans` for body) loaded via `next/font/google`.
+- `styled.d.ts` augments styled-components' `DefaultTheme` by deriving the interface from `typeof theme` exported by `theme.ts`. **When you add a field to `theme.ts`, the types update automatically — you no longer edit `styled.d.ts` by hand.**
 - `src/components/globalstyles.tsx` (`createGlobalStyle`) applies base/reset styles and theme-driven defaults.
-- `src/components/mainstyles.tsx` exports the page's layout primitives (`Container`, `Main`, `H1`, `Nav`, `H2`, `RedBlock`, `P`, `Footer`) as styled-components, with media queries driven by a local `breakpoints` constant. `index.tsx` composes these.
+- `src/components/mainstyles.tsx` exports the page's layout primitives (`Container`, `Main`, `H1`, `Nav`, `H2`, `RedBlock`, `P`, `Footer`) as styled-components. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `index.tsx` composes these.
 - All styled-component template literals read from the theme via `${({ theme }) => theme...}` rather than hardcoded values — preserve this when editing styles.
+
+**Extending the theme**
+
+When adding tokens:
+
+- Prefer semantic names under `breakpoints`, `transitions`, `layout`, or `typography`.
+- Layout tokens (max-widths, headline widths, footer heights) belong in `theme.layout`.
+- Repeated timing/easing strings belong in `theme.transitions`.
+- Update consumers in `mainstyles.tsx` (or other styled files) to interpolate the new value.
+- Artistic/one-off values (e.g., a specific pseudo-element `height: 83%`) can stay local to the component.
 
 **Server-side rendering of styles:** `src/pages/_document.tsx` uses styled-components' `ServerStyleSheet` to collect and inline styles during SSR (prevents FOUC). `src/pages/_app.tsx` wraps the app in `ThemeProvider` and injects the body font. The `styledComponents: true` SWC compiler option is enabled in `next.config.js`. If you change SSR/styling setup, keep `_document.tsx`, `_app.tsx`, and the compiler flag consistent.
 
