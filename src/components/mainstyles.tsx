@@ -1,23 +1,16 @@
 import styled from "styled-components";
 
-// Centralized breakpoints for consistency
-const breakpoints = {
-    phone: "512px",
-    tablet: "768px",
-    smallLaptop: "820px",
-} as const;
-
 const Container = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    max-width: 1200px;
+    max-width: ${({ theme }) => theme.layout.containerMaxWidth};
     min-height: 100%;
     margin: 0 auto;
     padding: 2rem 4%;
 
-    @media (max-width: ${breakpoints.tablet}) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
         padding: 1.5rem 3%;
     }
 `;
@@ -30,22 +23,22 @@ const Main = styled.main`
     justify-content: flex-start;
     flex: 1;
     width: 100%;
-    max-width: 1600px;
+    max-width: ${({ theme }) => theme.layout.mainMaxWidth};
     height: auto;
 
     /** Small laptops and equivalent devices */
-    @media only screen and (max-width: ${breakpoints.smallLaptop}) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.smallLaptop}) {
         width: 100%;
     }
 
     /** Generic tablet and equivalent devices */
-    @media only screen and (max-width: ${breakpoints.tablet}) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
         width: 98%;
         margin: 0 auto;
     }
 
     /** iPhone portrait mode and equivalent devices */
-    @media only screen and (max-width: ${breakpoints.phone}) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         width: 96%;
     }
 `;
@@ -69,7 +62,7 @@ const Nav = styled.nav`
         font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
 
         /** iPhone portrait mode and equivalent devices */
-        @media only screen and (max-width: ${breakpoints.phone}) {
+        @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
             align-items: center;
             font-size: ${({ theme }) => theme.typography.fontSize.uiCopyMobile};
         }
@@ -79,9 +72,7 @@ const Nav = styled.nav`
         color: ${({ theme }) => theme.colors.text};
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         text-decoration: none;
-        transition:
-            color 120ms ease-in-out,
-            text-underline-offset 120ms ease-in-out;
+        transition: ${({ theme }) => theme.transitions.link};
 
         &:hover,
         &:focus-visible,
@@ -98,7 +89,7 @@ const Nav = styled.nav`
         }
     }
 
-    @media screen and (max-width: ${breakpoints.phone}) {
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         width: 98%;
     }
 `;
@@ -113,15 +104,15 @@ const H1 = styled.h1`
     text-align: center;
     text-decoration: none;
     margin: 0 auto;
-    max-width: 24rem;
+    max-width: ${({ theme }) => theme.layout.headlineWidth};
 
     /** iPad portrait mode and equivalent devices */
-    @media only screen and (max-width: ${breakpoints.tablet}) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
         margin: 2rem auto;
     }
 
     /** iPhone portrait mode and equivalent devices */
-    @media only screen and (max-width: ${breakpoints.phone}) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
     }
 `;
@@ -134,7 +125,7 @@ const H2 = styled.h2`
     align-items: center;
     justify-content: center;
     align-self: center;
-    width: 24rem;
+    width: ${({ theme }) => theme.layout.headlineWidth};
     font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
@@ -143,12 +134,12 @@ const H2 = styled.h2`
     text-transform: uppercase;
 
     /** iPad portrait mode and equivalent devices */
-    @media only screen and (max-width: ${breakpoints.tablet}) {
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
         font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
     }
 
-    @media screen and (max-width: ${breakpoints.phone}) {
-        width: 16rem;
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        width: ${({ theme }) => theme.layout.headlineWidthMobile};
     }
 `;
 
@@ -170,7 +161,7 @@ const RedBlock = styled.span`
         background-color: ${({ theme }) => theme.colors.accent};
     }
 
-    @media screen and (max-width: ${breakpoints.phone}) {
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         width: 98%;
     }
 `;
@@ -201,7 +192,7 @@ const P = styled.p`
         }
     }
 
-    @media screen and (max-width: ${breakpoints.phone}) {
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
         margin: 0.75rem auto;
         text-align: justify;
@@ -216,16 +207,14 @@ const Footer = styled.footer`
     justify-content: space-between;
     align-self: center;
     width: 100%;
-    height: 8rem;
+    height: ${({ theme }) => theme.layout.footerHeight};
     margin: 0 auto;
     padding: 0;
 
     a {
         color: ${({ theme }) => theme.colors.text};
         text-decoration: none;
-        transition:
-            color 120ms ease-in-out,
-            text-underline-offset 120ms ease-in-out;
+        transition: ${({ theme }) => theme.transitions.link};
         &:hover,
         &:focus-visible,
         &:active {
