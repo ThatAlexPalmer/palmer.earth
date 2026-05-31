@@ -1,15 +1,6 @@
 import "styled-components";
+import type { Theme } from "./src/config/theme";
 
 declare module "styled-components" {
-    export interface DefaultTheme {
-        colors: { background: string; text: string; accent: string };
-        typography: {
-            fontFamily: string;
-            headingFont: string;
-            fontWeight: { light: number; normal: number; medium: number; semibold: number; bold: number };
-            fontSize: { heading: string; headingMobile: string; paragraph: string; paragraphMobile: string; uiCopy: string; uiCopyMobile: string };
-            lineHeight: { heading: string; paragraph: string };
-            letterSpacing: { normal: string; wide: string };
-        };
-    }
+    export interface DefaultTheme extends Theme {}
 }
