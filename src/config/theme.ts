@@ -1,4 +1,3 @@
-import { DefaultTheme } from "styled-components";
 import { Oswald, Noto_Sans } from "next/font/google";
 
 export const oswald = Oswald({
@@ -15,7 +14,7 @@ export const noto = Noto_Sans({
     subsets: ["latin"],
 });
 
-export const theme: DefaultTheme = {
+export const theme = {
     colors: {
         background: "#08080a",
         text: "#dcdcdc",
@@ -48,4 +47,23 @@ export const theme: DefaultTheme = {
             wide: "0.05em",
         },
     },
+    breakpoints: {
+        phone: "512px",
+        tablet: "768px",
+        smallLaptop: "820px",
+    },
+    transitions: {
+        fast: "120ms ease-in-out",
+        link: "color 120ms ease-in-out, text-underline-offset 120ms ease-in-out",
+    },
+    layout: {
+        containerMaxWidth: "1200px",
+        mainMaxWidth: "1600px",
+        headlineWidth: "24rem",
+        headlineWidthMobile: "16rem",
+        contentMaxWidth: "696px",
+        footerHeight: "8rem",
+    },
 };
+
+export type Theme = typeof theme;
