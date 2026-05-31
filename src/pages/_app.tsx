@@ -6,6 +6,7 @@ import { theme, noto } from "@/config/theme";
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
+            {/* Early font-family to reduce FOUC; GlobalStyle (below) also sets it from theme.typography.fontFamily */}
             <style jsx global>{`
                 html {
                     font-family: ${noto.style.fontFamily};
