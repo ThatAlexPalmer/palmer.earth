@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides guidance to WARP (warp.dev) when working with code in this repository.
+This file provides guidance to AI coding agents (grok, claude, etc.) when working with code in this repository.
 
 ## Overview
 
@@ -23,6 +23,13 @@ There is **no test framework or test suite** in this repo; CI only runs lint + t
 
 - Husky runs `lint-staged` on pre-commit, which runs `eslint --fix` then `prettier --write` on staged `*.{js,jsx,ts,tsx}` files (`.lintstagedrc.js`).
 - Prettier config (`.prettierrc.js`): 4-space tabs, semicolons, 150-char print width. Match this style in edits.
+
+## Agent workflow
+
+- use todo lists for tasks with 3+ steps
+- enter plan mode before high-impact or ambiguous changes
+- always run `pnpm lint` + `pnpm tsc --noEmit` before finishing
+- follow the styling architecture strictly (single source of truth in theme)
 
 ## Architecture
 
