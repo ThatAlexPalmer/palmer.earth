@@ -2,9 +2,8 @@
     // Extensions recommended for users of this workspace.
     "recommendations": [
         "dbaeumer.vscode-eslint",
-        "mikestead.dotenv",
-		"eamodio.gitlens",
-        "christian-kohler.npm-intellisense",
+		"mikestead.dotenv",
+		"christian-kohler.npm-intellisense",
         "esbenp.prettier-vscode",
         "prisma.prisma",
         "styled-components.vscode-styled-components",
