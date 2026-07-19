@@ -5,9 +5,6 @@ const nextConfig = {
     compiler: {
         styledComponents: true,
     },
-    eslint: {
-        dirs: ['src']
-    },
 };
 
 module.exports = nextConfig;
