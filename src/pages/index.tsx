@@ -43,8 +43,8 @@ export default function Home() {
                 <H1>{siteMetadata.title}</H1>
                 <Nav>
                     <span className="controls">
-                        <a href={socialLinks.farcaster} target="_blank" rel="noopener noreferrer">
-                            Farcaster
+                        <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
+                            GitHub
                         </a>
                         <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
                             X
@@ -70,7 +70,11 @@ export default function Home() {
                     , open source infrastructure for tokenized cap tables that will power Plume's transfer agent.
                 </P>
                 <P>
-                    2x founder before this. Ran payments infra, led products in pharma and AI. I build things and write about them on{" "}
+                    2x founder before this. Ran payments infra, led products in pharma and AI. Built{" "}
+                    <a href="https://visualizelaws.com" target="_blank" rel="noopener noreferrer">
+                        Visualize Laws
+                    </a>{" "}
+                    to explore 2.2M U.S. local laws, with financial, state, and federal law to come. I build things and write about them on{" "}
                     <a href={socialLinks.paragraph} target="_blank" rel="noopener noreferrer">
                         Paragraph
                     </a>
@@ -82,8 +86,8 @@ export default function Home() {
                 </P>
             </Main>
             <Footer>
-                <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
-                    GitHub
+                <a href={socialLinks.farcaster} target="_blank" rel="noopener noreferrer">
+                    Farcaster
                 </a>
                 <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
                     LinkedIn
