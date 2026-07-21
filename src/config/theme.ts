@@ -30,7 +30,6 @@ export const theme = {
         background: "#08080a",
         text: "#dcdcdc",
         accent: "#a32d15",
-        // white-opacity gray ramp for secondary chrome only
         g04: "rgba(255,255,255,0.04)",
         g08: "rgba(255,255,255,0.08)",
         g12: "rgba(255,255,255,0.12)",
@@ -40,6 +39,10 @@ export const theme = {
         g68: "rgba(255,255,255,0.68)",
         g76: "rgba(255,255,255,0.76)",
         g90: "rgba(255,255,255,0.90)",
+        // atmospheric wash (accent at low alpha — used in global bg)
+        glow: "rgba(163, 45, 21, 0.14)",
+        glowSoft: "rgba(163, 45, 21, 0.06)",
+        haze: "rgba(255, 255, 255, 0.025)",
     },
     typography: {
         fontFamily: noto.style.fontFamily,
@@ -84,7 +87,6 @@ export const theme = {
         link: "color 120ms ease-in-out, text-underline-offset 120ms ease-in-out",
     },
     layout: {
-        // Restore live-site scale so the red block can breathe
         containerMaxWidth: "1200px",
         mainMaxWidth: "1600px",
         headlineWidth: "24rem",
@@ -97,11 +99,6 @@ export const theme = {
         none: "0",
         sm: "2px",
         md: "4px",
-    },
-    // Grid kept extremely quiet — almost subliminal
-    grid: {
-        cell: "40px",
-        opacity: "0.018",
     },
 };
 

@@ -1,5 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 
+/**
+ * Background: no grid. Layered radial washes (accent glow + soft haze)
+ * plus a CSS noise film. Minimal but not flat.
+ */
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
@@ -31,27 +35,32 @@ const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
   }
 
-  /* Extremely faint grid — only reads on large displays, never fights the red block */
+  /* Atmospheric depth — soft accent bloom + edge haze (not a grid) */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 1;
-    background-image:
-      linear-gradient(
-        to right,
-        rgba(255, 255, 255, ${({ theme }) => theme.grid.opacity}) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, ${({ theme }) => theme.grid.opacity}) 1px,
-        transparent 1px
-      );
-    background-size: ${({ theme }) => theme.grid.cell} ${({ theme }) => theme.grid.cell};
-    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 10%, transparent 70%);
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -15%, ${({ theme }) => theme.colors.glow}, transparent 58%),
+      radial-gradient(ellipse 45% 35% at 100% 100%, ${({ theme }) => theme.colors.glowSoft}, transparent 55%),
+      radial-gradient(ellipse 40% 30% at 0% 85%, ${({ theme }) => theme.colors.haze}, transparent 50%),
+      radial-gradient(ellipse 70% 50% at 50% 110%, rgba(0, 0, 0, 0.55), transparent 60%);
+  }
+
+  /* Fine film grain via SVG turbulence — texture without structure */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
   }
 
   h1, h2, h3 {
