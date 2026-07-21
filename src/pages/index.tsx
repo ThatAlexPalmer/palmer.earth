@@ -16,42 +16,40 @@ import {
     Prose,
     ProjectList,
     ProjectItem,
-    PostList,
-    PostItem,
+    StatusBadge,
     Beliefs,
     Footer,
     MoreLink,
-    MutedNote,
 } from "@/components/mainstyles";
 import { siteMetadata, socialLinks, jsonLdData } from "@/config/seo";
-import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL, type ParagraphPost } from "@/lib/paragraph";
+import { PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
 const SubscribeForm = dynamic(() => import("@/components/SubscribeForm"), { ssr: false });
 
 const projects = [
     {
-        name: "Nest",
-        href: "https://nest.credit",
-        meta: "live",
-        blurb: "Anyone with a wallet can earn from RWAs — helped make Plume top chain by RWA holders.",
+        name: "Plume",
+        href: "https://plume.org",
+        meta: "work" as const,
+        blurb: "Public blockchain for scaling real-world assets. Head of Regulatory Strategy.",
     },
     {
-        name: "Transfer Agent Protocol",
-        href: "https://transferagentprotocol.xyz",
-        meta: "oss",
-        blurb: "Open-source infrastructure for tokenized cap tables powering Plume's transfer agent.",
+        name: "Nest",
+        href: "https://nest.credit",
+        meta: "live" as const,
+        blurb: "Anyone with a wallet can earn from RWAs — helped make Plume top chain by RWA holders.",
     },
     {
         name: "Visualize Laws",
         href: "https://visualizelaws.com",
-        meta: "live",
+        meta: "live" as const,
         blurb: "Explore ~2.2M U.S. local laws — search, filter, map. Financial / state / federal next.",
     },
     {
-        name: "Plume",
-        href: "https://plume.org",
-        meta: "work",
-        blurb: "Public blockchain for scaling real-world assets. Head of Regulatory Strategy.",
+        name: "Transfer Agent Protocol",
+        href: "https://transferagentprotocol.xyz",
+        meta: "oss" as const,
+        blurb: "Open-source infrastructure for tokenized cap tables powering Plume's transfer agent.",
     },
 ] as const;
 
@@ -62,11 +60,7 @@ const beliefs = [
     "Questions are places in the mind where answers fit",
 ] as const;
 
-type HomeProps = {
-    posts: ParagraphPost[];
-};
-
-export default function Home({ posts }: HomeProps) {
+export default function Home() {
     return (
         <Shell>
             <Head>
@@ -153,7 +147,7 @@ export default function Home({ posts }: HomeProps) {
                                 <a href={p.href} target="_blank" rel="noopener noreferrer">
                                     {p.name}
                                 </a>
-                                <span className="meta">{p.meta}</span>
+                                <StatusBadge $kind={p.meta}>{p.meta}</StatusBadge>
                                 <p className="blurb">{p.blurb}</p>
                             </ProjectItem>
                         ))}
@@ -165,33 +159,8 @@ export default function Home({ posts }: HomeProps) {
                         <span className="prefix">{"//"}</span>
                         Writing
                     </SectionLabel>
-                    {posts.length > 0 ? (
-                        <PostList>
-                            {posts.map((post) => (
-                                <PostItem key={post.id}>
-                                    {post.publishedAtLabel && (
-                                        <time className="date" dateTime={post.publishedAt || undefined}>
-                                            {post.publishedAtLabel}
-                                        </time>
-                                    )}
-                                    <a href={post.url} target="_blank" rel="noopener noreferrer">
-                                        {post.title}
-                                    </a>
-                                    {post.subtitle && <p className="subtitle">{post.subtitle}</p>}
-                                </PostItem>
-                            ))}
-                        </PostList>
-                    ) : (
-                        <P>
-                            Essays on product strategy for tokenized RWAs live on{" "}
-                            <a href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                                Paragraph
-                            </a>
-                            .
-                        </P>
-                    )}
                     <MoreLink href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                        All posts on Paragraph ↗
+                        Read on Paragraph →
                     </MoreLink>
                     <SubscribeForm />
                 </Section>
@@ -206,12 +175,11 @@ export default function Home({ posts }: HomeProps) {
                             <li key={b}>{b}</li>
                         ))}
                     </Beliefs>
-                    <MutedNote>Clayton Christensen: &ldquo;questions are places in the mind where answers fit.&rdquo;</MutedNote>
                 </Section>
             </Main>
 
             <Footer>
-                <span>© {new Date().getFullYear()} Alex Palmer</span>
+                <span>© {new Date().getFullYear()}</span>
                 <div className="links">
                     <a href={socialLinks.farcaster} target="_blank" rel="noopener noreferrer">
                         Farcaster
@@ -223,12 +191,4 @@ export default function Home({ posts }: HomeProps) {
             </Footer>
         </Shell>
     );
-}
-
-export async function getStaticProps() {
-    const posts = await fetchRecentPosts(5);
-    return {
-        props: { posts },
-        revalidate: 3600,
-    };
 }

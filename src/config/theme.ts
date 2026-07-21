@@ -40,6 +40,12 @@ export const theme = {
         g68: "rgba(255,255,255,0.68)",
         g76: "rgba(255,255,255,0.76)",
         g90: "rgba(255,255,255,0.90)",
+        // neon status chips
+        status: {
+            live: "#4ade80",
+            work: "#c084fc",
+            oss: "#38bdf8",
+        },
     },
     typography: {
         fontFamily: noto.style.fontFamily,

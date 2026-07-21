@@ -96,7 +96,7 @@ const GlobalStyle = createGlobalStyle`
 
   ::selection {
     background: ${({ theme }) => theme.colors.accent};
-    color: ${({ theme }) => theme.colors.background};
+    color: #ffffff;
   }
 
   @media (prefers-reduced-motion: reduce) {

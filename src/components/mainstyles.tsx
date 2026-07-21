@@ -81,20 +81,20 @@ const Main = styled.main`
 const Hero = styled.header`
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     width: 100%;
 `;
 
 const H1 = styled.h1`
     position: relative;
-    display: inline-flex;
-    margin: 0;
-    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    max-width: ${({ theme }) => theme.layout.headlineWidth};
     font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.display};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     line-height: 1.15;
-    text-align: left;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
 
@@ -246,15 +246,6 @@ const ProjectItem = styled.li`
         }
     }
 
-    .meta {
-        font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.sm};
-        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-        text-transform: uppercase;
-        color: ${({ theme }) => theme.colors.g68};
-        white-space: nowrap;
-    }
-
     .blurb {
         grid-column: 1 / -1;
         margin: 0;
@@ -270,62 +261,22 @@ const ProjectItem = styled.li`
         a {
             font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
         }
-
-        .meta {
-            justify-self: start;
-        }
     }
 `;
 
-const PostList = styled.ul`
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid ${({ theme }) => theme.colors.g12};
-`;
+type StatusKind = "live" | "work" | "oss";
 
-const PostItem = styled.li`
-    display: flex;
-    flex-direction: column;
-    gap: ${({ theme }) => theme.space(1)};
-    padding: ${({ theme }) => theme.space(4)} 0;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
-
-    a {
-        color: ${({ theme }) => theme.colors.text};
-        font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
-        font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-        text-decoration: none;
-        transition: ${({ theme }) => theme.transitions.link};
-
-        &:hover,
-        &:focus-visible {
-            color: ${({ theme }) => theme.colors.accent};
-        }
-    }
-
-    .date {
-        font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.sm};
-        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-        text-transform: uppercase;
-        color: ${({ theme }) => theme.colors.g68};
-    }
-
-    .subtitle {
-        margin: 0;
-        font-size: ${({ theme }) => theme.typography.fontSize.md};
-        color: ${({ theme }) => theme.colors.g76};
-        line-height: 1.55;
-    }
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        a {
-            font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
-        }
-    }
+const StatusBadge = styled.span<{ $kind: StatusKind }>`
+    font-family: ${({ theme }) => theme.typography.monoFont};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: ${({ theme, $kind }) => theme.colors.status[$kind]};
+    text-shadow:
+        0 0 0.35rem ${({ theme, $kind }) => theme.colors.status[$kind]},
+        0 0 0.85rem ${({ theme, $kind }) => theme.colors.status[$kind]};
 `;
 
 const Beliefs = styled.ul`
@@ -393,25 +344,22 @@ const MoreLink = styled.a`
     display: inline-flex;
     align-items: center;
     gap: ${({ theme }) => theme.space(1)};
-    margin-top: ${({ theme }) => theme.space(1)};
+    width: fit-content;
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.text} !important;
     text-decoration: none !important;
+    padding-bottom: ${({ theme }) => theme.space(1)};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g20};
+    transition: ${({ theme }) => theme.transitions.base};
 
     &:hover,
     &:focus-visible {
         color: ${({ theme }) => theme.colors.accent} !important;
+        border-bottom-color: ${({ theme }) => theme.colors.accent};
     }
-`;
-
-const MutedNote = styled.p`
-    margin: 0;
-    font-size: ${({ theme }) => theme.typography.fontSize.md};
-    color: ${({ theme }) => theme.colors.g76};
-    line-height: 1.5;
 `;
 
 export {
@@ -430,10 +378,8 @@ export {
     Prose,
     ProjectList,
     ProjectItem,
-    PostList,
-    PostItem,
+    StatusBadge,
     Beliefs,
     Footer,
     MoreLink,
-    MutedNote,
 };
