@@ -1,7 +1,7 @@
 import Document, { DocumentContext, Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import { AppProps } from "next/app";
-import { noto } from "@/config/theme";
+import { noto, plexMono } from "@/config/theme";
 
 export default class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext) {
@@ -28,8 +28,8 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head />
-                {/* next/font class on body avoids FOUC without styled-jsx */}
-                <body className={noto.className}>
+                {/* next/font classes on body avoid FOUC without styled-jsx */}
+                <body className={`${noto.className} ${plexMono.variable}`}>
                     <Main />
                     <NextScript />
                 </body>

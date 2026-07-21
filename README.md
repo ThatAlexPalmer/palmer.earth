@@ -1,15 +1,32 @@
 # Personal website
 
-Live site lives at [`palmer.earth`](https://palmer.earth)
+Live site: [palmer.earth](https://palmer.earth)
 
 ## Development
 
-1. Clone the repo and install dependencies:
+```bash
+pnpm install
+pnpm dev
+```
 
-`pnpm install`
+Open [http://localhost:3000](http://localhost:3000).
 
-2. Run the development server:
+```bash
+pnpm lint
+pnpm tsc --noEmit
+pnpm build
+```
 
-`pnpm run dev`
+## Optional: Paragraph subscribe
 
-3. Open [http://localhost:3000](http://localhost:3000)
+Recent posts load from the public Paragraph API (no secrets).
+
+To enable the on-site email form (otherwise a “Subscribe on Paragraph” link is shown):
+
+1. Create an API key in Paragraph → Account Settings → Integrations  
+2. Set `PARAGRAPH_API_KEY` in the Vercel project (or `.env.local` for local)
+
+```bash
+# .env.local
+PARAGRAPH_API_KEY=your_key_here
+```

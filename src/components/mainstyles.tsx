@@ -1,75 +1,53 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const Container = styled.div`
+const Shell = styled.div`
     display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
     max-width: ${({ theme }) => theme.layout.containerMaxWidth};
     min-height: 100%;
     margin: 0 auto;
-    padding: 2rem 4%;
+    padding: ${({ theme }) => theme.space(6)} ${({ theme }) => theme.space(5)};
 
     @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-        padding: 1.5rem 3%;
+        padding: ${({ theme }) => theme.space(4)} ${({ theme }) => theme.space(4)};
     }
 `;
 
-const Main = styled.main`
+const TopBar = styled.header`
     display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-    align-self: center;
-    justify-content: flex-start;
-    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: ${({ theme }) => theme.space(4)};
     width: 100%;
-    max-width: ${({ theme }) => theme.layout.mainMaxWidth};
-    height: auto;
+    padding-bottom: ${({ theme }) => theme.space(4)};
+    margin-bottom: ${({ theme }) => theme.space(8)};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
+    font-family: ${({ theme }) => theme.typography.monoFont};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+    text-transform: uppercase;
+`;
 
-    /** Small laptops and equivalent devices */
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.smallLaptop}) {
-        width: 100%;
-    }
+const Brand = styled.span`
+    color: ${({ theme }) => theme.colors.g76};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    white-space: nowrap;
 
-    /** Generic tablet and equivalent devices */
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-        width: 98%;
-        margin: 0 auto;
-    }
-
-    /** iPhone portrait mode and equivalent devices */
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        width: 96%;
+    .prompt {
+        color: ${({ theme }) => theme.colors.g40};
+        margin-right: ${({ theme }) => theme.space(1)};
     }
 `;
 
 const Nav = styled.nav`
-    position: relative;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-self: center;
-    align-items: baseline;
-    width: 100%;
-    height: auto;
-
-    .controls {
-        width: 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        margin: 0.5rem 0;
-        font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
-
-        /** iPhone portrait mode and equivalent devices */
-        @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-            align-items: center;
-            font-size: ${({ theme }) => theme.typography.fontSize.uiCopyMobile};
-        }
-    }
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: ${({ theme }) => theme.space(4)};
 
     a {
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.g68};
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
@@ -82,38 +60,69 @@ const Nav = styled.nav`
             text-decoration-thickness: 0.08rem;
             text-underline-offset: 0.2rem;
         }
-        padding: 0 1rem 0 0;
-
-        &:last-child {
-            padding: 0;
-        }
     }
 
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        width: 98%;
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        gap: ${({ theme }) => theme.space(3)};
+        font-size: ${({ theme }) => theme.typography.fontSize.xs};
     }
+`;
+
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    max-width: ${({ theme }) => theme.layout.mainMaxWidth};
+    gap: ${({ theme }) => theme.space(10)};
+`;
+
+const Hero = styled.header`
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: ${({ theme }) => theme.space(6)};
+`;
+
+const caretBlink = keyframes`
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 `;
 
 const H1 = styled.h1`
     position: relative;
     display: inline-flex;
-    line-height: 1.25;
+    align-items: baseline;
+    margin: 0;
+    max-width: 100%;
     font-family: ${({ theme }) => theme.typography.headingFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.heading};
+    font-size: ${({ theme }) => theme.typography.fontSize.display};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-    text-align: center;
-    text-decoration: none;
-    margin: 0 auto;
-    max-width: ${({ theme }) => theme.layout.headlineWidth};
+    line-height: 1.15;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
 
-    /** iPad portrait mode and equivalent devices */
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-        margin: 2rem auto;
+    .caret {
+        display: inline-block;
+        width: 0.55rem;
+        height: 1.05em;
+        margin-left: 0.2rem;
+        background: ${({ theme }) => theme.colors.accent};
+        vertical-align: text-bottom;
+        animation: ${caretBlink} 1.1s step-end infinite;
     }
 
-    /** iPhone portrait mode and equivalent devices */
-    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        font-size: ${({ theme }) => theme.typography.fontSize.displayMobile};
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .caret {
+            animation: none;
+            opacity: 1;
+        }
     }
 `;
 
@@ -130,10 +139,9 @@ const H2 = styled.h2`
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     text-align: justify;
-    margin: 12.5rem auto 0; /* 200px -> 12.5rem for scalability */
+    margin: 0 auto;
     text-transform: uppercase;
 
-    /** iPad portrait mode and equivalent devices */
     @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
         font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
     }
@@ -143,6 +151,7 @@ const H2 = styled.h2`
     }
 `;
 
+/** Signature accent slab behind the role line — keep as visual identity */
 const RedBlock = styled.span`
     position: relative;
     display: flex;
@@ -150,6 +159,7 @@ const RedBlock = styled.span`
     align-self: center;
     width: 100%;
     height: auto;
+    margin-top: ${({ theme }) => theme.space(4)};
 
     &::before {
         content: "";
@@ -162,68 +172,275 @@ const RedBlock = styled.span`
     }
 
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        width: 98%;
+        width: 100%;
+    }
+`;
+
+const Section = styled.section`
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.space(4)};
+    width: 100%;
+`;
+
+const SectionLabel = styled.h2`
+    margin: 0;
+    font-family: ${({ theme }) => theme.typography.monoFont};
+    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    line-height: 1;
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.colors.g68};
+
+    .prefix {
+        color: ${({ theme }) => theme.colors.accent};
+        margin-right: ${({ theme }) => theme.space(1)};
     }
 `;
 
 const P = styled.p`
-    max-width: 696px;
+    max-width: ${({ theme }) => theme.layout.contentMaxWidth};
     text-align: left;
-    margin: 1rem auto;
-    line-height: 1.618;
+    margin: 0;
+    line-height: ${({ theme }) => theme.typography.lineHeight.paragraph};
     font-family: ${({ theme }) => theme.typography.fontFamily};
     font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
     font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
-    letter-spacing: 0.01618rem;
-
-    &:first-of-type {
-        margin-top: 2.5rem;
-    }
+    color: ${({ theme }) => theme.colors.g90};
 
     a {
         color: ${({ theme }) => theme.colors.accent};
         font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
         text-decoration: underline;
         text-underline-offset: 0.12rem;
+        text-decoration-thickness: 0.08rem;
+
         &:hover,
         &:focus-visible,
         &:active {
-            text-decoration-thickness: 0.3rem;
+            text-decoration-thickness: 0.16rem;
         }
     }
 
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
-        margin: 0.75rem auto;
-        text-align: justify;
-        line-height: 1.318;
+        line-height: 1.55;
+    }
+`;
+
+const Prose = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.space(4)};
+`;
+
+const ProjectList = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid ${({ theme }) => theme.colors.g12};
+`;
+
+const ProjectItem = styled.li`
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: ${({ theme }) => theme.space(3)};
+    align-items: baseline;
+    padding: ${({ theme }) => theme.space(3)} 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g08};
+
+    a {
+        color: ${({ theme }) => theme.colors.text};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+        text-decoration: none;
+        transition: ${({ theme }) => theme.transitions.link};
+
+        &:hover,
+        &:focus-visible {
+            color: ${({ theme }) => theme.colors.accent};
+        }
+    }
+
+    .meta {
+        font-family: ${({ theme }) => theme.typography.monoFont};
+        font-size: ${({ theme }) => theme.typography.fontSize.xs};
+        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+        text-transform: uppercase;
+        color: ${({ theme }) => theme.colors.g40};
+        white-space: nowrap;
+    }
+
+    .blurb {
+        grid-column: 1 / -1;
+        margin: 0;
+        font-size: ${({ theme }) => theme.typography.fontSize.md};
+        color: ${({ theme }) => theme.colors.g60};
+        line-height: 1.5;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        grid-template-columns: 1fr;
+        gap: ${({ theme }) => theme.space(1)};
+
+        .meta {
+            justify-self: start;
+        }
+    }
+`;
+
+const PostList = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid ${({ theme }) => theme.colors.g12};
+`;
+
+const PostItem = styled.li`
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.space(1)};
+    padding: ${({ theme }) => theme.space(3)} 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g08};
+
+    a {
+        color: ${({ theme }) => theme.colors.text};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+        text-decoration: none;
+        transition: ${({ theme }) => theme.transitions.link};
+
+        &:hover,
+        &:focus-visible {
+            color: ${({ theme }) => theme.colors.accent};
+        }
+    }
+
+    .date {
+        font-family: ${({ theme }) => theme.typography.monoFont};
+        font-size: ${({ theme }) => theme.typography.fontSize.xs};
+        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+        text-transform: uppercase;
+        color: ${({ theme }) => theme.colors.g40};
+    }
+
+    .subtitle {
+        margin: 0;
+        font-size: ${({ theme }) => theme.typography.fontSize.md};
+        color: ${({ theme }) => theme.colors.g60};
+        line-height: 1.5;
+    }
+`;
+
+const Beliefs = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: ${({ theme }) => theme.space(3)};
+
+    li {
+        font-family: ${({ theme }) => theme.typography.monoFont};
+        font-size: ${({ theme }) => theme.typography.fontSize.sm};
+        line-height: 1.45;
+        color: ${({ theme }) => theme.colors.g68};
+        padding: ${({ theme }) => theme.space(3)};
+        border: 1px solid ${({ theme }) => theme.colors.g12};
+        background: ${({ theme }) => theme.colors.g04};
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        grid-template-columns: 1fr;
     }
 `;
 
 const Footer = styled.footer`
     display: flex;
-    flex-flow: row nowrap;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    align-self: center;
+    gap: ${({ theme }) => theme.space(3)};
     width: 100%;
-    height: ${({ theme }) => theme.layout.footerHeight};
-    margin: 0 auto;
-    padding: 0;
+    margin-top: ${({ theme }) => theme.space(12)};
+    padding-top: ${({ theme }) => theme.space(4)};
+    border-top: 1px solid ${({ theme }) => theme.colors.g12};
+    font-family: ${({ theme }) => theme.typography.monoFont};
+    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.colors.g40};
 
     a {
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.g68};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
+
         &:hover,
         &:focus-visible,
         &:active {
             color: ${({ theme }) => theme.colors.accent};
             text-decoration: underline;
-            text-decoration-thickness: 0.1rem;
+            text-decoration-thickness: 0.08rem;
             text-underline-offset: 0.2rem;
         }
     }
+
+    .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: ${({ theme }) => theme.space(4)};
+    }
 `;
 
-export { Container, Main, H1, Nav, H2, RedBlock, P, Footer };
+const MoreLink = styled.a`
+    display: inline-flex;
+    align-items: center;
+    gap: ${({ theme }) => theme.space(1)};
+    margin-top: ${({ theme }) => theme.space(1)};
+    font-family: ${({ theme }) => theme.typography.monoFont};
+    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.colors.g68} !important;
+    text-decoration: none !important;
+
+    &:hover,
+    &:focus-visible {
+        color: ${({ theme }) => theme.colors.accent} !important;
+    }
+`;
+
+const MutedNote = styled.p`
+    margin: 0;
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+    color: ${({ theme }) => theme.colors.g40};
+    line-height: 1.5;
+`;
+
+export {
+    Shell,
+    TopBar,
+    Brand,
+    Nav,
+    Main,
+    Hero,
+    H1,
+    H2,
+    RedBlock,
+    Section,
+    SectionLabel,
+    P,
+    Prose,
+    ProjectList,
+    ProjectItem,
+    PostList,
+    PostItem,
+    Beliefs,
+    Footer,
+    MoreLink,
+    MutedNote,
+};

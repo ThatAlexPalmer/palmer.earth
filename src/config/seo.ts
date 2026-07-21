@@ -11,7 +11,7 @@ export const socialLinks = {
     farcaster: "https://farcaster.com/thatalexpalmer.eth",
     twitter: "https://twitter.com/thatalexpalmer",
     github: "https://github.com/thatalexpalmer",
-    paragraph: "https://paragraph.xyz/@thatalexpalmer",
+    paragraph: "https://paragraph.com/@thatalexpalmer",
     linkedin: "https://linkedin.com/in/thatalexpalmer",
 };
 
