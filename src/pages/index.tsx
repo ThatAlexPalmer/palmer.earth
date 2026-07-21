@@ -17,12 +17,14 @@ import {
     ProjectList,
     ProjectItem,
     StatusBadge,
+    PostList,
+    PostItem,
     Beliefs,
     Footer,
     MoreLink,
 } from "@/components/mainstyles";
 import { siteMetadata, socialLinks, jsonLdData } from "@/config/seo";
-import { PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
+import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL, type ParagraphPost } from "@/lib/paragraph";
 
 const SubscribeForm = dynamic(() => import("@/components/SubscribeForm"), { ssr: false });
 
@@ -60,7 +62,11 @@ const beliefs = [
     "Questions are places in the mind where answers fit",
 ] as const;
 
-export default function Home() {
+type HomeProps = {
+    posts: ParagraphPost[];
+};
+
+export default function Home({ posts }: HomeProps) {
     return (
         <Shell>
             <Head>
@@ -159,8 +165,25 @@ export default function Home() {
                         <span className="prefix">{"//"}</span>
                         Writing
                     </SectionLabel>
+                    {posts.length > 0 && (
+                        <PostList>
+                            {posts.map((post) => (
+                                <PostItem key={post.id}>
+                                    {post.publishedAtLabel && (
+                                        <time className="date" dateTime={post.publishedAt || undefined}>
+                                            {post.publishedAtLabel}
+                                        </time>
+                                    )}
+                                    <a href={post.url} target="_blank" rel="noopener noreferrer">
+                                        {post.title}
+                                    </a>
+                                    {post.subtitle && <p className="subtitle">{post.subtitle}</p>}
+                                </PostItem>
+                            ))}
+                        </PostList>
+                    )}
                     <MoreLink href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                        Read on Paragraph →
+                        Read all on Paragraph →
                     </MoreLink>
                     <SubscribeForm />
                 </Section>
@@ -191,4 +214,12 @@ export default function Home() {
             </Footer>
         </Shell>
     );
+}
+
+export async function getStaticProps() {
+    const posts = await fetchRecentPosts(5);
+    return {
+        props: { posts },
+        revalidate: 3600,
+    };
 }

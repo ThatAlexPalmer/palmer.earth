@@ -279,6 +279,57 @@ const StatusBadge = styled.span<{ $kind: StatusKind }>`
         0 0 0.85rem ${({ theme, $kind }) => theme.colors.status[$kind]};
 `;
 
+const PostList = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid ${({ theme }) => theme.colors.g12};
+`;
+
+const PostItem = styled.li`
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.space(1)};
+    padding: ${({ theme }) => theme.space(4)} 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
+
+    a {
+        color: ${({ theme }) => theme.colors.text};
+        font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+        text-decoration: none;
+        transition: ${({ theme }) => theme.transitions.link};
+
+        &:hover,
+        &:focus-visible {
+            color: ${({ theme }) => theme.colors.accent};
+        }
+    }
+
+    .date {
+        font-family: ${({ theme }) => theme.typography.monoFont};
+        font-size: ${({ theme }) => theme.typography.fontSize.sm};
+        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+        text-transform: uppercase;
+        color: ${({ theme }) => theme.colors.g68};
+    }
+
+    .subtitle {
+        margin: 0;
+        font-size: ${({ theme }) => theme.typography.fontSize.md};
+        color: ${({ theme }) => theme.colors.g76};
+        line-height: 1.55;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        a {
+            font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
+        }
+    }
+`;
+
 const Beliefs = styled.ul`
     list-style: none;
     margin: 0;
@@ -379,6 +430,8 @@ export {
     ProjectList,
     ProjectItem,
     StatusBadge,
+    PostList,
+    PostItem,
     Beliefs,
     Footer,
     MoreLink,
