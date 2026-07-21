@@ -90,7 +90,7 @@ export const theme = {
     transitions: {
         fast: "120ms ease-in-out",
         base: "180ms cubic-bezier(0.22, 1, 0.36, 1)",
-        link: "color 180ms cubic-bezier(0.22, 1, 0.36, 1), text-underline-offset 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1)",
+        link: "color 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
     },
     layout: {
         // Live-site scale so RedBlock has the same presence as production

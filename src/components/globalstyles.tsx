@@ -82,6 +82,7 @@ const GlobalStyle = createGlobalStyle`
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.g68};
       outline-offset: 3px;
+      border-radius: 2px;
     }
   }
 

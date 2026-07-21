@@ -183,7 +183,10 @@ export default function Home({ posts }: HomeProps) {
                         </PostList>
                     )}
                     <MoreLink href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                        Read all on Paragraph →
+                        Read all on Paragraph
+                        <span className="arrow" aria-hidden="true">
+                            →
+                        </span>
                     </MoreLink>
                     <SubscribeForm />
                 </Section>

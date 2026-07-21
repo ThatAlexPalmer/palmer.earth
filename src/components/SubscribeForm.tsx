@@ -10,16 +10,17 @@ import styled from "styled-components";
 const Form = styled.form`
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
     gap: ${({ theme }) => theme.space(2)};
     width: 100%;
-    margin-top: ${({ theme }) => theme.space(2)};
+    margin-top: ${({ theme }) => theme.space(3)};
 `;
 
 const Field = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.space(1)};
-    flex: 1 1 12rem;
+    flex: 1 1 14rem;
     min-width: 0;
 `;
 
@@ -36,7 +37,7 @@ const Input = styled.input`
     background: ${({ theme }) => theme.colors.g04};
     border: 1px solid ${({ theme }) => theme.colors.g20};
     border-radius: ${({ theme }) => theme.radius.sm};
-    padding: ${({ theme }) => theme.space(2.5)} ${({ theme }) => theme.space(3)};
+    padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(3)};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.md};
     color: ${({ theme }) => theme.colors.text};
@@ -47,8 +48,13 @@ const Input = styled.input`
         color: ${({ theme }) => theme.colors.g60};
     }
 
+    &:hover:not(:disabled) {
+        border-color: ${({ theme }) => theme.colors.g40};
+    }
+
     &:focus {
-        border-color: ${({ theme }) => theme.colors.g76};
+        border-color: ${({ theme }) => theme.colors.accent};
+        box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.accent};
     }
 
     &:disabled {
@@ -59,27 +65,29 @@ const Input = styled.input`
 
 const Button = styled.button`
     align-self: flex-end;
-    background: transparent;
-    border: 1px solid ${({ theme }) => theme.colors.g40};
+    background: ${({ theme }) => theme.colors.accent};
+    border: 1px solid ${({ theme }) => theme.colors.accent};
     border-radius: ${({ theme }) => theme.radius.sm};
-    padding: ${({ theme }) => theme.space(2.5)} ${({ theme }) => theme.space(4)};
+    padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(5)};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.text};
+    color: #ffffff;
     cursor: pointer;
     transition: ${({ theme }) => theme.transitions.base};
     white-space: nowrap;
 
     &:hover:not(:disabled),
     &:focus-visible:not(:disabled) {
-        border-color: ${({ theme }) => theme.colors.accent};
-        color: ${({ theme }) => theme.colors.accent};
+        background: #c23a1c;
+        border-color: #c23a1c;
+        color: #ffffff;
     }
 
     &:disabled {
-        opacity: 0.55;
+        opacity: 0.45;
         cursor: not-allowed;
     }
 `;
@@ -90,7 +98,7 @@ const Status = styled.p<{ $tone?: "ok" | "err" }>`
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.g90 : theme.colors.accent)};
+    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.status.live : theme.colors.accent)};
 `;
 
 type StatusState = { tone: "ok" | "err"; text: string } | null;

@@ -48,7 +48,7 @@ const Nav = styled.nav`
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
     a {
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.g76};
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
@@ -56,10 +56,7 @@ const Nav = styled.nav`
         &:hover,
         &:focus-visible,
         &:active {
-            color: ${({ theme }) => theme.colors.accent};
-            text-decoration: underline;
-            text-decoration-thickness: 0.08rem;
-            text-underline-offset: 0.2rem;
+            color: ${({ theme }) => theme.colors.text};
         }
     }
 
@@ -190,17 +187,22 @@ const P = styled.p`
     font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
     color: ${({ theme }) => theme.colors.text};
 
+    /* Inline links: accent color only — no underlines */
     a {
         color: ${({ theme }) => theme.colors.accent};
         font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-        text-decoration: underline;
-        text-underline-offset: 0.12rem;
-        text-decoration-thickness: 0.08rem;
+        text-decoration: none;
+        border-radius: 2px;
+        transition: ${({ theme }) => theme.transitions.link};
 
         &:hover,
-        &:focus-visible,
-        &:active {
-            text-decoration-thickness: 0.16rem;
+        &:focus-visible {
+            color: #d94a2e;
+            background: rgba(163, 45, 21, 0.12);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            padding: 0 0.12em;
+            margin: 0 -0.12em;
         }
     }
 
@@ -230,19 +232,45 @@ const ProjectItem = styled.li`
     grid-template-columns: minmax(0, 1fr) auto;
     gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
     align-items: baseline;
-    padding: ${({ theme }) => theme.space(4)} 0;
+    padding: ${({ theme }) => theme.space(4)} ${({ theme }) => theme.space(3)};
+    margin: 0 -${({ theme }) => theme.space(3)};
     border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
+    border-radius: ${({ theme }) => theme.radius.sm};
+    transition: ${({ theme }) => theme.transitions.base};
+
+    &:hover {
+        background: ${({ theme }) => theme.colors.g04};
+    }
 
     a {
+        display: inline-flex;
+        align-items: baseline;
+        gap: ${({ theme }) => theme.space(2)};
         color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
         font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
 
+        &::after {
+            content: "→";
+            font-family: ${({ theme }) => theme.typography.monoFont};
+            font-size: 0.85em;
+            color: ${({ theme }) => theme.colors.g40};
+            opacity: 0;
+            transform: translateX(-0.25rem);
+            transition: ${({ theme }) => theme.transitions.link};
+        }
+
         &:hover,
         &:focus-visible {
             color: ${({ theme }) => theme.colors.accent};
+
+            &::after {
+                opacity: 1;
+                color: ${({ theme }) => theme.colors.accent};
+                transform: translateX(0);
+            }
         }
     }
 
@@ -292,19 +320,48 @@ const PostItem = styled.li`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.space(1)};
-    padding: ${({ theme }) => theme.space(4)} 0;
+    padding: ${({ theme }) => theme.space(4)} ${({ theme }) => theme.space(3)};
+    margin: 0 -${({ theme }) => theme.space(3)};
     border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
+    border-radius: ${({ theme }) => theme.radius.sm};
+    transition: ${({ theme }) => theme.transitions.base};
+
+    &:hover {
+        background: ${({ theme }) => theme.colors.g04};
+    }
 
     a {
+        display: inline-flex;
+        align-items: baseline;
+        gap: ${({ theme }) => theme.space(2)};
+        width: fit-content;
+        max-width: 100%;
         color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
         font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
 
+        &::after {
+            content: "→";
+            flex: 0 0 auto;
+            font-family: ${({ theme }) => theme.typography.monoFont};
+            font-size: 0.85em;
+            color: ${({ theme }) => theme.colors.g40};
+            opacity: 0;
+            transform: translateX(-0.25rem);
+            transition: ${({ theme }) => theme.transitions.link};
+        }
+
         &:hover,
         &:focus-visible {
             color: ${({ theme }) => theme.colors.accent};
+
+            &::after {
+                opacity: 1;
+                color: ${({ theme }) => theme.colors.accent};
+                transform: translateX(0);
+            }
         }
     }
 
@@ -370,17 +427,14 @@ const Footer = styled.footer`
     color: ${({ theme }) => theme.colors.g68};
 
     a {
-        color: ${({ theme }) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.g76};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
 
         &:hover,
         &:focus-visible,
         &:active {
-            color: ${({ theme }) => theme.colors.accent};
-            text-decoration: underline;
-            text-decoration-thickness: 0.08rem;
-            text-underline-offset: 0.2rem;
+            color: ${({ theme }) => theme.colors.text};
         }
     }
 
@@ -394,22 +448,28 @@ const Footer = styled.footer`
 const MoreLink = styled.a`
     display: inline-flex;
     align-items: center;
-    gap: ${({ theme }) => theme.space(1)};
+    gap: ${({ theme }) => theme.space(2)};
     width: fit-content;
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.text} !important;
+    color: ${({ theme }) => theme.colors.g76} !important;
     text-decoration: none !important;
-    padding-bottom: ${({ theme }) => theme.space(1)};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.g20};
-    transition: ${({ theme }) => theme.transitions.base};
+    transition: ${({ theme }) => theme.transitions.link};
+
+    .arrow {
+        display: inline-block;
+        transition: ${({ theme }) => theme.transitions.link};
+    }
 
     &:hover,
     &:focus-visible {
         color: ${({ theme }) => theme.colors.accent} !important;
-        border-bottom-color: ${({ theme }) => theme.colors.accent};
+
+        .arrow {
+            transform: translateX(0.25rem);
+        }
     }
 `;
 
