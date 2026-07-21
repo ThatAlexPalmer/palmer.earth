@@ -1,35 +1,38 @@
 name: CI
-on: push
+
+on:
+    push:
+    pull_request:
+
+concurrency:
+    group: ci-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     test:
         name: Lint, typecheck
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
-            - name: Setup Node
-              uses: actions/setup-node@v4.0.1
-              with:
-                  node-version: "20"
+              uses: actions/checkout@v7
+
             - name: Setup pnpm
-              uses: pnpm/action-setup@v4
+              uses: pnpm/action-setup@v6
               with:
                   run_install: false
-            - name: Get pnpm store directory
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-            - name: Setup pnpm cache
-              uses: actions/cache@v3
+
+            - name: Setup Node
+              uses: actions/setup-node@v7
               with:
-                  path: ${{ env.STORE_PATH }}
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
-            # Throw an error if the pnpm-lock.yaml file doesn't match the installed dependencies
+                  node-version: "22"
+                  cache: "pnpm"
+
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+
             - name: Lint
               run: pnpm lint
+
             - name: Typecheck
               run: pnpm tsc --noEmit
