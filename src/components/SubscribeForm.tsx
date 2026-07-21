@@ -1,7 +1,12 @@
-import { useEffect, useState, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import styled from "styled-components";
-import { PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
+/**
+ * On-site subscribe form → POST /api/subscribe →
+ * Paragraph official API: POST https://public.api.paragraph.com/api/v1/subscribers
+ * with Authorization: Bearer $PARAGRAPH_API_KEY
+ * @see https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber
+ */
 const Form = styled.form`
     display: flex;
     flex-wrap: wrap;
@@ -79,60 +84,21 @@ const Button = styled.button`
     }
 `;
 
-const Status = styled.p<{ $tone?: "ok" | "err" | "muted" }>`
+const Status = styled.p<{ $tone?: "ok" | "err" }>`
     margin: ${({ theme }) => theme.space(2)} 0 0;
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.g90 : $tone === "err" ? theme.colors.accent : theme.colors.g68)};
+    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.g90 : theme.colors.accent)};
 `;
 
-const Cta = styled.a`
-    display: inline-flex;
-    align-items: center;
-    margin-top: ${({ theme }) => theme.space(2)};
-    padding: ${({ theme }) => theme.space(2.5)} ${({ theme }) => theme.space(4)};
-    border: 1px solid ${({ theme }) => theme.colors.g40};
-    border-radius: ${({ theme }) => theme.radius.sm};
-    font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.text} !important;
-    text-decoration: none !important;
-    transition: ${({ theme }) => theme.transitions.base};
-    width: fit-content;
-
-    &:hover,
-    &:focus-visible {
-        border-color: ${({ theme }) => theme.colors.accent};
-        color: ${({ theme }) => theme.colors.accent} !important;
-    }
-`;
-
-type StatusState = { tone: "ok" | "err" | "muted"; text: string } | null;
+type StatusState = { tone: "ok" | "err"; text: string } | null;
 
 export default function SubscribeForm() {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
-    const [configured, setConfigured] = useState<boolean | null>(null);
     const [status, setStatus] = useState<StatusState>(null);
-
-    useEffect(() => {
-        let cancelled = false;
-        fetch("/api/subscribe-status")
-            .then((r) => r.json())
-            .then((data: { configured?: boolean }) => {
-                if (!cancelled) setConfigured(Boolean(data.configured));
-            })
-            .catch(() => {
-                if (!cancelled) setConfigured(false);
-            });
-        return () => {
-            cancelled = true;
-        };
-    }, []);
 
     async function onSubmit(e: FormEvent) {
         e.preventDefault();
@@ -142,31 +108,23 @@ export default function SubscribeForm() {
             const res = await fetch("/api/subscribe", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email: email.trim() }),
             });
             const data = (await res.json()) as { ok?: boolean; error?: string };
             if (res.ok && data.ok) {
                 setStatus({ tone: "ok", text: "Subscribed. Check your inbox." });
                 setEmail("");
             } else {
-                setStatus({ tone: "err", text: data.error || "Something went wrong." });
+                setStatus({
+                    tone: "err",
+                    text: data.error || "Could not subscribe. Try again.",
+                });
             }
         } catch {
             setStatus({ tone: "err", text: "Network error. Try again." });
         } finally {
             setLoading(false);
         }
-    }
-
-    if (configured === false) {
-        return (
-            <>
-                <Cta href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                    Subscribe on Paragraph ↗
-                </Cta>
-                <Status $tone="muted">Opens newsletter signup on Paragraph</Status>
-            </>
-        );
     }
 
     return (
@@ -183,11 +141,11 @@ export default function SubscribeForm() {
                         placeholder="you@domain.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        disabled={loading || configured === null}
+                        disabled={loading}
                         required
                     />
                 </Field>
-                <Button type="submit" disabled={loading || configured === null || !email.trim()}>
+                <Button type="submit" disabled={loading || !email.trim()}>
                     {loading ? "…" : "Subscribe"}
                 </Button>
             </Form>

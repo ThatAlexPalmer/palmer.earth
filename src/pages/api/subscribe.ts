@@ -3,18 +3,19 @@ import { addSubscriber, isValidEmail } from "@/lib/paragraph";
 
 type Body = { email?: string };
 
+/**
+ * POST /api/subscribe  { "email": "reader@example.com" }
+ *
+ * Proxies to Paragraph:
+ *   POST https://public.api.paragraph.com/api/v1/subscribers
+ *   Authorization: Bearer $PARAGRAPH_API_KEY
+ *
+ * @see https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") {
         res.setHeader("Allow", "POST");
         return res.status(405).json({ ok: false, error: "Method not allowed" });
-    }
-
-    if (!process.env.PARAGRAPH_API_KEY) {
-        return res.status(503).json({
-            ok: false,
-            error: "Subscribe is not configured on this deployment.",
-            configured: false,
-        });
     }
 
     const { email } = (req.body || {}) as Body;
@@ -29,10 +30,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({ ok: true });
     }
 
-    // Note: strictNullChecks is off in this repo, so we can't rely on union narrowing
     const failed = result as { ok: false; error: string; status?: number };
     const upstream = failed.status && failed.status >= 400 ? failed.status : 502;
-    // Don't leak upstream 401/403 details to the client
-    const clientStatus = upstream === 401 || upstream === 403 ? 502 : upstream;
+    const clientStatus = upstream === 401 || upstream === 403 ? 503 : upstream;
     return res.status(clientStatus).json({ ok: false, error: failed.error });
 }

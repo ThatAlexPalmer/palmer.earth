@@ -17,16 +17,28 @@ pnpm tsc --noEmit
 pnpm build
 ```
 
-## Optional: Paragraph subscribe
+## Paragraph subscribe (required for the form)
 
-Recent posts load from the public Paragraph API (no secrets).
+The writing section posts to Paragraph’s official API:
 
-To enable the on-site email form (otherwise a “Subscribe on Paragraph” link is shown):
+```http
+POST https://public.api.paragraph.com/api/v1/subscribers
+Authorization: Bearer <PARAGRAPH_API_KEY>
+Content-Type: application/json
 
-1. Create an API key in Paragraph → Account Settings → Integrations  
-2. Set `PARAGRAPH_API_KEY` in the Vercel project (or `.env.local` for local)
+{ "email": "reader@example.com" }
+```
+
+Docs: [Add a new subscriber](https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber)
+
+1. Generate a key in [publication settings → Developer](https://paragraph.com/settings/publication/#developer)
+2. Local:
 
 ```bash
 # .env.local
 PARAGRAPH_API_KEY=your_key_here
 ```
+
+3. Production: set `PARAGRAPH_API_KEY` on Vercel (or your host), then redeploy.
+
+Without the key, the form still renders but subscribe returns an error.

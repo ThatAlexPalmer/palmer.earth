@@ -1,4 +1,12 @@
-/** Paragraph publication for @thatalexpalmer */
+/**
+ * Paragraph integration for @thatalexpalmer
+ *
+ * Public posts: GET /v1/publications/{id}/posts (no auth)
+ * Subscribe:    POST /v1/subscribers with Bearer API key
+ * @see https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber
+ * @see https://public.api.paragraph.com/api  (OpenAPI server)
+ */
+
 export const PARAGRAPH_PUBLICATION_ID = "CYbcj5aaaKn4zqXpKysG";
 export const PARAGRAPH_SLUG = "thatalexpalmer";
 export const PARAGRAPH_PUBLICATION_URL = `https://paragraph.com/@${PARAGRAPH_SLUG}`;
@@ -37,9 +45,7 @@ function formatDate(epochMs: string | undefined): { iso: string | null; label: s
     };
 }
 
-/**
- * Fetch recent posts. Never throws — returns [] on failure so the homepage still builds.
- */
+/** Fetch recent posts. Never throws — returns [] on failure so the homepage still builds. */
 export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
     try {
         const url = `${PARAGRAPH_API_BASE}/v1/publications/${PARAGRAPH_PUBLICATION_ID}/posts?limit=${limit}`;
@@ -76,13 +82,22 @@ export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
 export type SubscribeResult = { ok: true } | { ok: false; error: string; status?: number };
 
 /**
- * Add a subscriber via the authenticated Paragraph API.
- * Requires PARAGRAPH_API_KEY on the server.
+ * Add a subscriber via Paragraph's official API.
+ * Publication is identified by the API key (not the publication id in the body).
+ *
+ *   curl -X POST "https://public.api.paragraph.com/api/v1/subscribers" \
+ *     -H "Authorization: Bearer $PARAGRAPH_API_KEY" \
+ *     -H "Content-Type: application/json" \
+ *     -d '{"email": "reader@example.com"}'
  */
 export async function addSubscriber(email: string): Promise<SubscribeResult> {
     const apiKey = process.env.PARAGRAPH_API_KEY;
     if (!apiKey) {
-        return { ok: false, error: "Subscribe is not configured.", status: 503 };
+        return {
+            ok: false,
+            error: "Missing PARAGRAPH_API_KEY on the server.",
+            status: 503,
+        };
     }
 
     try {
@@ -102,10 +117,15 @@ export async function addSubscriber(email: string): Promise<SubscribeResult> {
 
         let msg = "Could not subscribe. Try again later.";
         try {
-            const body = (await res.json()) as { msg?: string; message?: string };
+            const body = (await res.json()) as { msg?: string; message?: string; success?: boolean };
             msg = body.msg || body.message || msg;
         } catch {
             // ignore parse errors
+        }
+
+        // Map auth failures to a clearer server-config message
+        if (res.status === 401 || res.status === 403) {
+            return { ok: false, error: "Subscribe is misconfigured (invalid API key).", status: res.status };
         }
 
         return { ok: false, error: msg, status: res.status };
@@ -115,6 +135,5 @@ export async function addSubscriber(email: string): Promise<SubscribeResult> {
 }
 
 export function isValidEmail(email: string): boolean {
-    // Practical validation — not full RFC
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
 }
