@@ -1,27 +1,22 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import {
-    Shell,
-    TopBar,
-    Brand,
-    Nav,
+    Container,
     Main,
-    Hero,
     H1,
+    Nav,
     H2,
     RedBlock,
+    P,
+    Below,
     Section,
     SectionLabel,
-    P,
-    Prose,
     ProjectList,
     ProjectItem,
     PostList,
     PostItem,
-    Beliefs,
-    Footer,
     MoreLink,
-    MutedNote,
+    Footer,
 } from "@/components/mainstyles";
 import { siteMetadata, socialLinks, jsonLdData } from "@/config/seo";
 import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL, type ParagraphPost } from "@/lib/paragraph";
@@ -47,19 +42,6 @@ const projects = [
         meta: "live",
         blurb: "Explore ~2.2M U.S. local laws — search, filter, map. Financial / state / federal next.",
     },
-    {
-        name: "Plume",
-        href: "https://plume.org",
-        meta: "work",
-        blurb: "Public blockchain for scaling real-world assets. Head of Regulatory Strategy.",
-    },
-] as const;
-
-const beliefs = [
-    "Technology always wins",
-    "Cynicism pays no dividends",
-    "First, principles",
-    "Questions are places in the mind where answers fit",
 ] as const;
 
 type HomeProps = {
@@ -68,7 +50,7 @@ type HomeProps = {
 
 export default function Home({ posts }: HomeProps) {
     return (
-        <Shell>
+        <Container>
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
@@ -103,128 +85,113 @@ export default function Home({ posts }: HomeProps) {
                 </noscript>
             </Head>
 
-            <TopBar>
-                <Brand>
-                    <span className="prompt">~$</span>
-                    palmer.earth
-                </Brand>
+            <Main>
+                {/* —— Classic hero (matches live site) —— */}
+                <H1>{siteMetadata.title}</H1>
                 <Nav>
-                    <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
-                        GitHub
+                    <span className="controls">
+                        <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
+                            GitHub
+                        </a>
+                        <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+                            X
+                        </a>
+                    </span>
+                </Nav>
+                <RedBlock>
+                    <H2>— Head of Regulatory Strategy at Plume, a public blockchain for scaling RWAs</H2>
+                </RedBlock>
+
+                <P>
+                    Launched{" "}
+                    <a href="https://nest.credit" target="_blank" rel="noopener noreferrer">
+                        Nest
+                    </a>{" "}
+                    to let anyone with a wallet earn from RWAs. This made Plume the{" "}
+                    <a href="https://app.rwa.xyz/platforms/nest" target="_blank" rel="noopener noreferrer">
+                        top chain by RWA holders
+                    </a>{" "}
+                    (60k before we launched, 200k+ as of now). Building{" "}
+                    <a href="https://transferagentprotocol.xyz" target="_blank" rel="noopener noreferrer">
+                        Transfer Agent Protocol
                     </a>
-                    <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-                        X
-                    </a>
+                    , open source infrastructure for tokenized cap tables that will power Plume&apos;s transfer agent.
+                </P>
+                <P>
+                    2x founder before this. Ran payments infra, led products in pharma and AI. Built{" "}
+                    <a href="https://visualizelaws.com" target="_blank" rel="noopener noreferrer">
+                        Visualize Laws
+                    </a>{" "}
+                    to explore 2.2M U.S. local laws, with financial, state, and federal law to come. I build things and write about them on{" "}
                     <a href={socialLinks.paragraph} target="_blank" rel="noopener noreferrer">
                         Paragraph
                     </a>
-                </Nav>
-            </TopBar>
+                    .
+                </P>
+                <P>
+                    A few of my strong beliefs are: technology always wins; cynicism pays no dividends; first, principles; and, &ldquo;questions are
+                    places in the mind where answers fit&rdquo;. Clayton Christensen said that and I never forgot.
+                </P>
 
-            <Main>
-                <Hero>
-                    <H1>
-                        {siteMetadata.title}
-                        <span className="caret" aria-hidden="true" />
-                    </H1>
-                    <RedBlock>
-                        <H2>— Head of Regulatory Strategy at Plume, a public blockchain for scaling RWAs</H2>
-                    </RedBlock>
-                </Hero>
-
-                <Section aria-labelledby="about-label">
-                    <SectionLabel id="about-label">
-                        <span className="prefix">{"//"}</span>
-                        About
-                    </SectionLabel>
-                    <Prose>
-                        <P>
-                            2x founder. Ran payments infra, led products in pharma and AI. Now building the stack for tokenized real-world assets —
-                            and writing about product strategy for globally compliant infra.
-                        </P>
-                    </Prose>
-                </Section>
-
-                <Section aria-labelledby="work-label">
-                    <SectionLabel id="work-label">
-                        <span className="prefix">{"//"}</span>
-                        Work
-                    </SectionLabel>
-                    <ProjectList>
-                        {projects.map((p) => (
-                            <ProjectItem key={p.name}>
-                                <a href={p.href} target="_blank" rel="noopener noreferrer">
-                                    {p.name}
-                                </a>
-                                <span className="meta">{p.meta}</span>
-                                <p className="blurb">{p.blurb}</p>
-                            </ProjectItem>
-                        ))}
-                    </ProjectList>
-                </Section>
-
-                <Section aria-labelledby="writing-label">
-                    <SectionLabel id="writing-label">
-                        <span className="prefix">{"//"}</span>
-                        Writing
-                    </SectionLabel>
-                    {posts.length > 0 ? (
-                        <PostList>
-                            {posts.map((post) => (
-                                <PostItem key={post.id}>
-                                    {post.publishedAtLabel && (
-                                        <time className="date" dateTime={post.publishedAt || undefined}>
-                                            {post.publishedAtLabel}
-                                        </time>
-                                    )}
-                                    <a href={post.url} target="_blank" rel="noopener noreferrer">
-                                        {post.title}
+                {/* —— Quieter secondary sections —— */}
+                <Below>
+                    <Section aria-labelledby="work-label">
+                        <SectionLabel id="work-label">
+                            <span className="prefix">{"//"}</span>
+                            Work
+                        </SectionLabel>
+                        <ProjectList>
+                            {projects.map((p) => (
+                                <ProjectItem key={p.name}>
+                                    <a href={p.href} target="_blank" rel="noopener noreferrer">
+                                        {p.name}
                                     </a>
-                                    {post.subtitle && <p className="subtitle">{post.subtitle}</p>}
-                                </PostItem>
+                                    <span className="meta">{p.meta}</span>
+                                    <p className="blurb">{p.blurb}</p>
+                                </ProjectItem>
                             ))}
-                        </PostList>
-                    ) : (
-                        <P>
-                            Essays on product strategy for tokenized RWAs live on{" "}
-                            <a href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                                Paragraph
-                            </a>
-                            .
-                        </P>
-                    )}
-                    <MoreLink href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
-                        All posts on Paragraph ↗
-                    </MoreLink>
-                    <SubscribeForm />
-                </Section>
+                        </ProjectList>
+                    </Section>
 
-                <Section aria-labelledby="beliefs-label">
-                    <SectionLabel id="beliefs-label">
-                        <span className="prefix">{"//"}</span>
-                        Beliefs
-                    </SectionLabel>
-                    <Beliefs>
-                        {beliefs.map((b) => (
-                            <li key={b}>{b}</li>
-                        ))}
-                    </Beliefs>
-                    <MutedNote>Clayton Christensen: &ldquo;questions are places in the mind where answers fit.&rdquo;</MutedNote>
-                </Section>
+                    <Section aria-labelledby="writing-label">
+                        <SectionLabel id="writing-label">
+                            <span className="prefix">{"//"}</span>
+                            Writing
+                        </SectionLabel>
+                        {posts.length > 0 ? (
+                            <PostList>
+                                {posts.map((post) => (
+                                    <PostItem key={post.id}>
+                                        {post.publishedAtLabel && (
+                                            <time className="date" dateTime={post.publishedAt || undefined}>
+                                                {post.publishedAtLabel}
+                                            </time>
+                                        )}
+                                        <a href={post.url} target="_blank" rel="noopener noreferrer">
+                                            {post.title}
+                                        </a>
+                                        {post.subtitle && <p className="subtitle">{post.subtitle}</p>}
+                                    </PostItem>
+                                ))}
+                            </PostList>
+                        ) : null}
+                        <MoreLink href={PARAGRAPH_PUBLICATION_URL} target="_blank" rel="noopener noreferrer">
+                            All posts on Paragraph ↗
+                        </MoreLink>
+                        <SubscribeForm />
+                    </Section>
+                </Below>
             </Main>
 
             <Footer>
-                <span>© {new Date().getFullYear()} Alex Palmer</span>
-                <div className="links">
-                    <a href={socialLinks.farcaster} target="_blank" rel="noopener noreferrer">
-                        Farcaster
-                    </a>
-                    <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
-                        LinkedIn
-                    </a>
-                </div>
+                <a href={socialLinks.farcaster} target="_blank" rel="noopener noreferrer">
+                    Farcaster
+                </a>
+                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+                    LinkedIn
+                </a>
             </Footer>
-        </Shell>
+        </Container>
     );
 }
 

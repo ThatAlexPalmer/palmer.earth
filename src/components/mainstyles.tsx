@@ -1,53 +1,99 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-const Shell = styled.div`
+/**
+ * Hero composition mirrors live palmer.earth:
+ * centered name → space-between nav → monumental RedBlock with justified type
+ * that intentionally overflows the red slab. Secondary sections sit below.
+ */
+
+const Container = styled.div`
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
     max-width: ${({ theme }) => theme.layout.containerMaxWidth};
     min-height: 100%;
     margin: 0 auto;
-    padding: ${({ theme }) => theme.space(6)} ${({ theme }) => theme.space(5)};
+    padding: 2rem 4%;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-        padding: ${({ theme }) => theme.space(4)} ${({ theme }) => theme.space(4)};
+        padding: 1.5rem 3%;
     }
 `;
 
-const TopBar = styled.header`
+const Main = styled.main`
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: ${({ theme }) => theme.space(4)};
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    align-self: center;
+    justify-content: flex-start;
+    flex: 1;
     width: 100%;
-    padding-bottom: ${({ theme }) => theme.space(4)};
-    margin-bottom: ${({ theme }) => theme.space(8)};
-    border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
-    font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-    text-transform: uppercase;
-`;
+    max-width: ${({ theme }) => theme.layout.mainMaxWidth};
+    height: auto;
 
-const Brand = styled.span`
-    color: ${({ theme }) => theme.colors.g76};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    white-space: nowrap;
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.smallLaptop}) {
+        width: 100%;
+    }
 
-    .prompt {
-        color: ${({ theme }) => theme.colors.g40};
-        margin-right: ${({ theme }) => theme.space(1)};
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        width: 98%;
+        margin: 0 auto;
+    }
+
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        width: 96%;
     }
 `;
 
+const H1 = styled.h1`
+    position: relative;
+    display: inline-flex;
+    line-height: 1.25;
+    font-family: ${({ theme }) => theme.typography.headingFont};
+    font-size: ${({ theme }) => theme.typography.fontSize.heading};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    text-align: center;
+    text-decoration: none;
+    margin: 0 auto;
+    max-width: ${({ theme }) => theme.layout.headlineWidth};
+
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        margin: 2rem auto;
+    }
+
+    @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        font-size: ${({ theme }) => theme.typography.fontSize.headingMobile};
+    }
+`;
+
+/** Live-site nav: full width under the name, GitHub left / X right */
 const Nav = styled.nav`
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: ${({ theme }) => theme.space(4)};
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-self: center;
+    align-items: baseline;
+    width: 100%;
+    height: auto;
+
+    .controls {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        margin: 0.5rem 0;
+        font-size: ${({ theme }) => theme.typography.fontSize.uiCopy};
+
+        @media only screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+            align-items: center;
+            font-size: ${({ theme }) => theme.typography.fontSize.uiCopyMobile};
+        }
+    }
 
     a {
-        color: ${({ theme }) => theme.colors.g68};
+        color: ${({ theme }) => theme.colors.text};
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
@@ -60,69 +106,42 @@ const Nav = styled.nav`
             text-decoration-thickness: 0.08rem;
             text-underline-offset: 0.2rem;
         }
-    }
+        padding: 0 1rem 0 0;
 
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        gap: ${({ theme }) => theme.space(3)};
-        font-size: ${({ theme }) => theme.typography.fontSize.xs};
-    }
-`;
-
-const Main = styled.main`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-    max-width: ${({ theme }) => theme.layout.mainMaxWidth};
-    gap: ${({ theme }) => theme.space(10)};
-`;
-
-const Hero = styled.header`
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    gap: ${({ theme }) => theme.space(6)};
-`;
-
-const caretBlink = keyframes`
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-`;
-
-const H1 = styled.h1`
-    position: relative;
-    display: inline-flex;
-    align-items: baseline;
-    margin: 0;
-    max-width: 100%;
-    font-family: ${({ theme }) => theme.typography.headingFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.display};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-    line-height: 1.15;
-    text-align: left;
-    text-transform: uppercase;
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
-
-    .caret {
-        display: inline-block;
-        width: 0.55rem;
-        height: 1.05em;
-        margin-left: 0.2rem;
-        background: ${({ theme }) => theme.colors.accent};
-        vertical-align: text-bottom;
-        animation: ${caretBlink} 1.1s step-end infinite;
-    }
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        font-size: ${({ theme }) => theme.typography.fontSize.displayMobile};
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .caret {
-            animation: none;
-            opacity: 1;
+        &:last-child {
+            padding: 0;
         }
+    }
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        width: 98%;
+    }
+`;
+
+/**
+ * Signature red slab. ::before is 83% height so the last lines of the
+ * justified H2 hang below the rectangle — that's the live-site look.
+ */
+const RedBlock = styled.span`
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    align-self: center;
+    width: 100%;
+    height: auto;
+
+    &::before {
+        content: "";
+        z-index: 1;
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 83%;
+        background-color: ${({ theme }) => theme.colors.accent};
+    }
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        width: 98%;
     }
 `;
 
@@ -139,7 +158,8 @@ const H2 = styled.h2`
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     text-align: justify;
-    margin: 0 auto;
+    /* Critical: live site uses ~200px top margin so the block sits mid-hero */
+    margin: 12.5rem auto 0;
     text-transform: uppercase;
 
     @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -148,42 +168,64 @@ const H2 = styled.h2`
 
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         width: ${({ theme }) => theme.layout.headlineWidthMobile};
+        margin-top: 6rem;
     }
 `;
 
-/** Signature accent slab behind the role line — keep as visual identity */
-const RedBlock = styled.span`
-    position: relative;
-    display: flex;
-    flex-flow: column nowrap;
-    align-self: center;
-    width: 100%;
-    height: auto;
-    margin-top: ${({ theme }) => theme.space(4)};
+const P = styled.p`
+    max-width: ${({ theme }) => theme.layout.contentMaxWidth};
+    text-align: left;
+    margin: 1rem auto;
+    line-height: 1.618;
+    font-family: ${({ theme }) => theme.typography.fontFamily};
+    font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+    letter-spacing: 0.01618rem;
 
-    &::before {
-        content: "";
-        z-index: 1;
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 83%;
-        background-color: ${({ theme }) => theme.colors.accent};
+    &:first-of-type {
+        margin-top: 2.5rem;
+    }
+
+    a {
+        color: ${({ theme }) => theme.colors.accent};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+        text-decoration: underline;
+        text-underline-offset: 0.12rem;
+
+        &:hover,
+        &:focus-visible,
+        &:active {
+            text-decoration-thickness: 0.3rem;
+        }
     }
 
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        width: 100%;
+        font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
+        margin: 0.75rem auto;
+        text-align: justify;
+        line-height: 1.318;
     }
+`;
+
+/* —— Secondary sections (below the classic hero) —— */
+
+const Below = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: ${({ theme }) => theme.layout.contentMaxWidth};
+    margin: ${({ theme }) => theme.space(14)} auto 0;
+    gap: ${({ theme }) => theme.space(12)};
 `;
 
 const Section = styled.section`
     display: flex;
     flex-direction: column;
-    gap: ${({ theme }) => theme.space(4)};
+    gap: ${({ theme }) => theme.space(3)};
     width: 100%;
 `;
 
-const SectionLabel = styled.h2`
+const SectionLabel = styled.h3`
     margin: 0;
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.xs};
@@ -191,48 +233,12 @@ const SectionLabel = styled.h2`
     line-height: 1;
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g68};
+    color: ${({ theme }) => theme.colors.g40};
 
     .prefix {
         color: ${({ theme }) => theme.colors.accent};
         margin-right: ${({ theme }) => theme.space(1)};
     }
-`;
-
-const P = styled.p`
-    max-width: ${({ theme }) => theme.layout.contentMaxWidth};
-    text-align: left;
-    margin: 0;
-    line-height: ${({ theme }) => theme.typography.lineHeight.paragraph};
-    font-family: ${({ theme }) => theme.typography.fontFamily};
-    font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
-    color: ${({ theme }) => theme.colors.g90};
-
-    a {
-        color: ${({ theme }) => theme.colors.accent};
-        font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-        text-decoration: underline;
-        text-underline-offset: 0.12rem;
-        text-decoration-thickness: 0.08rem;
-
-        &:hover,
-        &:focus-visible,
-        &:active {
-            text-decoration-thickness: 0.16rem;
-        }
-    }
-
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
-        line-height: 1.55;
-    }
-`;
-
-const Prose = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: ${({ theme }) => theme.space(4)};
 `;
 
 const ProjectList = styled.ul`
@@ -241,13 +247,13 @@ const ProjectList = styled.ul`
     padding: 0;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid ${({ theme }) => theme.colors.g12};
+    border-top: 1px solid ${({ theme }) => theme.colors.g08};
 `;
 
 const ProjectItem = styled.li`
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: ${({ theme }) => theme.space(3)};
+    gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
     align-items: baseline;
     padding: ${({ theme }) => theme.space(3)} 0;
     border-bottom: 1px solid ${({ theme }) => theme.colors.g08};
@@ -284,10 +290,6 @@ const ProjectItem = styled.li`
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         grid-template-columns: 1fr;
         gap: ${({ theme }) => theme.space(1)};
-
-        .meta {
-            justify-self: start;
-        }
     }
 `;
 
@@ -297,7 +299,7 @@ const PostList = styled.ul`
     padding: 0;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid ${({ theme }) => theme.colors.g12};
+    border-top: 1px solid ${({ theme }) => theme.colors.g08};
 `;
 
 const PostItem = styled.li`
@@ -335,67 +337,6 @@ const PostItem = styled.li`
     }
 `;
 
-const Beliefs = styled.ul`
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: ${({ theme }) => theme.space(3)};
-
-    li {
-        font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.sm};
-        line-height: 1.45;
-        color: ${({ theme }) => theme.colors.g68};
-        padding: ${({ theme }) => theme.space(3)};
-        border: 1px solid ${({ theme }) => theme.colors.g12};
-        background: ${({ theme }) => theme.colors.g04};
-    }
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        grid-template-columns: 1fr;
-    }
-`;
-
-const Footer = styled.footer`
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: ${({ theme }) => theme.space(3)};
-    width: 100%;
-    margin-top: ${({ theme }) => theme.space(12)};
-    padding-top: ${({ theme }) => theme.space(4)};
-    border-top: 1px solid ${({ theme }) => theme.colors.g12};
-    font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g40};
-
-    a {
-        color: ${({ theme }) => theme.colors.g68};
-        text-decoration: none;
-        transition: ${({ theme }) => theme.transitions.link};
-
-        &:hover,
-        &:focus-visible,
-        &:active {
-            color: ${({ theme }) => theme.colors.accent};
-            text-decoration: underline;
-            text-decoration-thickness: 0.08rem;
-            text-underline-offset: 0.2rem;
-        }
-    }
-
-    .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: ${({ theme }) => theme.space(4)};
-    }
-`;
-
 const MoreLink = styled.a`
     display: inline-flex;
     align-items: center;
@@ -405,7 +346,7 @@ const MoreLink = styled.a`
     font-size: ${({ theme }) => theme.typography.fontSize.xs};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g68} !important;
+    color: ${({ theme }) => theme.colors.g60} !important;
     text-decoration: none !important;
 
     &:hover,
@@ -414,33 +355,31 @@ const MoreLink = styled.a`
     }
 `;
 
-const MutedNote = styled.p`
-    margin: 0;
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    color: ${({ theme }) => theme.colors.g40};
-    line-height: 1.5;
+const Footer = styled.footer`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    align-self: center;
+    width: 100%;
+    height: ${({ theme }) => theme.layout.footerHeight};
+    margin: 0 auto;
+    padding: 0;
+
+    a {
+        color: ${({ theme }) => theme.colors.text};
+        text-decoration: none;
+        transition: ${({ theme }) => theme.transitions.link};
+
+        &:hover,
+        &:focus-visible,
+        &:active {
+            color: ${({ theme }) => theme.colors.accent};
+            text-decoration: underline;
+            text-decoration-thickness: 0.1rem;
+            text-underline-offset: 0.2rem;
+        }
+    }
 `;
 
-export {
-    Shell,
-    TopBar,
-    Brand,
-    Nav,
-    Main,
-    Hero,
-    H1,
-    H2,
-    RedBlock,
-    Section,
-    SectionLabel,
-    P,
-    Prose,
-    ProjectList,
-    ProjectItem,
-    PostList,
-    PostItem,
-    Beliefs,
-    Footer,
-    MoreLink,
-    MutedNote,
-};
+export { Container, Main, H1, Nav, H2, RedBlock, P, Below, Section, SectionLabel, ProjectList, ProjectItem, PostList, PostItem, MoreLink, Footer };

@@ -15,7 +15,7 @@ export const noto = Noto_Sans({
 });
 
 export const plexMono = IBM_Plex_Mono({
-    weight: ["400", "500", "600"],
+    weight: ["400", "500"],
     style: "normal",
     display: "swap",
     subsets: ["latin"],
@@ -30,7 +30,7 @@ export const theme = {
         background: "#08080a",
         text: "#dcdcdc",
         accent: "#a32d15",
-        // white-opacity gray ramp (visualizelaws-style chrome)
+        // white-opacity gray ramp for secondary chrome only
         g04: "rgba(255,255,255,0.04)",
         g08: "rgba(255,255,255,0.08)",
         g12: "rgba(255,255,255,0.12)",
@@ -53,27 +53,24 @@ export const theme = {
             bold: 700,
         },
         fontSize: {
-            xs: "0.6875rem", // 11px
-            sm: "0.75rem", // 12px
-            md: "0.875rem", // 14px
+            xs: "0.6875rem",
+            sm: "0.75rem",
+            md: "0.875rem",
             heading: "2.5rem",
             headingMobile: "1.6rem",
-            paragraph: "1.125rem", // 18px — slightly tighter than before
+            paragraph: "1.3rem",
             paragraphMobile: "1rem",
-            uiCopy: "0.875rem",
-            uiCopyMobile: "0.8125rem",
-            display: "2.75rem",
-            displayMobile: "1.85rem",
+            uiCopy: "1.5rem",
+            uiCopyMobile: "1rem",
         },
         lineHeight: {
-            heading: "1.2",
-            paragraph: "1.65",
-            tight: "1.3",
+            heading: "1.3",
+            paragraph: "1.6",
         },
         letterSpacing: {
             normal: "0",
             wide: "0.05em",
-            mono: "0.08em",
+            mono: "0.06em",
         },
     },
     breakpoints: {
@@ -84,15 +81,16 @@ export const theme = {
     transitions: {
         fast: "120ms ease-in-out",
         base: "180ms cubic-bezier(0.22, 1, 0.36, 1)",
-        link: "color 180ms cubic-bezier(0.22, 1, 0.36, 1), text-underline-offset 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1)",
+        link: "color 120ms ease-in-out, text-underline-offset 120ms ease-in-out",
     },
     layout: {
-        containerMaxWidth: "720px",
-        mainMaxWidth: "720px",
+        // Restore live-site scale so the red block can breathe
+        containerMaxWidth: "1200px",
+        mainMaxWidth: "1600px",
         headlineWidth: "24rem",
         headlineWidthMobile: "16rem",
-        contentMaxWidth: "720px",
-        footerHeight: "auto",
+        contentMaxWidth: "696px",
+        footerHeight: "8rem",
     },
     space,
     radius: {
@@ -100,9 +98,10 @@ export const theme = {
         sm: "2px",
         md: "4px",
     },
+    // Grid kept extremely quiet — almost subliminal
     grid: {
-        cell: "28px",
-        opacity: "0.035",
+        cell: "40px",
+        opacity: "0.018",
     },
 };
 

@@ -31,13 +31,14 @@ const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
   }
 
-  /* Faint terminal grid — fixed, non-interactive, below content */
+  /* Extremely faint grid — only reads on large displays, never fights the red block */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    opacity: 1;
     background-image:
       linear-gradient(
         to right,
@@ -50,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
         transparent 1px
       );
     background-size: ${({ theme }) => theme.grid.cell} ${({ theme }) => theme.grid.cell};
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 10%, transparent 70%);
   }
 
   h1, h2, h3 {
@@ -77,7 +78,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     cursor: pointer;
-    transition: ${({ theme }) => theme.transitions.link};
 
     &:hover,
     &:focus-visible,
@@ -103,27 +103,6 @@ const GlobalStyle = createGlobalStyle`
   ::selection {
     background: ${({ theme }) => theme.colors.accent};
     color: ${({ theme }) => theme.colors.background};
-  }
-
-  /* Minimal monochrome scrollbars */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.g20};
-    border-radius: ${({ theme }) => theme.radius.md};
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.g60};
-  }
-
-  @keyframes caret-blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
