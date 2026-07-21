@@ -4,7 +4,6 @@ import {
     Shell,
     TopBar,
     Brand,
-    Nav,
     Main,
     Hero,
     H1,
@@ -96,21 +95,16 @@ export default function Home({ posts }: HomeProps) {
             </Head>
 
             <TopBar>
+                <a className="nav-left" href={socialLinks.github} target="_blank" rel="noopener noreferrer">
+                    GitHub
+                </a>
                 <Brand>
                     <span className="prompt">~$</span>
                     palmer.earth
                 </Brand>
-                <Nav>
-                    <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
-                        GitHub
-                    </a>
-                    <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-                        X
-                    </a>
-                    <a href={socialLinks.paragraph} target="_blank" rel="noopener noreferrer">
-                        Paragraph
-                    </a>
-                </Nav>
+                <a className="nav-right" href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+                    X
+                </a>
             </TopBar>
 
             <Main>

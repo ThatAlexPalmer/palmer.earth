@@ -15,10 +15,9 @@ const Shell = styled.div`
 `;
 
 const TopBar = styled.header`
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
-    gap: ${({ theme }) => theme.space(4)};
     width: 100%;
     padding-bottom: ${({ theme }) => theme.space(4)};
     margin-bottom: ${({ theme }) => theme.space(8)};
@@ -27,25 +26,6 @@ const TopBar = styled.header`
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-`;
-
-const Brand = styled.span`
-    color: ${({ theme }) => theme.colors.g90};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    white-space: nowrap;
-
-    .prompt {
-        color: ${({ theme }) => theme.colors.g60};
-        margin-right: ${({ theme }) => theme.space(1)};
-    }
-`;
-
-const Nav = styled.nav`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: ${({ theme }) => theme.space(4)};
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
     a {
         color: ${({ theme }) => theme.colors.g76};
@@ -60,8 +40,24 @@ const Nav = styled.nav`
         }
     }
 
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        gap: ${({ theme }) => theme.space(3)};
+    .nav-left {
+        justify-self: start;
+    }
+
+    .nav-right {
+        justify-self: end;
+    }
+`;
+
+const Brand = styled.span`
+    justify-self: center;
+    color: ${({ theme }) => theme.colors.g90};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    white-space: nowrap;
+
+    .prompt {
+        color: ${({ theme }) => theme.colors.g60};
+        margin-right: ${({ theme }) => theme.space(1)};
     }
 `;
 
@@ -454,7 +450,6 @@ export {
     Shell,
     TopBar,
     Brand,
-    Nav,
     Main,
     Hero,
     H1,
