@@ -30,12 +30,12 @@ const TopBar = styled.header`
 `;
 
 const Brand = styled.span`
-    color: ${({ theme }) => theme.colors.g76};
+    color: ${({ theme }) => theme.colors.g90};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     white-space: nowrap;
 
     .prompt {
-        color: ${({ theme }) => theme.colors.g40};
+        color: ${({ theme }) => theme.colors.g60};
         margin-right: ${({ theme }) => theme.space(1)};
     }
 `;
@@ -45,9 +45,10 @@ const Nav = styled.nav`
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: ${({ theme }) => theme.space(4)};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
 
     a {
-        color: ${({ theme }) => theme.colors.g68};
+        color: ${({ theme }) => theme.colors.text};
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
@@ -64,13 +65,13 @@ const Nav = styled.nav`
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         gap: ${({ theme }) => theme.space(3)};
-        font-size: ${({ theme }) => theme.typography.fontSize.xs};
     }
 `;
 
 const Main = styled.main`
     display: flex;
     flex-direction: column;
+    align-items: center;
     flex: 1;
     width: 100%;
     max-width: ${({ theme }) => theme.layout.mainMaxWidth};
@@ -158,18 +159,20 @@ const Section = styled.section`
     gap: ${({ theme }) => theme.space(4)};
     width: 100%;
     max-width: ${({ theme }) => theme.layout.contentMaxWidth};
-    align-self: flex-start;
+    /* Center under RedBlock — matches live body column */
+    align-self: center;
+    margin: 0 auto;
 `;
 
 const SectionLabel = styled.h2`
     margin: 0;
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     line-height: 1;
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g68};
+    color: ${({ theme }) => theme.colors.g76};
 
     .prefix {
         color: ${({ theme }) => theme.colors.accent};
@@ -185,7 +188,7 @@ const P = styled.p`
     font-family: ${({ theme }) => theme.typography.fontFamily};
     font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
     font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
-    color: ${({ theme }) => theme.colors.g90};
+    color: ${({ theme }) => theme.colors.text};
 
     a {
         color: ${({ theme }) => theme.colors.accent};
@@ -225,13 +228,14 @@ const ProjectList = styled.ul`
 const ProjectItem = styled.li`
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: ${({ theme }) => theme.space(3)};
+    gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
     align-items: baseline;
-    padding: ${({ theme }) => theme.space(3)} 0;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.g08};
+    padding: ${({ theme }) => theme.space(4)} 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
 
     a {
         color: ${({ theme }) => theme.colors.text};
+        font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
         font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
@@ -244,10 +248,10 @@ const ProjectItem = styled.li`
 
     .meta {
         font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.xs};
+        font-size: ${({ theme }) => theme.typography.fontSize.sm};
         letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
         text-transform: uppercase;
-        color: ${({ theme }) => theme.colors.g40};
+        color: ${({ theme }) => theme.colors.g68};
         white-space: nowrap;
     }
 
@@ -255,13 +259,17 @@ const ProjectItem = styled.li`
         grid-column: 1 / -1;
         margin: 0;
         font-size: ${({ theme }) => theme.typography.fontSize.md};
-        color: ${({ theme }) => theme.colors.g60};
-        line-height: 1.5;
+        color: ${({ theme }) => theme.colors.g76};
+        line-height: 1.55;
     }
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         grid-template-columns: 1fr;
         gap: ${({ theme }) => theme.space(1)};
+
+        a {
+            font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
+        }
 
         .meta {
             justify-self: start;
@@ -282,11 +290,12 @@ const PostItem = styled.li`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.space(1)};
-    padding: ${({ theme }) => theme.space(3)} 0;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.g08};
+    padding: ${({ theme }) => theme.space(4)} 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.g12};
 
     a {
         color: ${({ theme }) => theme.colors.text};
+        font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
         font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
@@ -299,17 +308,23 @@ const PostItem = styled.li`
 
     .date {
         font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.xs};
+        font-size: ${({ theme }) => theme.typography.fontSize.sm};
         letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
         text-transform: uppercase;
-        color: ${({ theme }) => theme.colors.g40};
+        color: ${({ theme }) => theme.colors.g68};
     }
 
     .subtitle {
         margin: 0;
         font-size: ${({ theme }) => theme.typography.fontSize.md};
-        color: ${({ theme }) => theme.colors.g60};
-        line-height: 1.5;
+        color: ${({ theme }) => theme.colors.g76};
+        line-height: 1.55;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        a {
+            font-size: ${({ theme }) => theme.typography.fontSize.paragraphMobile};
+        }
     }
 `;
 
@@ -323,9 +338,9 @@ const Beliefs = styled.ul`
 
     li {
         font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.sm};
-        line-height: 1.45;
-        color: ${({ theme }) => theme.colors.g68};
+        font-size: ${({ theme }) => theme.typography.fontSize.md};
+        line-height: 1.5;
+        color: ${({ theme }) => theme.colors.g90};
         padding: ${({ theme }) => theme.space(3)};
         border: 1px solid ${({ theme }) => theme.colors.g12};
         background: ${({ theme }) => theme.colors.g04};
@@ -347,13 +362,13 @@ const Footer = styled.footer`
     padding-top: ${({ theme }) => theme.space(4)};
     border-top: 1px solid ${({ theme }) => theme.colors.g12};
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g40};
+    color: ${({ theme }) => theme.colors.g68};
 
     a {
-        color: ${({ theme }) => theme.colors.g68};
+        color: ${({ theme }) => theme.colors.text};
         text-decoration: none;
         transition: ${({ theme }) => theme.transitions.link};
 
@@ -380,10 +395,10 @@ const MoreLink = styled.a`
     gap: ${({ theme }) => theme.space(1)};
     margin-top: ${({ theme }) => theme.space(1)};
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g68} !important;
+    color: ${({ theme }) => theme.colors.text} !important;
     text-decoration: none !important;
 
     &:hover,
@@ -394,8 +409,8 @@ const MoreLink = styled.a`
 
 const MutedNote = styled.p`
     margin: 0;
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    color: ${({ theme }) => theme.colors.g40};
+    font-size: ${({ theme }) => theme.typography.fontSize.md};
+    color: ${({ theme }) => theme.colors.g76};
     line-height: 1.5;
 `;
 

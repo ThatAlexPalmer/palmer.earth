@@ -20,16 +20,16 @@ const Field = styled.div`
 
 const Label = styled.label`
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g60};
+    color: ${({ theme }) => theme.colors.g76};
 `;
 
 const Input = styled.input`
     width: 100%;
     background: ${({ theme }) => theme.colors.g04};
-    border: 1px solid ${({ theme }) => theme.colors.g12};
+    border: 1px solid ${({ theme }) => theme.colors.g20};
     border-radius: ${({ theme }) => theme.radius.sm};
     padding: ${({ theme }) => theme.space(2.5)} ${({ theme }) => theme.space(3)};
     font-family: ${({ theme }) => theme.typography.monoFont};
@@ -39,11 +39,11 @@ const Input = styled.input`
     transition: ${({ theme }) => theme.transitions.base};
 
     &::placeholder {
-        color: ${({ theme }) => theme.colors.g40};
+        color: ${({ theme }) => theme.colors.g60};
     }
 
     &:focus {
-        border-color: ${({ theme }) => theme.colors.g68};
+        border-color: ${({ theme }) => theme.colors.g76};
     }
 
     &:disabled {
@@ -55,11 +55,11 @@ const Input = styled.input`
 const Button = styled.button`
     align-self: flex-end;
     background: transparent;
-    border: 1px solid ${({ theme }) => theme.colors.g20};
+    border: 1px solid ${({ theme }) => theme.colors.g40};
     border-radius: ${({ theme }) => theme.radius.sm};
     padding: ${({ theme }) => theme.space(2.5)} ${({ theme }) => theme.space(4)};
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.text};
@@ -82,10 +82,10 @@ const Button = styled.button`
 const Status = styled.p<{ $tone?: "ok" | "err" | "muted" }>`
     margin: ${({ theme }) => theme.space(2)} 0 0;
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.g90 : $tone === "err" ? theme.colors.accent : theme.colors.g40)};
+    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.g90 : $tone === "err" ? theme.colors.accent : theme.colors.g68)};
 `;
 
 const Cta = styled.a`
@@ -93,10 +93,10 @@ const Cta = styled.a`
     align-items: center;
     margin-top: ${({ theme }) => theme.space(2)};
     padding: ${({ theme }) => theme.space(2.5)} ${({ theme }) => theme.space(4)};
-    border: 1px solid ${({ theme }) => theme.colors.g20};
+    border: 1px solid ${({ theme }) => theme.colors.g40};
     border-radius: ${({ theme }) => theme.radius.sm};
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
+    font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.text} !important;

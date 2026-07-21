@@ -31,26 +31,20 @@ const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
   }
 
-  /* Faint terminal grid — fixed, non-interactive, below content */
+  /*
+   * No grid / honeycomb — those read as dated UI chrome.
+   * Soft radial depth only: flat black core with a quiet accent bloom
+   * so the RedBlock still owns the page.
+   */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background-image:
-      linear-gradient(
-        to right,
-        rgba(255, 255, 255, ${({ theme }) => theme.grid.opacity}) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, ${({ theme }) => theme.grid.opacity}) 1px,
-        transparent 1px
-      );
-    background-size: ${({ theme }) => theme.grid.cell} ${({ theme }) => theme.grid.cell};
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 75%);
+    background:
+      radial-gradient(ellipse 85% 55% at 50% -20%, rgba(163, 45, 21, 0.09), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 100%, rgba(163, 45, 21, 0.04), transparent 50%);
   }
 
   h1, h2, h3 {
@@ -103,27 +97,6 @@ const GlobalStyle = createGlobalStyle`
   ::selection {
     background: ${({ theme }) => theme.colors.accent};
     color: ${({ theme }) => theme.colors.background};
-  }
-
-  /* Minimal monochrome scrollbars */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.g20};
-    border-radius: ${({ theme }) => theme.radius.md};
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.g60};
-  }
-
-  @keyframes caret-blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {

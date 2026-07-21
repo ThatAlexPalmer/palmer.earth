@@ -101,10 +101,6 @@ export const theme = {
         sm: "2px",
         md: "4px",
     },
-    grid: {
-        cell: "28px",
-        opacity: "0.035",
-    },
 };
 
 export type Theme = typeof theme;
