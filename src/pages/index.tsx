@@ -19,7 +19,6 @@ import {
     StatusBadge,
     PostList,
     PostItem,
-    Beliefs,
     Footer,
     MoreLink,
 } from "@/components/mainstyles";
@@ -53,13 +52,6 @@ const projects = [
         meta: "oss" as const,
         blurb: "Open-source infrastructure for tokenized cap tables powering Plume's transfer agent.",
     },
-] as const;
-
-const beliefs = [
-    "Technology always wins",
-    "Cynicism pays no dividends",
-    "First, principles",
-    "Questions are places in the mind where answers fit",
 ] as const;
 
 type HomeProps = {
@@ -196,11 +188,10 @@ export default function Home({ posts }: HomeProps) {
                         <span className="prefix">{"//"}</span>
                         Beliefs
                     </SectionLabel>
-                    <Beliefs>
-                        {beliefs.map((b) => (
-                            <li key={b}>{b}</li>
-                        ))}
-                    </Beliefs>
+                    <P>
+                        A few of my strong beliefs are: technology always wins; cynicism pays no dividends; first, principles; and, &ldquo;questions
+                        are places in the mind where answers fit&rdquo;. Clayton Christensen said that and I never forgot.
+                    </P>
                 </Section>
             </Main>
 

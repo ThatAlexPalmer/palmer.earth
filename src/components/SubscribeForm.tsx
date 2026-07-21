@@ -71,10 +71,11 @@ const Button = styled.button`
     padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(5)};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: #ffffff;
+    /* Dark label on accent — high contrast (white on #a32d15 was muddy) */
+    color: ${({ theme }) => theme.colors.background};
     cursor: pointer;
     transition: ${({ theme }) => theme.transitions.base};
     white-space: nowrap;
@@ -83,7 +84,7 @@ const Button = styled.button`
     &:focus-visible:not(:disabled) {
         background: #c23a1c;
         border-color: #c23a1c;
-        color: #ffffff;
+        color: ${({ theme }) => theme.colors.background};
     }
 
     &:disabled {

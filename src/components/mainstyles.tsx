@@ -387,29 +387,6 @@ const PostItem = styled.li`
     }
 `;
 
-const Beliefs = styled.ul`
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: ${({ theme }) => theme.space(3)};
-
-    li {
-        font-family: ${({ theme }) => theme.typography.monoFont};
-        font-size: ${({ theme }) => theme.typography.fontSize.md};
-        line-height: 1.5;
-        color: ${({ theme }) => theme.colors.g90};
-        padding: ${({ theme }) => theme.space(3)};
-        border: 1px solid ${({ theme }) => theme.colors.g12};
-        background: ${({ theme }) => theme.colors.g04};
-    }
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        grid-template-columns: 1fr;
-    }
-`;
-
 const Footer = styled.footer`
     display: flex;
     flex-wrap: wrap;
@@ -492,7 +469,6 @@ export {
     StatusBadge,
     PostList,
     PostItem,
-    Beliefs,
     Footer,
     MoreLink,
 };
