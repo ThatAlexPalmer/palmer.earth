@@ -34,13 +34,14 @@ const Label = styled.label`
 
 const Input = styled.input`
     width: 100%;
-    background: ${({ theme }) => theme.colors.g04};
-    border: 1px solid ${({ theme }) => theme.colors.g20};
+    min-height: 2.75rem;
+    background: ${({ theme }) => theme.colors.form.surface};
+    border: 1px solid ${({ theme }) => theme.colors.form.border};
     border-radius: ${({ theme }) => theme.radius.sm};
     padding: ${({ theme }) => theme.space(3)} ${({ theme }) => theme.space(3)};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.md};
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.g90};
     outline: none;
     transition: ${({ theme }) => theme.transitions.base};
 
@@ -49,7 +50,7 @@ const Input = styled.input`
     }
 
     &:hover:not(:disabled) {
-        border-color: ${({ theme }) => theme.colors.g40};
+        border-color: ${({ theme }) => theme.colors.form.borderHover};
     }
 
     &:focus {
@@ -65,6 +66,7 @@ const Input = styled.input`
 
 const Button = styled.button`
     align-self: flex-end;
+    min-height: 2.75rem;
     background: ${({ theme }) => theme.colors.accent};
     border: 1px solid ${({ theme }) => theme.colors.accent};
     border-radius: ${({ theme }) => theme.radius.sm};
@@ -74,17 +76,17 @@ const Button = styled.button`
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    /* Dark label on accent — high contrast (white on #a32d15 was muddy) */
-    color: ${({ theme }) => theme.colors.background};
+    /* Near-white on accent — readable cypherpunk CTA */
+    color: ${({ theme }) => theme.colors.form.buttonText};
     cursor: pointer;
     transition: ${({ theme }) => theme.transitions.base};
     white-space: nowrap;
 
     &:hover:not(:disabled),
     &:focus-visible:not(:disabled) {
-        background: #c23a1c;
-        border-color: #c23a1c;
-        color: ${({ theme }) => theme.colors.background};
+        background: ${({ theme }) => theme.colors.accentHover};
+        border-color: ${({ theme }) => theme.colors.accentHover};
+        color: ${({ theme }) => theme.colors.form.buttonText};
     }
 
     &:disabled {
