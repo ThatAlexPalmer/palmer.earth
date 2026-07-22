@@ -30,6 +30,7 @@ export const theme = {
         background: "#08080a",
         text: "#dcdcdc",
         accent: "#a32d15",
+        accentHover: "#d94a2e",
         // white-opacity gray ramp (visualizelaws-style chrome)
         g04: "rgba(255,255,255,0.04)",
         g08: "rgba(255,255,255,0.08)",
@@ -40,11 +41,17 @@ export const theme = {
         g68: "rgba(255,255,255,0.68)",
         g76: "rgba(255,255,255,0.76)",
         g90: "rgba(255,255,255,0.90)",
-        // neon status chips
+        // neon status chips — brighter / higher sat for cypherpunk read
         status: {
-            live: "#4ade80",
-            work: "#c084fc",
-            oss: "#38bdf8",
+            live: "#39ff87",
+            work: "#d47bff",
+            oss: "#3dd6ff",
+        },
+        form: {
+            surface: "rgba(255,255,255,0.06)",
+            border: "rgba(255,255,255,0.22)",
+            borderHover: "rgba(255,255,255,0.38)",
+            buttonText: "#f5f5f5",
         },
     },
     typography: {
@@ -62,9 +69,10 @@ export const theme = {
             xs: "0.6875rem", // 11px
             sm: "0.75rem", // 12px
             md: "0.875rem", // 14px
-            heading: "2.5rem",
-            headingMobile: "1.6rem",
-            paragraph: "1.125rem", // 18px — slightly tighter than before
+            // slightly smaller so "Regulatory Product Strategy" fits the slab
+            heading: "2.25rem",
+            headingMobile: "1.45rem",
+            paragraph: "1.125rem", // 18px
             paragraphMobile: "1rem",
             uiCopy: "0.875rem",
             uiCopyMobile: "0.8125rem",
@@ -79,7 +87,7 @@ export const theme = {
         letterSpacing: {
             normal: "0",
             wide: "0.05em",
-            mono: "0.08em",
+            mono: "0.1em",
         },
     },
     breakpoints: {
@@ -91,15 +99,23 @@ export const theme = {
         fast: "120ms ease-in-out",
         base: "180ms cubic-bezier(0.22, 1, 0.36, 1)",
         link: "color 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
+        bracket: "opacity 160ms cubic-bezier(0.22, 1, 0.36, 1), transform 160ms cubic-bezier(0.22, 1, 0.36, 1)",
     },
     layout: {
         // Live-site scale so RedBlock has the same presence as production
         containerMaxWidth: "1200px",
         mainMaxWidth: "1200px",
-        headlineWidth: "24rem",
-        headlineWidthMobile: "16rem",
+        // wider slab for three-word title line without overflow
+        headlineWidth: "28rem",
+        headlineWidthMobile: "18rem",
         contentMaxWidth: "696px",
         footerHeight: "auto",
+    },
+    effects: {
+        bracketSize: "12px",
+        bracketThickness: "1px",
+        bracketInset: "6px",
+        badgeFlickerDuration: "4.2s",
     },
     space,
     radius: {
