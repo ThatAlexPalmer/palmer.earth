@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents (grok, claude, etc.) when workin
 
 ## Overview
 
-Personal website for [palmer.earth](https://palmer.earth) — a single-page Next.js 15 site built with the **Pages Router** (`src/pages`, not the App Router), TypeScript, and styled-components. The visible content is essentially one page (`src/pages/index.tsx`).
+Personal website for [palmer.earth](https://palmer.earth) — a single-page Next.js 16 site built with the **Pages Router** (`src/pages`, not the App Router), TypeScript, and styled-components. The visible content is essentially one page (`src/pages/index.tsx`).
 
 ## Commands
 
@@ -14,7 +14,7 @@ Package manager is **pnpm** (`pnpm@9.9.0`, pinned via `packageManager` in `packa
 - `pnpm dev` — run dev server at http://localhost:3000
 - `pnpm build` — production build (runs `next-sitemap` automatically via `postbuild` to regenerate `public/sitemap*.xml` and `robots.txt`)
 - `pnpm start` — serve the production build
-- `pnpm lint` — ESLint (scoped to `src` via `next.config.js`)
+- `pnpm lint` — ESLint (`eslint src`)
 - `pnpm tsc --noEmit` — typecheck (the exact check CI runs)
 
 There is **no test framework or test suite** in this repo; CI only runs lint + typecheck (`.github/workflows/main.yml`, triggered on every push).
@@ -35,10 +35,11 @@ There is **no test framework or test suite** in this repo; CI only runs lint + t
 
 **Styling is the core of this codebase** and follows a deliberate layered pattern:
 
-- `src/config/theme.ts` defines the single source of truth `theme` object (colors, typography, breakpoints, transitions, layout tokens) plus Google fonts (`Oswald` for headings, `Noto_Sans` for body) loaded via `next/font/google`.
+- `src/config/theme.ts` defines the single source of truth `theme` object (colors, typography, breakpoints, transitions, layout, effects, form tokens) plus Google fonts (`Oswald` for headings, `Noto_Sans` for body, `IBM_Plex_Mono` for mono) loaded via `next/font/google`.
 - `styled.d.ts` augments styled-components' `DefaultTheme` by deriving the interface from `typeof theme` exported by `theme.ts`. **When you add a field to `theme.ts`, the types update automatically — you no longer edit `styled.d.ts` by hand.**
 - `src/components/globalstyles.tsx` (`createGlobalStyle`) applies base/reset styles and theme-driven defaults.
-- `src/components/mainstyles.tsx` exports the page's layout primitives (`Container`, `Main`, `H1`, `Nav`, `H2`, `RedBlock`, `P`, `Footer`) as styled-components. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `index.tsx` composes these.
+- `src/components/mainstyles.tsx` exports layout primitives (`Shell`, `Nav`, `Main`, `H1`, `H2`, `RedBlock`, `Section`, `ProductList`/`ProductItem`, `PostList`/`PostItem`, `StatusBadge`, `P`, `Footer`, …). Shared list-row chrome (cyberpunk corner brackets) lives in one `listRowChrome` helper used by product and post rows. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `index.tsx` composes these.
+- Live Nest vault stats: `src/lib/nest.ts`. Paragraph posts/subscribe (+ optional views via API key): `src/lib/paragraph.ts`.
 - All styled-component template literals read from the theme via `${({ theme }) => theme...}` rather than hardcoded values — preserve this when editing styles.
 
 **Extending the theme**
