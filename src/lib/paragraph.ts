@@ -20,6 +20,9 @@ export type ParagraphPost = {
     url: string;
     publishedAt: string | null;
     publishedAtLabel: string;
+    /** Present when fetched with PARAGRAPH_API_KEY via GET /v1/posts */
+    views: number | null;
+    viewsLabel: string | null;
 };
 
 type ApiPost = {
@@ -28,6 +31,7 @@ type ApiPost = {
     subtitle?: string;
     slug: string;
     publishedAt?: string;
+    views?: number;
 };
 
 type ApiListResponse = {
@@ -45,8 +49,65 @@ function formatDate(epochMs: string | undefined): { iso: string | null; label: s
     };
 }
 
-/** Fetch recent posts. Never throws — returns [] on failure so the homepage still builds. */
+/** Compact view count for mono meta, e.g. "273" / "1.2k". */
+export function formatViews(n: number): string {
+    if (n >= 1_000_000) {
+        const v = n / 1_000_000;
+        return `${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}M`;
+    }
+    if (n >= 1_000) {
+        const v = n / 1_000;
+        return `${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}k`;
+    }
+    return `${Math.round(n)}`;
+}
+
+function mapPosts(items: ApiPost[]): ParagraphPost[] {
+    return items.map((item) => {
+        const { iso, label } = formatDate(item.publishedAt);
+        const views = typeof item.views === "number" && Number.isFinite(item.views) ? item.views : null;
+        return {
+            id: item.id,
+            title: item.title,
+            subtitle: item.subtitle,
+            slug: item.slug,
+            url: `${PARAGRAPH_PUBLICATION_URL}/${item.slug}`,
+            publishedAt: iso,
+            publishedAtLabel: label,
+            views,
+            viewsLabel: views != null ? formatViews(views) : null,
+        };
+    });
+}
+
+/**
+ * Fetch recent posts. Prefers authenticated GET /v1/posts when PARAGRAPH_API_KEY
+ * is set (includes `views`). Falls back to public publication posts without views.
+ * Never throws — returns [] on failure so the homepage still builds.
+ */
 export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
+    const apiKey = process.env.PARAGRAPH_API_KEY;
+
+    if (apiKey) {
+        try {
+            const res = await fetch(`${PARAGRAPH_API_BASE}/v1/posts?limit=${limit}&status=published`, {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                },
+            });
+            if (res.ok) {
+                const data = (await res.json()) as ApiListResponse;
+                const items = Array.isArray(data.items) ? data.items : [];
+                if (items.length > 0) return mapPosts(items);
+            } else {
+                console.warn(`[paragraph] auth posts fetch failed: ${res.status}`);
+            }
+        } catch (err) {
+            console.warn("[paragraph] auth posts fetch error", err);
+        }
+    }
+
     try {
         const url = `${PARAGRAPH_API_BASE}/v1/publications/${PARAGRAPH_PUBLICATION_ID}/posts?limit=${limit}`;
         const res = await fetch(url, {
@@ -60,19 +121,7 @@ export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
 
         const data = (await res.json()) as ApiListResponse;
         const items = Array.isArray(data.items) ? data.items : [];
-
-        return items.map((item) => {
-            const { iso, label } = formatDate(item.publishedAt);
-            return {
-                id: item.id,
-                title: item.title,
-                subtitle: item.subtitle,
-                slug: item.slug,
-                url: `${PARAGRAPH_PUBLICATION_URL}/${item.slug}`,
-                publishedAt: iso,
-                publishedAtLabel: label,
-            };
-        });
+        return mapPosts(items);
     } catch (err) {
         console.warn("[paragraph] posts fetch error", err);
         return [];
