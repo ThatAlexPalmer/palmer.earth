@@ -162,7 +162,11 @@ export default function SubscribeForm() {
                     {loading ? "…" : "Subscribe"}
                 </Button>
             </Form>
-            {status && <Status $tone={status.tone}>{status.text}</Status>}
+            {status && (
+                <Status role="status" aria-live="polite" aria-atomic="true" $tone={status.tone}>
+                    {status.text}
+                </Status>
+            )}
         </>
     );
 }

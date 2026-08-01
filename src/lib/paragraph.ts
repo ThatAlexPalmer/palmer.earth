@@ -151,6 +151,9 @@ export async function addSubscriber(email: string): Promise<SubscribeResult> {
         };
     }
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8_000);
+
     try {
         const res = await fetch(`${PARAGRAPH_API_BASE}/v1/subscribers`, {
             method: "POST",
@@ -160,6 +163,7 @@ export async function addSubscriber(email: string): Promise<SubscribeResult> {
                 Accept: "application/json",
             },
             body: JSON.stringify({ email }),
+            signal: controller.signal,
         });
 
         if (res.ok) {
@@ -180,8 +184,13 @@ export async function addSubscriber(email: string): Promise<SubscribeResult> {
         }
 
         return { ok: false, error: msg, status: res.status };
-    } catch {
+    } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") {
+            return { ok: false, error: "Subscribe timed out. Try again later.", status: 504 };
+        }
         return { ok: false, error: "Network error. Try again later.", status: 502 };
+    } finally {
+        clearTimeout(timeout);
     }
 }
 

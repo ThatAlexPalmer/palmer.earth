@@ -32,7 +32,7 @@ const Shell = styled.div`
     }
 `;
 
-const Nav = styled.header`
+const Nav = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;

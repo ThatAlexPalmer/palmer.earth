@@ -87,7 +87,7 @@ export default async function Home() {
                 If you&apos;re seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>.
             </noscript>
 
-            <Nav>
+            <Nav aria-label="Social">
                 <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>
@@ -116,7 +116,8 @@ export default async function Home() {
                                 Nest
                             </a>
                             to let anyone with a wallet earn from RWAs — now <Stat>{nest.totalVaultHoldersLabel}</Stat> holders and{" "}
-                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={NEST_STATS_SOURCE_URL} /> across Nest. That made Plume the{" "}
+                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={NEST_STATS_SOURCE_URL} />{" "}
+                            across Nest. That made Plume the{" "}
                             <a href="https://app.rwa.xyz/networks/plume" target="_blank" rel="noopener noreferrer">
                                 top chain by RWA holders
                             </a>{" "}

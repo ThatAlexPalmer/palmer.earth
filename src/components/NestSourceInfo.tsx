@@ -125,14 +125,14 @@ export default function NestSourceInfo({ fetchedAt, sourceUrl }: { fetchedAt: st
             <Trigger
                 type="button"
                 aria-label="Nest stats data source"
-                aria-haspopup="dialog"
                 aria-expanded={open}
                 aria-controls={popoverId}
                 onClick={() => setOpen((current) => !current)}
             >
                 ⓘ
             </Trigger>
-            <Popover id={popoverId} role="dialog" aria-label="Nest stats data source" aria-hidden={!open} $open={open}>
+            {/* Disclosure (not dialog): hover/click popover with a link — no focus trap */}
+            <Popover id={popoverId} role="region" aria-label="Nest stats data source" aria-hidden={!open} $open={open}>
                 <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                     Nest API
                 </a>{" "}
