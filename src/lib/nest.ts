@@ -9,17 +9,22 @@ export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults";
 export const NEST_URL = "https://nest.credit";
 
 export type NestStats = {
-    totalTvl: number;
-    totalVaultHolders: number;
-    vaultCount: number;
     fetchedAt: string;
+    source: string;
+    vaultCount: number;
+    /** Σ numHolders — NOT unique wallets */
+    totalHolders: number;
+    totalTvl: number;
+    /** compact + "+" suffix required, e.g. "181k+" */
+    totalHoldersLabel: string;
     /** e.g. "$142M" */
     totalTvlLabel: string;
-    /** e.g. "181k+" */
-    totalVaultHoldersLabel: string;
+    vaults?: Array<{ slug?: string; name?: string; numHolders: number; tvl: number }>;
 };
 
 type NestVault = {
+    slug?: unknown;
+    name?: unknown;
     tvl?: unknown;
     numHolders?: unknown;
 };
@@ -60,13 +65,19 @@ function isNonNegativeFiniteNumber(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value) && value >= 0;
 }
 
+function optionalString(value: unknown): string | undefined {
+    return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+/** Sum numHolders + sum tvl across vaults. Throws on empty/invalid input. */
 export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().toISOString()): NestStats {
     if (vaults.length === 0) {
         throw new Error("[nest] vaults response was empty");
     }
 
     let totalTvl = 0;
-    let totalVaultHolders = 0;
+    let totalHolders = 0;
+    const normalized: NonNullable<NestStats["vaults"]> = [];
 
     vaults.forEach((vault, index) => {
         if (!vault || !isNonNegativeFiniteNumber(vault.tvl) || !isNonNegativeFiniteNumber(vault.numHolders)) {
@@ -74,16 +85,24 @@ export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().
         }
 
         totalTvl += vault.tvl;
-        totalVaultHolders += vault.numHolders;
+        totalHolders += vault.numHolders;
+        normalized.push({
+            slug: optionalString(vault.slug),
+            name: optionalString(vault.name),
+            numHolders: vault.numHolders,
+            tvl: vault.tvl,
+        });
     });
 
     return {
-        totalTvl,
-        totalVaultHolders,
-        vaultCount: vaults.length,
         fetchedAt,
+        source: NEST_STATS_SOURCE_URL,
+        vaultCount: vaults.length,
+        totalHolders,
+        totalTvl,
+        totalHoldersLabel: `${formatCompactCount(totalHolders)}+`,
         totalTvlLabel: formatUsdCompact(totalTvl),
-        totalVaultHoldersLabel: `${formatCompactCount(totalVaultHolders)}+`,
+        vaults: normalized,
     };
 }
 

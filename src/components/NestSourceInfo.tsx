@@ -124,7 +124,7 @@ export default function NestSourceInfo({ fetchedAt, sourceUrl }: { fetchedAt: st
         >
             <Trigger
                 type="button"
-                aria-label="Nest stats data source"
+                aria-label="Data source"
                 aria-expanded={open}
                 aria-controls={popoverId}
                 onClick={() => setOpen((current) => !current)}
@@ -132,11 +132,13 @@ export default function NestSourceInfo({ fetchedAt, sourceUrl }: { fetchedAt: st
                 ⓘ
             </Trigger>
             {/* Disclosure (not dialog): hover/click popover with a link — no focus trap */}
-            <Popover id={popoverId} role="region" aria-label="Nest stats data source" aria-hidden={!open} $open={open}>
+            <Popover id={popoverId} role="region" aria-label="Data source" aria-hidden={!open} $open={open}>
                 <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                     Nest API
                 </a>{" "}
                 · as of {formatUtcDateTime(fetchedAt)}
+                <br />
+                Sums vault numHolders (multi-vault wallets counted more than once). Not unique wallets.
             </Popover>
         </Wrapper>
     );

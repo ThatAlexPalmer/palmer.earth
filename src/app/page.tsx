@@ -49,7 +49,7 @@ function buildProducts(nest: NestStats): Product[] {
             name: "Nest",
             href: "https://nest.credit",
             meta: "live",
-            blurb: `Anyone with a wallet can earn from RWAs — now ${nest.totalVaultHoldersLabel} holders and ${nest.totalTvlLabel} TVL across Nest. Helped make Plume top chain by RWA holders.`,
+            blurb: `Anyone with a wallet can earn from RWAs — now ${nest.totalHoldersLabel} vault positions and ${nest.totalTvlLabel} TVL across Nest. Helped make Plume top chain by RWA holders.`,
         },
         {
             name: "Visualize Laws",
@@ -115,9 +115,9 @@ export default async function Home() {
                             <a href="https://nest.credit" target="_blank" rel="noopener noreferrer">
                                 Nest
                             </a>
-                            to let anyone with a wallet earn from RWAs — now <Stat>{nest.totalVaultHoldersLabel}</Stat> holders and{" "}
-                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={NEST_STATS_SOURCE_URL} />{" "}
-                            across Nest. That made Plume the{" "}
+                            to let anyone with a wallet earn from RWAs — now <Stat>{nest.totalHoldersLabel}</Stat> holders across Nest vaults and{" "}
+                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={NEST_STATS_SOURCE_URL} />.
+                            That made Plume the{" "}
                             <a href="https://app.rwa.xyz/networks/plume" target="_blank" rel="noopener noreferrer">
                                 top chain by RWA holders
                             </a>{" "}
