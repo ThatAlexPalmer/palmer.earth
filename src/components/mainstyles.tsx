@@ -1,11 +1,29 @@
+"use client";
+
 import styled, { css, keyframes } from "styled-components";
+
+const socialLink = css`
+    color: ${({ theme }) => theme.colors.text};
+    text-decoration: none;
+    transition: ${({ theme }) => theme.transitions.link};
+
+    &:hover,
+    &:focus-visible,
+    &:active {
+        color: ${({ theme }) => theme.colors.accentHover};
+        text-decoration: none;
+    }
+`;
 
 const Shell = styled.div`
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
+    flex: 1;
     width: 100%;
-    max-width: ${({ theme }) => theme.layout.containerMaxWidth};
-    min-height: 100%;
+    max-width: ${({ theme }) => theme.layout.pageMaxWidth};
+    min-height: 100vh;
     margin: 0 auto;
     padding: ${({ theme }) => theme.space(6)} ${({ theme }) => theme.space(5)};
 
@@ -22,21 +40,14 @@ const Nav = styled.header`
     padding-bottom: ${({ theme }) => theme.space(4)};
     margin-bottom: ${({ theme }) => theme.space(8)};
     font-family: ${({ theme }) => theme.typography.monoFont};
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
+    font-size: ${({ theme }) => theme.typography.fontSize.md};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
 
     a {
-        color: ${({ theme }) => theme.colors.g76};
+        ${socialLink}
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
-        text-decoration: none;
-        transition: ${({ theme }) => theme.transitions.link};
-
-        &:hover,
-        &:focus-visible,
-        &:active {
-            color: ${({ theme }) => theme.colors.text};
-        }
+        font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
     }
 `;
 
@@ -46,7 +57,6 @@ const Main = styled.main`
     align-items: center;
     flex: 1;
     width: 100%;
-    max-width: ${({ theme }) => theme.layout.mainMaxWidth};
     gap: ${({ theme }) => theme.space(10)};
 `;
 
@@ -152,7 +162,6 @@ const SectionLabel = styled.h2`
 `;
 
 const P = styled.p`
-    max-width: ${({ theme }) => theme.layout.contentMaxWidth};
     text-align: left;
     margin: 0;
     line-height: ${({ theme }) => theme.typography.lineHeight.paragraph};
@@ -275,6 +284,7 @@ const listRowChrome = css`
     }
 
     a.title {
+        position: static;
         color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
         font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
@@ -283,6 +293,14 @@ const listRowChrome = css`
         transition: ${({ theme }) => theme.transitions.link};
         width: fit-content;
         max-width: 100%;
+
+        /* Stretched-link pattern: the title remains the semantic link while the entire row is tappable. */
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+        }
 
         /* Match body link hover: accentHover + hard underline */
         &:hover,
@@ -404,6 +422,7 @@ const Footer = styled.footer`
     width: 100%;
     margin-top: ${({ theme }) => theme.space(12)};
     padding-top: ${({ theme }) => theme.space(4)};
+    padding-bottom: ${({ theme }) => theme.space(4)};
     border-top: 1px solid ${({ theme }) => theme.colors.g12};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
@@ -412,15 +431,9 @@ const Footer = styled.footer`
     color: ${({ theme }) => theme.colors.g68};
 
     a {
-        color: ${({ theme }) => theme.colors.g76};
-        text-decoration: none;
-        transition: ${({ theme }) => theme.transitions.link};
-
-        &:hover,
-        &:focus-visible,
-        &:active {
-            color: ${({ theme }) => theme.colors.text};
-        }
+        ${socialLink}
+        font-size: ${({ theme }) => theme.typography.fontSize.sm};
+        font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     }
 
     .links {
@@ -431,6 +444,7 @@ const Footer = styled.footer`
 `;
 
 const MoreLink = styled.a`
+    ${socialLink}
     display: inline-flex;
     align-items: center;
     gap: ${({ theme }) => theme.space(2)};
@@ -439,10 +453,6 @@ const MoreLink = styled.a`
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.g76} !important;
-    text-decoration: none !important;
-    transition: ${({ theme }) => theme.transitions.link};
-
     .arrow {
         display: inline-block;
         transition: ${({ theme }) => theme.transitions.link};
@@ -450,8 +460,6 @@ const MoreLink = styled.a`
 
     &:hover,
     &:focus-visible {
-        color: ${({ theme }) => theme.colors.accent} !important;
-
         .arrow {
             transform: translateX(0.25rem);
         }

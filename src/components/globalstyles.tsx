@@ -1,3 +1,5 @@
+"use client";
+
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -55,16 +57,6 @@ const GlobalStyle = createGlobalStyle`
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
   }
 
-  #__next {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-  }
-
   a {
     color: ${({ theme }) => theme.colors.accent};
     text-decoration: none;
@@ -82,7 +74,7 @@ const GlobalStyle = createGlobalStyle`
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.g68};
       outline-offset: 3px;
-      border-radius: 2px;
+      border-radius: ${({ theme }) => theme.radius.sm};
     }
   }
 

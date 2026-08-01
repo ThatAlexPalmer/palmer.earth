@@ -45,7 +45,7 @@ function formatDate(epochMs: string | undefined): { iso: string | null; label: s
     const d = new Date(n);
     return {
         iso: d.toISOString(),
-        label: d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
+        label: d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }),
     };
 }
 
@@ -95,6 +95,7 @@ export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
                     Accept: "application/json",
                     Authorization: `Bearer ${apiKey}`,
                 },
+                next: { revalidate: 86_400 },
             });
             if (res.ok) {
                 const data = (await res.json()) as ApiListResponse;
@@ -112,6 +113,7 @@ export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
         const url = `${PARAGRAPH_API_BASE}/v1/publications/${PARAGRAPH_PUBLICATION_ID}/posts?limit=${limit}`;
         const res = await fetch(url, {
             headers: { Accept: "application/json" },
+            next: { revalidate: 86_400 },
         });
 
         if (!res.ok) {

@@ -1,31 +1,34 @@
-import Head from "next/head";
-import dynamic from "next/dynamic";
+import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import {
-    Shell,
-    Nav,
-    Main,
-    Hero,
+    Footer,
     H1,
     H2,
+    Hero,
+    Main,
+    MoreLink,
+    Nav,
+    P,
+    PostItem,
+    PostList,
+    ProductItem,
+    ProductList,
+    Prose,
     RedBlock,
     Section,
     SectionLabel,
-    P,
-    Prose,
+    Shell,
     Stat,
-    ProductList,
-    ProductItem,
     StatusBadge,
-    PostList,
-    PostItem,
-    Footer,
-    MoreLink,
 } from "@/components/mainstyles";
-import { siteMetadata, socialLinks, jsonLdData } from "@/config/seo";
-import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL, type ParagraphPost } from "@/lib/paragraph";
-import { fetchNestStats, type NestStats } from "@/lib/nest";
+import NestSourceInfo from "@/components/NestSourceInfo";
+import SubscribeForm from "@/components/SubscribeForm";
+import { jsonLdData, siteMetadata, socialLinks } from "@/config/seo";
+import nestStatsFallback from "@/data/nest-stats.json";
+import { fetchNestStats, NEST_STATS_SOURCE_URL, type NestStats } from "@/lib/nest";
+import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
-const SubscribeForm = dynamic(() => import("@/components/SubscribeForm"), { ssr: false });
+export const dynamic = "force-static";
+export const revalidate = 86400;
 
 type Product = {
     name: string;
@@ -35,13 +38,6 @@ type Product = {
 };
 
 function buildProducts(nest: NestStats): Product[] {
-    const nestHolders = nest.maxVaultHoldersLabel ?? "60k+";
-    const nestTvl = nest.totalTvlLabel;
-
-    const nestBlurb = nestTvl
-        ? `Anyone with a wallet can earn from RWAs — ${nestHolders} holders on the largest vault, ${nestTvl} TVL across Nest. Helped make Plume top chain by RWA holders.`
-        : `Anyone with a wallet can earn from RWAs — ${nestHolders} holders on the largest vault. Helped make Plume top chain by RWA holders.`;
-
     return [
         {
             name: "Plume",
@@ -53,7 +49,7 @@ function buildProducts(nest: NestStats): Product[] {
             name: "Nest",
             href: "https://nest.credit",
             meta: "live",
-            blurb: nestBlurb,
+            blurb: `Anyone with a wallet can earn from RWAs — now ${nest.totalVaultHoldersLabel} holders and ${nest.totalTvlLabel} TVL across Nest. Helped make Plume top chain by RWA holders.`,
         },
         {
             name: "Visualize Laws",
@@ -70,51 +66,26 @@ function buildProducts(nest: NestStats): Product[] {
     ];
 }
 
-type HomeProps = {
-    posts: ParagraphPost[];
-    nest: NestStats;
-};
+async function loadNestStats(): Promise<NestStats> {
+    try {
+        return await fetchNestStats();
+    } catch (error) {
+        if (process.env.NEXT_PHASE !== PHASE_PRODUCTION_BUILD) throw error;
+        console.warn("[nest] build fetch failed; using committed snapshot", error);
+        return nestStatsFallback as NestStats;
+    }
+}
 
-export default function Home({ posts, nest }: HomeProps) {
+export default async function Home() {
+    const [posts, nest] = await Promise.all([fetchRecentPosts(5), loadNestStats()]);
     const products = buildProducts(nest);
-    const holdersLabel = nest.maxVaultHoldersLabel ?? "60k+";
-    const tvlLabel = nest.totalTvlLabel;
 
     return (
         <Shell>
-            <Head>
-                <meta charSet="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-                <title>{siteMetadata.title}</title>
-                <meta name="author" content={siteMetadata.title} />
-                <meta name="description" content={siteMetadata.description} />
-
-                <meta property="og:type" content="website" />
-                <meta property="og:site_name" content={siteMetadata.title} />
-                <meta property="og:url" content={siteMetadata.url} />
-                <meta property="og:title" content={siteMetadata.title} />
-                <meta property="og:description" content={siteMetadata.description} />
-                <meta property="og:image" content={siteMetadata.image} />
-                <meta property="og:image:type" content="image/jpg" />
-                <meta property="og:image:width" content="279" />
-                <meta property="og:image:height" content="279" />
-
-                <meta name="theme-color" content={siteMetadata.themeColor} />
-                <link rel="canonical" href={siteMetadata.url} />
-                <link rel="manifest" href="/site.webmanifest" />
-
-                <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-                <link rel="shortcut icon" href="/favicon.ico" />
-                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-                <meta name="apple-mobile-web-app-title" content="palmer.earth" />
-
-                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }} />
-
-                <noscript>
-                    If you&apos;re seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>.
-                </noscript>
-            </Head>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData).replace(/</g, "\\u003c") }} />
+            <noscript>
+                If you&apos;re seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>.
+            </noscript>
 
             <Nav>
                 <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
@@ -143,20 +114,9 @@ export default function Home({ posts, nest }: HomeProps) {
                             Launched{" "}
                             <a href="https://nest.credit" target="_blank" rel="noopener noreferrer">
                                 Nest
-                            </a>{" "}
-                            to let anyone with a wallet earn from RWAs
-                            {tvlLabel ? (
-                                <>
-                                    {" "}
-                                    — now <Stat>{holdersLabel}</Stat> holders on the largest vault and <Stat>{tvlLabel}</Stat> TVL across the protocol
-                                </>
-                            ) : (
-                                <>
-                                    {" "}
-                                    — <Stat>{holdersLabel}</Stat> holders on the largest vault
-                                </>
-                            )}
-                            . That made Plume the{" "}
+                            </a>
+                            to let anyone with a wallet earn from RWAs — now <Stat>{nest.totalVaultHoldersLabel}</Stat> holders and{" "}
+                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={NEST_STATS_SOURCE_URL} /> across Nest. That made Plume the{" "}
                             <a href="https://app.rwa.xyz/networks/plume" target="_blank" rel="noopener noreferrer">
                                 top chain by RWA holders
                             </a>{" "}
@@ -186,13 +146,13 @@ export default function Home({ posts, nest }: HomeProps) {
                         Products
                     </SectionLabel>
                     <ProductList>
-                        {products.map((p) => (
-                            <ProductItem key={p.name}>
-                                <a className="title" href={p.href} target="_blank" rel="noopener noreferrer">
-                                    {p.name}
+                        {products.map((product) => (
+                            <ProductItem key={product.name}>
+                                <a className="title" href={product.href} target="_blank" rel="noopener noreferrer">
+                                    {product.name}
                                 </a>
-                                <StatusBadge $kind={p.meta}>{p.meta}</StatusBadge>
-                                <p className="blurb">{p.blurb}</p>
+                                <StatusBadge $kind={product.meta}>{product.meta}</StatusBadge>
+                                <p className="blurb">{product.blurb}</p>
                             </ProductItem>
                         ))}
                     </ProductList>
@@ -257,12 +217,4 @@ export default function Home({ posts, nest }: HomeProps) {
             </Footer>
         </Shell>
     );
-}
-
-export async function getStaticProps() {
-    const [posts, nest] = await Promise.all([fetchRecentPosts(5), fetchNestStats()]);
-    return {
-        props: { posts, nest },
-        revalidate: 3600,
-    };
 }

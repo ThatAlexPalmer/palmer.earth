@@ -4,28 +4,28 @@
  * @see https://api.nest.credit/v1/vaults
  */
 
-export const NEST_API_BASE = "https://api.nest.credit/v1";
+export const NEST_API_BASE = process.env.NEST_API_BASE_URL || "https://api.nest.credit/v1";
+export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults";
 export const NEST_URL = "https://nest.credit";
 
 export type NestStats = {
-    totalTvl: number | null;
-    maxVaultHolders: number | null;
+    totalTvl: number;
+    totalVaultHolders: number;
     vaultCount: number;
-    /** e.g. "$140M" */
-    totalTvlLabel: string | null;
-    /** e.g. "70k" */
-    maxVaultHoldersLabel: string | null;
+    fetchedAt: string;
+    /** e.g. "$142M" */
+    totalTvlLabel: string;
+    /** e.g. "181k+" */
+    totalVaultHoldersLabel: string;
 };
 
 type NestVault = {
-    name?: string;
-    slug?: string;
-    tvl?: number | null;
-    numHolders?: number | null;
+    tvl?: unknown;
+    numHolders?: unknown;
 };
 
 type NestVaultsResponse = {
-    data?: NestVault[];
+    data?: unknown;
 };
 
 function formatCompactCount(n: number): string {
@@ -56,59 +56,60 @@ function formatUsdCompact(n: number): string {
     return `$${Math.round(n)}`;
 }
 
-const empty: NestStats = {
-    totalTvl: null,
-    maxVaultHolders: null,
-    vaultCount: 0,
-    totalTvlLabel: null,
-    maxVaultHoldersLabel: null,
-};
+function isNonNegativeFiniteNumber(value: unknown): value is number {
+    return typeof value === "number" && Number.isFinite(value) && value >= 0;
+}
 
-/**
- * Aggregate public Nest vault stats.
- * - totalTvl: sum of per-vault TVL
- * - maxVaultHolders: largest single-vault numHolders (do NOT sum across vaults —
- *   multi-vault users would be double-counted)
- */
+export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().toISOString()): NestStats {
+    if (vaults.length === 0) {
+        throw new Error("[nest] vaults response was empty");
+    }
+
+    let totalTvl = 0;
+    let totalVaultHolders = 0;
+
+    vaults.forEach((vault, index) => {
+        if (!vault || !isNonNegativeFiniteNumber(vault.tvl) || !isNonNegativeFiniteNumber(vault.numHolders)) {
+            throw new Error(`[nest] vault ${index} has invalid holder or TVL data`);
+        }
+
+        totalTvl += vault.tvl;
+        totalVaultHolders += vault.numHolders;
+    });
+
+    return {
+        totalTvl,
+        totalVaultHolders,
+        vaultCount: vaults.length,
+        fetchedAt,
+        totalTvlLabel: formatUsdCompact(totalTvl),
+        totalVaultHoldersLabel: `${formatCompactCount(totalVaultHolders)}+`,
+    };
+}
+
+/** Fetch and aggregate every vault exposed by Nest's public API. */
 export async function fetchNestStats(): Promise<NestStats> {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5_000);
+
     try {
         const res = await fetch(`${NEST_API_BASE}/vaults`, {
             headers: { Accept: "application/json" },
+            next: { revalidate: 86_400 },
+            signal: controller.signal,
         });
+
         if (!res.ok) {
-            console.warn(`[nest] vaults fetch failed: ${res.status}`);
-            return empty;
+            throw new Error(`[nest] vaults fetch failed: ${res.status}`);
         }
 
         const body = (await res.json()) as NestVaultsResponse;
-        const vaults = Array.isArray(body.data) ? body.data : [];
-        if (vaults.length === 0) return empty;
-
-        let totalTvl = 0;
-        let maxHolders = 0;
-        let hasTvl = false;
-        let hasHolders = false;
-
-        for (const v of vaults) {
-            if (typeof v.tvl === "number" && Number.isFinite(v.tvl)) {
-                totalTvl += v.tvl;
-                hasTvl = true;
-            }
-            if (typeof v.numHolders === "number" && Number.isFinite(v.numHolders)) {
-                hasHolders = true;
-                if (v.numHolders > maxHolders) maxHolders = v.numHolders;
-            }
+        if (!Array.isArray(body.data)) {
+            throw new Error("[nest] vaults response did not contain an array");
         }
 
-        return {
-            totalTvl: hasTvl ? totalTvl : null,
-            maxVaultHolders: hasHolders ? maxHolders : null,
-            vaultCount: vaults.length,
-            totalTvlLabel: hasTvl ? formatUsdCompact(totalTvl) : null,
-            maxVaultHoldersLabel: hasHolders ? formatCompactCount(maxHolders) : null,
-        };
-    } catch (err) {
-        console.warn("[nest] vaults fetch error", err);
-        return empty;
+        return aggregateNestVaults(body.data as NestVault[]);
+    } finally {
+        clearTimeout(timeout);
     }
 }

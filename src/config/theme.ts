@@ -1,27 +1,3 @@
-import { Oswald, Noto_Sans, IBM_Plex_Mono } from "next/font/google";
-
-export const oswald = Oswald({
-    weight: ["400", "600", "700"],
-    style: "normal",
-    display: "swap",
-    subsets: ["latin"],
-});
-
-export const noto = Noto_Sans({
-    weight: ["300", "400", "500", "600"],
-    style: "normal",
-    display: "swap",
-    subsets: ["latin"],
-});
-
-export const plexMono = IBM_Plex_Mono({
-    weight: ["400", "500", "600"],
-    style: "normal",
-    display: "swap",
-    subsets: ["latin"],
-    variable: "--font-mono",
-});
-
 /** 4px base spacing scale */
 const space = (n: number) => `${n * 4}px`;
 
@@ -32,11 +8,7 @@ export const theme = {
         accent: "#a32d15",
         accentHover: "#d94a2e",
         // white-opacity gray ramp (visualizelaws-style chrome)
-        g04: "rgba(255,255,255,0.04)",
-        g08: "rgba(255,255,255,0.08)",
         g12: "rgba(255,255,255,0.12)",
-        g20: "rgba(255,255,255,0.20)",
-        g40: "rgba(255,255,255,0.40)",
         g60: "rgba(255,255,255,0.60)",
         g68: "rgba(255,255,255,0.68)",
         g76: "rgba(255,255,255,0.76)",
@@ -55,9 +27,9 @@ export const theme = {
         },
     },
     typography: {
-        fontFamily: noto.style.fontFamily,
-        headingFont: oswald.style.fontFamily,
-        monoFont: plexMono.style.fontFamily,
+        fontFamily: "var(--font-body)",
+        headingFont: "var(--font-heading)",
+        monoFont: "var(--font-mono)",
         fontWeight: {
             light: 300,
             normal: 400,
@@ -74,8 +46,6 @@ export const theme = {
             headingMobile: "1.45rem",
             paragraph: "1.125rem", // 18px
             paragraphMobile: "1rem",
-            uiCopy: "0.875rem",
-            uiCopyMobile: "0.8125rem",
             display: "2.75rem",
             displayMobile: "1.85rem",
         },
@@ -96,20 +66,17 @@ export const theme = {
         smallLaptop: "820px",
     },
     transitions: {
-        fast: "120ms ease-in-out",
         base: "180ms cubic-bezier(0.22, 1, 0.36, 1)",
         link: "color 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
         bracket: "opacity 160ms cubic-bezier(0.22, 1, 0.36, 1), transform 160ms cubic-bezier(0.22, 1, 0.36, 1)",
     },
     layout: {
         // Live-site scale so RedBlock has the same presence as production
-        containerMaxWidth: "1200px",
-        mainMaxWidth: "1200px",
+        pageMaxWidth: "1200px",
         // wider slab for three-word title line without overflow
         headlineWidth: "28rem",
         headlineWidthMobile: "18rem",
         contentMaxWidth: "696px",
-        footerHeight: "auto",
     },
     effects: {
         bracketSize: "12px",
@@ -119,9 +86,7 @@ export const theme = {
     },
     space,
     radius: {
-        none: "0",
         sm: "2px",
-        md: "4px",
     },
 };
 

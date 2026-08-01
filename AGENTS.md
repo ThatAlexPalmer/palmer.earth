@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents (grok, claude, etc.) when workin
 
 ## Overview
 
-Personal website for [palmer.earth](https://palmer.earth) — a single-page Next.js 16 site built with the **Pages Router** (`src/pages`, not the App Router), TypeScript, and styled-components. The visible content is essentially one page (`src/pages/index.tsx`).
+Personal website for [palmer.earth](https://palmer.earth) — a single-page Next.js 16 site built with the **App Router** (`src/app`), TypeScript, React Server Components, and styled-components. The visible content is essentially one page (`src/app/page.tsx`).
 
 ## Commands
 
@@ -37,8 +37,9 @@ There is **no test framework or test suite** in this repo; CI only runs lint + t
 
 - `src/config/theme.ts` defines the single source of truth `theme` object (colors, typography, breakpoints, transitions, layout, effects, form tokens) plus Google fonts (`Oswald` for headings, `Noto_Sans` for body, `IBM_Plex_Mono` for mono) loaded via `next/font/google`.
 - `styled.d.ts` augments styled-components' `DefaultTheme` by deriving the interface from `typeof theme` exported by `theme.ts`. **When you add a field to `theme.ts`, the types update automatically — you no longer edit `styled.d.ts` by hand.**
+- `src/config/fonts.ts` loads the Google fonts and exposes CSS variables; `theme.ts` references those variables and remains safe to consume from Client Components.
 - `src/components/globalstyles.tsx` (`createGlobalStyle`) applies base/reset styles and theme-driven defaults.
-- `src/components/mainstyles.tsx` exports layout primitives (`Shell`, `Nav`, `Main`, `H1`, `H2`, `RedBlock`, `Section`, `ProductList`/`ProductItem`, `PostList`/`PostItem`, `StatusBadge`, `P`, `Footer`, …). Shared list-row chrome (cyberpunk corner brackets) lives in one `listRowChrome` helper used by product and post rows. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `index.tsx` composes these.
+- `src/components/mainstyles.tsx` exports layout primitives (`Shell`, `Nav`, `Main`, `H1`, `H2`, `RedBlock`, `Section`, `ProductList`/`ProductItem`, `PostList`/`PostItem`, `StatusBadge`, `P`, `Footer`, …). Shared list-row chrome (cyberpunk corner brackets) lives in one `listRowChrome` helper used by product and post rows. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `src/app/page.tsx` composes these as a Server Component.
 - Live Nest vault stats: `src/lib/nest.ts`. Paragraph posts/subscribe (+ optional views via API key): `src/lib/paragraph.ts`.
 - All styled-component template literals read from the theme via `${({ theme }) => theme...}` rather than hardcoded values — preserve this when editing styles.
 
@@ -52,9 +53,9 @@ When adding tokens:
 - Update consumers in `mainstyles.tsx` (or other styled files) to interpolate the new value.
 - Artistic/one-off values (e.g., a specific pseudo-element `height: 83%`) can stay local to the component.
 
-**Server-side rendering of styles:** `src/pages/_document.tsx` uses styled-components' `ServerStyleSheet` to collect and inline styles during SSR (prevents FOUC). `src/pages/_app.tsx` wraps the app in `ThemeProvider` and injects the body font. The `styledComponents: true` SWC compiler option is enabled in `next.config.js`. If you change SSR/styling setup, keep `_document.tsx`, `_app.tsx`, and the compiler flag consistent.
+**Server-side rendering of styles:** `src/components/StyledComponentsRegistry.tsx` uses `ServerStyleSheet` plus `useServerInsertedHTML` to collect and stream styles during App Router SSR. `src/components/Providers.tsx` supplies `ThemeProvider` and global styles from the root layout. The `styledComponents: true` SWC compiler option is enabled in `next.config.js`; keep the registry and compiler flag consistent.
 
-**SEO/metadata:** `src/config/seo.ts` centralizes `siteMetadata`, `socialLinks`, and JSON-LD structured data, all consumed by the `<Head>` in `index.tsx`. Site-level sitemap/robots config lives in `next-sitemap.config.js`.
+**SEO/metadata:** `src/config/seo.ts` centralizes `siteMetadata`, `socialLinks`, and JSON-LD structured data. `src/app/layout.tsx` exports Next metadata/viewport objects, while the homepage renders JSON-LD. Site-level sitemap/robots config lives in `next-sitemap.config.js`.
 
 ## Conventions
 
