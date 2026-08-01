@@ -1,4 +1,3 @@
-import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import {
     Footer,
     H1,
@@ -23,11 +22,11 @@ import {
 import NestSourceInfo from "@/components/NestSourceInfo";
 import SubscribeForm from "@/components/SubscribeForm";
 import { jsonLdData, siteMetadata, socialLinks } from "@/config/seo";
-import nestStatsFallback from "@/data/nest-stats.json";
-import { fetchNestStats, type NestStats } from "@/lib/nest";
+import { loadNestStatsForPage, type NestStats } from "@/lib/nest";
 import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
 export const dynamic = "force-static";
+// Paragraph ISR only — Nest numbers always come from committed nest-stats.json, not this revalidate.
 export const revalidate = 86400;
 
 type Product = {
@@ -66,18 +65,10 @@ function buildProducts(nest: NestStats): Product[] {
     ];
 }
 
-async function loadNestStats(): Promise<NestStats> {
-    try {
-        return await fetchNestStats();
-    } catch (error) {
-        if (process.env.NEXT_PHASE !== PHASE_PRODUCTION_BUILD) throw error;
-        console.warn("[nest] build fetch failed; using committed snapshot", error);
-        return nestStatsFallback as NestStats;
-    }
-}
-
 export default async function Home() {
-    const [posts, nest] = await Promise.all([fetchRecentPosts(5), loadNestStats()]);
+    // Nest: committed snapshot only (no live fetch on page load).
+    const nest = loadNestStatsForPage();
+    const posts = await fetchRecentPosts(5);
     const products = buildProducts(nest);
 
     return (
