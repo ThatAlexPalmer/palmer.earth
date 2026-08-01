@@ -24,7 +24,7 @@ import NestSourceInfo from "@/components/NestSourceInfo";
 import SubscribeForm from "@/components/SubscribeForm";
 import { jsonLdData, siteMetadata, socialLinks } from "@/config/seo";
 import nestStatsFallback from "@/data/nest-stats.json";
-import { fetchNestStats, NEST_STATS_SOURCE_URL, type NestStats } from "@/lib/nest";
+import { fetchNestStats, type NestStats } from "@/lib/nest";
 import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
 export const dynamic = "force-static";
@@ -116,8 +116,8 @@ export default async function Home() {
                                 Nest
                             </a>
                             to let anyone with a wallet earn from RWAs — now <Stat>{nest.totalHoldersLabel}</Stat> holders across Nest vaults and{" "}
-                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={NEST_STATS_SOURCE_URL} />.
-                            That made Plume the{" "}
+                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={nest.source} />. That made
+                            Plume the{" "}
                             <a href="https://app.rwa.xyz/networks/plume" target="_blank" rel="noopener noreferrer">
                                 top chain by RWA holders
                             </a>{" "}
