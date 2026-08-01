@@ -1,14 +1,16 @@
 /**
  * Nest public read API — vault discovery + holder/TVL stats.
  * Page HTML uses the committed snapshot only; live fetch is for refresh jobs/APIs.
+ * Pure aggregate/formatters live in nest-aggregate.mjs (shared with refresh script).
  * @see https://docs.nest.credit/developers/api/
  * @see https://api.nest.credit/v1/vaults
  */
 
 import committedNestStats from "@/data/nest-stats.json";
+import { aggregateNestVaults as aggregateNestVaultsPure, NEST_STATS_SOURCE_URL as SHARED_NEST_STATS_SOURCE_URL } from "./nest-aggregate.mjs";
 
 export const NEST_API_BASE = process.env.NEST_API_BASE_URL || "https://api.nest.credit/v1";
-export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults";
+export const NEST_STATS_SOURCE_URL = SHARED_NEST_STATS_SOURCE_URL as string;
 export const NEST_URL = "https://nest.credit";
 
 export type NestStats = {
@@ -35,34 +37,6 @@ type NestVault = {
 type NestVaultsResponse = {
     data?: unknown;
 };
-
-function formatCompactCount(n: number): string {
-    if (n >= 1_000_000) {
-        const v = n / 1_000_000;
-        return `${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}M`;
-    }
-    if (n >= 1_000) {
-        const v = n / 1_000;
-        return `${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}k`;
-    }
-    return `${Math.round(n)}`;
-}
-
-function formatUsdCompact(n: number): string {
-    if (n >= 1_000_000_000) {
-        const v = n / 1_000_000_000;
-        return `$${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}B`;
-    }
-    if (n >= 1_000_000) {
-        const v = n / 1_000_000;
-        return `$${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}M`;
-    }
-    if (n >= 1_000) {
-        const v = n / 1_000;
-        return `$${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}k`;
-    }
-    return `$${Math.round(n)}`;
-}
 
 function isNonNegativeFiniteNumber(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value) && value >= 0;
@@ -138,39 +112,7 @@ export function loadNestStatsForPage(): NestStats {
 
 /** Sum numHolders + sum tvl across vaults. Throws on empty/invalid input. */
 export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().toISOString()): NestStats {
-    if (vaults.length === 0) {
-        throw new Error("[nest] vaults response was empty");
-    }
-
-    let totalTvl = 0;
-    let totalHolders = 0;
-    const normalized: NonNullable<NestStats["vaults"]> = [];
-
-    vaults.forEach((vault, index) => {
-        if (!vault || !isNonNegativeFiniteNumber(vault.tvl) || !isNonNegativeFiniteNumber(vault.numHolders)) {
-            throw new Error(`[nest] vault ${index} has invalid holder or TVL data`);
-        }
-
-        totalTvl += vault.tvl;
-        totalHolders += vault.numHolders;
-        normalized.push({
-            slug: optionalString(vault.slug),
-            name: optionalString(vault.name),
-            numHolders: vault.numHolders,
-            tvl: vault.tvl,
-        });
-    });
-
-    return {
-        fetchedAt,
-        source: NEST_STATS_SOURCE_URL,
-        vaultCount: vaults.length,
-        totalHolders,
-        totalTvl,
-        totalHoldersLabel: `${formatCompactCount(totalHolders)}+`,
-        totalTvlLabel: formatUsdCompact(totalTvl),
-        vaults: normalized,
-    };
+    return aggregateNestVaultsPure(vaults, { fetchedAt, includeVaults: true }) as NestStats;
 }
 
 /**
