@@ -40,7 +40,7 @@ There is **no test framework or test suite** in this repo; CI only runs lint + t
 - `src/config/fonts.ts` loads the Google fonts and exposes CSS variables; `theme.ts` references those variables and remains safe to consume from Client Components.
 - `src/components/globalstyles.tsx` (`createGlobalStyle`) applies base/reset styles and theme-driven defaults.
 - `src/components/mainstyles.tsx` exports layout primitives (`Shell`, `Nav`, `Main`, `H1`, `H2`, `RedBlock`, `Section`, `ProductList`/`ProductItem`, `PostList`/`PostItem`, `StatusBadge`, `P`, `Footer`, …). Shared list-row chrome (cyberpunk corner brackets) lives in one `listRowChrome` helper used by product and post rows. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `src/app/page.tsx` composes these as a Server Component.
-- Live Nest vault stats: `src/lib/nest.ts`. Paragraph posts/subscribe (+ optional views via API key): `src/lib/paragraph.ts`.
+- Nest display is snapshot-only (`src/data/nest-stats.json`); daily GHA on main (`.github/workflows/nest-stats.yml`) runs `pnpm nest:refresh` and commits the file so host deploy-on-push rebuilds production. Nest helpers: `src/lib/nest.ts`. Paragraph posts/subscribe (+ optional views via API key): `src/lib/paragraph.ts`.
 - All styled-component template literals read from the theme via `${({ theme }) => theme...}` rather than hardcoded values — preserve this when editing styles.
 
 **Extending the theme**
