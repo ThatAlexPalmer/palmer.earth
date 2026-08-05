@@ -39,9 +39,21 @@ There is **no test framework or test suite** in this repo; CI only runs lint + t
 - `styled.d.ts` augments styled-components' `DefaultTheme` by deriving the interface from `typeof theme` exported by `theme.ts`. **When you add a field to `theme.ts`, the types update automatically — you no longer edit `styled.d.ts` by hand.**
 - `src/config/fonts.ts` loads the Google fonts and exposes CSS variables; `theme.ts` references those variables and remains safe to consume from Client Components.
 - `src/components/globalstyles.tsx` (`createGlobalStyle`) applies base/reset styles and theme-driven defaults.
-- `src/components/mainstyles.tsx` exports layout primitives (`Shell`, `Nav`, `Main`, `H1`, `H2`, `RedBlock`, `Section`, `ProductList`/`ProductItem`, `PostList`/`PostItem`, `StatusBadge`, `P`, `Footer`, …). Shared list-row chrome (cyberpunk corner brackets) lives in one `listRowChrome` helper used by product and post rows. Media queries and layout values are driven from `theme.breakpoints` / `theme.layout`. `src/app/page.tsx` composes these as a Server Component.
-- Nest display is snapshot-only (`src/data/nest-stats.json`); daily GHA on main (`.github/workflows/nest-stats.yml`) runs `pnpm nest:refresh` and commits the file so host deploy-on-push rebuilds production. Nest helpers: `src/lib/nest.ts`. Paragraph posts/subscribe (+ optional views via API key): `src/lib/paragraph.ts`.
+- `src/components/ui/` holds the styled primitives, split by concern and re-exported from `src/components/ui/index.ts`:
+    - `styles.ts` — shared `css` helpers. `bracketChrome` draws the Control-style corner brackets (top-left `::before`, bottom-right `::after`, geometry overridable via `--bracket-*` custom properties); `chromeLink` and `linkHover` define the one link hover language.
+    - `layout.tsx` (`Shell`, `Nav`, `Main`, `Hero`, `Section`, `Prose`, `Footer`), `typography.tsx` (`H1`, `H2`, `RedBlock`, `SectionLabel`, `P`, `Stat`), `lists.tsx` (`ProductList`/`PostList`, `ProductItem`/`PostItem`, `RowTitle`/`RowText`/`RowMetaBar`/`RowMeta`), `chrome.tsx` (`StatusBadge`, `MoreLink`).
+- Composite components live directly in `src/components/`: `LabeledSection`, `ProductRow`, `PostRow`, `NestSourceInfo`, `SubscribeForm`. `src/app/page.tsx` composes those as a Server Component, so page markup stays content-shaped — don't reintroduce `className` string hooks for styling.
+- Inline links inside `P` are deliberately **not** bracketed: an inline anchor wrapping across lines would draw broken corners. Brackets belong to rows and standalone chrome links.
+- Copy data: `src/data/products.ts` (`buildProducts` takes live Nest stats). Nest: `src/lib/nest.ts`. Paragraph posts/subscribe (+ views via API key): `src/lib/paragraph.ts`.
 - All styled-component template literals read from the theme via `${({ theme }) => theme...}` rather than hardcoded values — preserve this when editing styles.
+
+**Data freshness**
+
+Nest figures refresh **on visit**: `src/app/page.tsx` is statically generated with `export const revalidate = 3600`, so the first visitor after the window lapses triggers a background regeneration that re-pulls Nest and Paragraph. There is no cron job. `src/data/nest-stats.json` is only the fallback `loadNestStats()` returns when the Nest API is unreachable, so the page never fails. Keep that literal in sync with `NEST_REVALIDATE_SECONDS`.
+
+**Environment**
+
+`PARAGRAPH_API_KEY` (server-side only, never `NEXT_PUBLIC_`) unlocks post view counts at build/revalidate time and powers `POST /api/subscribe` at runtime. Both paths degrade gracefully when it is absent. On Vercel it must be set for Production, Preview, and Development, followed by a redeploy.
 
 **Extending the theme**
 
