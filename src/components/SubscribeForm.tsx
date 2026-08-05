@@ -61,7 +61,8 @@ const Input = styled.input`
     }
 
     &:disabled {
-        opacity: 0.6;
+        border-color: ${({ theme }) => theme.colors.g12};
+        color: ${({ theme }) => theme.colors.g76};
         cursor: not-allowed;
     }
 `;
@@ -91,8 +92,11 @@ const Button = styled.button`
         color: ${({ theme }) => theme.colors.form.buttonText};
     }
 
+    /* Never opacity-dimmed — the label stays fully legible while disabled. */
     &:disabled {
-        opacity: 0.45;
+        background: ${({ theme }) => theme.colors.form.disabledSurface};
+        border-color: ${({ theme }) => theme.colors.form.disabledBorder};
+        color: ${({ theme }) => theme.colors.form.buttonText};
         cursor: not-allowed;
     }
 `;
@@ -103,7 +107,7 @@ const Status = styled.p<{ $tone?: "ok" | "err" }>`
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.status.live : theme.colors.accent)};
+    color: ${({ theme, $tone }) => ($tone === "ok" ? theme.colors.feedback.ok : theme.colors.feedback.error)};
 `;
 
 type StatusState = { tone: "ok" | "err"; text: string } | null;
