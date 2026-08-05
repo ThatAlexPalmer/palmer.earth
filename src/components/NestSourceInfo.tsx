@@ -3,30 +3,28 @@
 import { useEffect, useRef, useState, type FocusEvent } from "react";
 import styled from "styled-components";
 
+/**
+ * Footnote marker for the Nest figures: a superscript ⓘ that sits tight
+ * against the preceding word, with a disclosure card that always opens
+ * downward so it can never collide with the hero slab above.
+ */
 const Wrapper = styled.span`
     position: relative;
-    display: inline-flex;
-    width: 1rem;
-    height: 1rem;
-    margin-left: 2px;
-    vertical-align: super;
-    transform: translateY(-0.1em);
+    display: inline;
+    white-space: nowrap;
 `;
 
 const Trigger = styled.button`
-    display: inline-grid;
-    place-items: center;
-    width: 1rem;
-    height: 1rem;
-    margin: 0;
+    display: inline;
+    margin: 0 0 0 1px;
     padding: 0;
     border: 0;
-    border-radius: 50%;
     background: transparent;
-    color: ${({ theme }) => theme.colors.g68};
+    color: ${({ theme }) => theme.colors.g60};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.xs};
     line-height: 1;
+    vertical-align: super;
     cursor: help;
     transition: ${({ theme }) => theme.transitions.link};
 
@@ -39,35 +37,38 @@ const Trigger = styled.button`
 
 const Popover = styled.span<{ $open: boolean }>`
     position: absolute;
-    right: 0;
-    bottom: calc(100% + ${({ theme }) => theme.space(2)});
-    z-index: 10;
+    top: calc(100% + ${({ theme }) => theme.space(2)});
+    left: 0;
+    z-index: ${({ theme }) => theme.layers.popover};
+    display: block;
     width: max-content;
-    max-width: min(18rem, calc(100vw - 2rem));
+    max-width: min(20rem, calc(100vw - 2rem));
     padding: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(3)};
-    border: 1px solid ${({ theme }) => theme.colors.g12};
-    border-radius: ${({ theme }) => theme.radius.sm};
-    background: ${({ theme }) => theme.colors.background};
+    border: 1px solid ${({ theme }) => theme.colors.overlay.border};
+    background: ${({ theme }) => theme.colors.overlay.surface};
     color: ${({ theme }) => theme.colors.g76};
     font-family: ${({ theme }) => theme.typography.monoFont};
     font-size: ${({ theme }) => theme.typography.fontSize.sm};
     font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
     line-height: 1.5;
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+    text-transform: none;
+    white-space: normal;
     visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
     opacity: ${({ $open }) => ($open ? 1 : 0)};
-    transform: translateY(${({ $open }) => ($open ? "0" : "4px")});
+    transform: translateY(${({ $open }) => ($open ? "0" : "-4px")});
     pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
     transition: ${({ theme }) => theme.transitions.base};
-    overflow-wrap: anywhere;
 
     a {
         color: ${({ theme }) => theme.colors.accent};
         font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     }
 
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        width: 9rem;
+    .caption {
+        display: block;
+        margin-top: ${({ theme }) => theme.space(1)};
+        color: ${({ theme }) => theme.colors.g68};
     }
 `;
 
@@ -124,21 +125,20 @@ export default function NestSourceInfo({ fetchedAt, sourceUrl }: { fetchedAt: st
         >
             <Trigger
                 type="button"
-                aria-label="Data source"
+                aria-label="Nest data source"
                 aria-expanded={open}
                 aria-controls={popoverId}
                 onClick={() => setOpen((current) => !current)}
             >
                 ⓘ
             </Trigger>
-            {/* Disclosure (not dialog): hover/click popover with a link — no focus trap */}
-            <Popover id={popoverId} role="region" aria-label="Data source" aria-hidden={!open} $open={open}>
+            {/* Disclosure, not a dialog: hover/click card with one link — no focus trap */}
+            <Popover id={popoverId} role="region" aria-label="Nest data source" aria-hidden={!open} $open={open}>
                 <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                     Nest API
                 </a>{" "}
                 · as of {formatUtcDateTime(fetchedAt)}
-                <br />
-                Sums vault numHolders (multi-vault wallets counted more than once). Not unique wallets.
+                <span className="caption">Unique wallets that have balances across our vaults.</span>
             </Popover>
         </Wrapper>
     );
