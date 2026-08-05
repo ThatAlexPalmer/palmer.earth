@@ -1,29 +1,51 @@
 /** 4px base spacing scale */
 const space = (n: number) => `${n * 4}px`;
 
+/**
+ * Palette follows Control (Remedy): near-black concrete, one dominant red,
+ * bone-white type, and a restrained warm HUD accent. No 120°-apart neon trio —
+ * status colours stay analogous to the accent or fall back to neutrals.
+ */
 export const theme = {
     colors: {
         background: "#08080a",
         text: "#dcdcdc",
         accent: "#a32d15",
         accentHover: "#d94a2e",
-        // white-opacity gray ramp (visualizelaws-style chrome)
+        // white-opacity gray ramp (concrete chrome)
         g12: "rgba(255,255,255,0.12)",
         g60: "rgba(255,255,255,0.60)",
         g68: "rgba(255,255,255,0.68)",
         g76: "rgba(255,255,255,0.76)",
         g90: "rgba(255,255,255,0.90)",
-        // neon status chips — brighter / higher sat for cypherpunk read
+        // status chips: HUD amber (signal on), bone (institutional), steel (cool neutral)
         status: {
-            live: "#39ff87",
-            work: "#d47bff",
-            oss: "#3dd6ff",
+            live: "#f0a93b",
+            work: "#e8e3d9",
+            oss: "#93a4ad",
+        },
+        // hairline chip edges — same hues, held back so the glow stays sharp
+        statusEdge: {
+            live: "rgba(240,169,59,0.45)",
+            work: "rgba(232,227,217,0.38)",
+            oss: "rgba(147,164,173,0.45)",
+        },
+        feedback: {
+            ok: "#f0a93b",
+            error: "#d94a2e",
         },
         form: {
             surface: "rgba(255,255,255,0.06)",
             border: "rgba(255,255,255,0.22)",
             borderHover: "rgba(255,255,255,0.38)",
             buttonText: "#f5f5f5",
+            // disabled keeps a readable white label — never opacity-dimmed
+            disabledSurface: "rgba(163,45,21,0.55)",
+            disabledBorder: "rgba(217,74,46,0.45)",
+        },
+        overlay: {
+            surface: "#0d0d10",
+            border: "rgba(255,255,255,0.18)",
         },
     },
     typography: {
@@ -77,12 +99,24 @@ export const theme = {
         headlineWidth: "28rem",
         headlineWidthMobile: "18rem",
         contentMaxWidth: "696px",
+        // breathing room under the slab so footnote popovers never crowd it
+        heroGap: "6rem",
+        heroGapMobile: "3rem",
     },
     effects: {
-        bracketSize: "12px",
+        // corner brackets: each pseudo-element draws one L
+        bracketSize: "10px",
         bracketThickness: "1px",
-        bracketInset: "6px",
-        badgeFlickerDuration: "4.2s",
+        bracketInset: "4px",
+        bracketOffset: "4px",
+        // sharp emissive text: tight core + short halo, no wide bloom
+        glowCore: "1px",
+        glowHalo: "4px",
+        badgeFlickerDuration: "6s",
+    },
+    layers: {
+        slab: 2,
+        popover: 50,
     },
     space,
     radius: {
