@@ -13,7 +13,6 @@
         "start": "next start",
         "start:ci": "INSECURE_AUTH=true pnpm run start",
         "lint": "eslint src",
-        "nest:refresh": "node scripts/refresh-nest-stats.mjs",
         "prepare": "husky"
     },
     "dependencies": {

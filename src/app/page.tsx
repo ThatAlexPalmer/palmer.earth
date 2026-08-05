@@ -1,74 +1,23 @@
-import {
-    Footer,
-    H1,
-    H2,
-    Hero,
-    Main,
-    MoreLink,
-    Nav,
-    P,
-    PostItem,
-    PostList,
-    ProductItem,
-    ProductList,
-    Prose,
-    RedBlock,
-    Section,
-    SectionLabel,
-    Shell,
-    Stat,
-    StatusBadge,
-} from "@/components/mainstyles";
+import LabeledSection from "@/components/LabeledSection";
 import NestSourceInfo from "@/components/NestSourceInfo";
+import PostRow from "@/components/PostRow";
+import ProductRow from "@/components/ProductRow";
 import SubscribeForm from "@/components/SubscribeForm";
+import { Footer, H1, H2, Hero, Main, MoreLink, Nav, P, PostList, ProductList, Prose, RedBlock, Shell, Stat } from "@/components/ui";
 import { jsonLdData, siteMetadata, socialLinks } from "@/config/seo";
-import { loadNestStatsForPage, type NestStats } from "@/lib/nest";
+import { buildProducts } from "@/data/products";
+import { loadNestStats } from "@/lib/nest";
 import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
-export const dynamic = "force-static";
-// Paragraph ISR only — Nest numbers always come from committed nest-stats.json, not this revalidate.
-export const revalidate = 86400;
-
-type Product = {
-    name: string;
-    href: string;
-    meta: "work" | "live" | "oss";
-    blurb: string;
-};
-
-function buildProducts(nest: NestStats): Product[] {
-    return [
-        {
-            name: "Plume",
-            href: "https://plume.org",
-            meta: "work",
-            blurb: "Public blockchain for scaling real-world assets. Head of Regulatory Product Strategy.",
-        },
-        {
-            name: "Nest",
-            href: "https://nest.credit",
-            meta: "live",
-            blurb: `Anyone with a wallet can earn from RWAs — now ${nest.totalHoldersLabel} vault positions and ${nest.totalTvlLabel} TVL across Nest. Helped make Plume top chain by RWA holders.`,
-        },
-        {
-            name: "Visualize Laws",
-            href: "https://visualizelaws.com",
-            meta: "live",
-            blurb: "Explore ~2.2M U.S. local laws — search, filter, map. Financial / state / federal next.",
-        },
-        {
-            name: "Transfer Agent Protocol",
-            href: "https://transferagentprotocol.xyz",
-            meta: "oss",
-            blurb: "Open-source infrastructure for tokenized cap tables powering Plume's transfer agent.",
-        },
-    ];
-}
+/**
+ * Statically generated, refreshed on visit: once this window lapses the next
+ * visitor triggers a background regeneration that re-pulls Nest and Paragraph.
+ * Keep in sync with NEST_REVALIDATE_SECONDS.
+ */
+export const revalidate = 3600;
 
 export default async function Home() {
-    // Nest: committed snapshot only (no live fetch on page load).
-    const nest = loadNestStatsForPage();
-    const posts = await fetchRecentPosts(5);
+    const [nest, posts] = await Promise.all([loadNestStats(), fetchRecentPosts(5)]);
     const products = buildProducts(nest);
 
     return (
@@ -95,20 +44,15 @@ export default async function Home() {
                     </RedBlock>
                 </Hero>
 
-                <Section aria-labelledby="about-label">
-                    <SectionLabel id="about-label">
-                        <span className="prefix">{"//"}</span>
-                        About
-                    </SectionLabel>
+                <LabeledSection id="about" label="About">
                     <Prose>
                         <P>
                             Launched{" "}
                             <a href="https://nest.credit" target="_blank" rel="noopener noreferrer">
                                 Nest
                             </a>
-                            to let anyone with a wallet earn from RWAs — now <Stat>{nest.totalHoldersLabel}</Stat> holders across Nest vaults and{" "}
-                            <Stat>{nest.totalTvlLabel}</Stat> TVL <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={nest.source} />. That made
-                            Plume the{" "}
+                            <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={nest.source} /> to let anyone with a wallet earn from RWAs — now{" "}
+                            <Stat>{nest.totalHoldersLabel}</Stat> wallets and <Stat>{nest.totalTvlLabel}</Stat> TVL across Nest. That made Plume the{" "}
                             <a href="https://app.rwa.xyz/networks/plume" target="_blank" rel="noopener noreferrer">
                                 top chain by RWA holders
                             </a>{" "}
@@ -130,48 +74,21 @@ export default async function Home() {
                             .
                         </P>
                     </Prose>
-                </Section>
+                </LabeledSection>
 
-                <Section aria-labelledby="products-label">
-                    <SectionLabel id="products-label">
-                        <span className="prefix">{"//"}</span>
-                        Products
-                    </SectionLabel>
+                <LabeledSection id="products" label="Products">
                     <ProductList>
                         {products.map((product) => (
-                            <ProductItem key={product.name}>
-                                <a className="title" href={product.href} target="_blank" rel="noopener noreferrer">
-                                    {product.name}
-                                </a>
-                                <StatusBadge $kind={product.meta}>{product.meta}</StatusBadge>
-                                <p className="blurb">{product.blurb}</p>
-                            </ProductItem>
+                            <ProductRow key={product.name} product={product} />
                         ))}
                     </ProductList>
-                </Section>
+                </LabeledSection>
 
-                <Section aria-labelledby="writing-label">
-                    <SectionLabel id="writing-label">
-                        <span className="prefix">{"//"}</span>
-                        Writing
-                    </SectionLabel>
+                <LabeledSection id="writing" label="Writing">
                     {posts.length > 0 && (
                         <PostList>
                             {posts.map((post) => (
-                                <PostItem key={post.id}>
-                                    <div className="row-meta">
-                                        {post.publishedAtLabel && (
-                                            <time className="meta" dateTime={post.publishedAt || undefined}>
-                                                {post.publishedAtLabel}
-                                            </time>
-                                        )}
-                                        {post.viewsLabel && <span className="meta">{post.viewsLabel} views</span>}
-                                    </div>
-                                    <a className="title" href={post.url} target="_blank" rel="noopener noreferrer">
-                                        {post.title}
-                                    </a>
-                                    {post.subtitle && <p className="subtitle">{post.subtitle}</p>}
-                                </PostItem>
+                                <PostRow key={post.id} post={post} />
                             ))}
                         </PostList>
                     )}
@@ -182,18 +99,14 @@ export default async function Home() {
                         </span>
                     </MoreLink>
                     <SubscribeForm />
-                </Section>
+                </LabeledSection>
 
-                <Section aria-labelledby="beliefs-label">
-                    <SectionLabel id="beliefs-label">
-                        <span className="prefix">{"//"}</span>
-                        Beliefs
-                    </SectionLabel>
+                <LabeledSection id="beliefs" label="Beliefs">
                     <P>
                         A few of my strong beliefs are: technology always wins; cynicism pays no dividends; first, principles; and, &ldquo;questions
                         are places in the mind where answers fit&rdquo;. Clayton Christensen said that and I never forgot.
                     </P>
-                </Section>
+                </LabeledSection>
             </Main>
 
             <Footer>

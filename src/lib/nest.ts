@@ -1,35 +1,40 @@
 /**
- * Nest public read API — vault discovery + holder/TVL stats.
- * Page HTML uses the committed snapshot only; live fetch is for refresh jobs/APIs.
- * Pure aggregate/formatters live in nest-aggregate.mjs (shared with refresh script).
+ * Nest public read API — vault discovery + holder/TVL aggregate.
+ *
+ * Freshness model: numbers refresh on visit. The homepage is statically
+ * generated and revalidated by Next ISR, so the first visitor after the
+ * window expires triggers a background re-fetch. `src/data/nest-stats.json`
+ * is only a fallback for when the API is unreachable, so the page never 500s.
+ *
  * @see https://docs.nest.credit/developers/api/
  * @see https://api.nest.credit/v1/vaults
  */
 
 import committedNestStats from "@/data/nest-stats.json";
-import { aggregateNestVaults as aggregateNestVaultsPure, NEST_STATS_SOURCE_URL as SHARED_NEST_STATS_SOURCE_URL } from "./nest-aggregate.mjs";
 
 export const NEST_API_BASE = process.env.NEST_API_BASE_URL || "https://api.nest.credit/v1";
-export const NEST_STATS_SOURCE_URL = SHARED_NEST_STATS_SOURCE_URL as string;
+export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults";
 export const NEST_URL = "https://nest.credit";
+
+/** Keep in sync with the `revalidate` export in src/app/page.tsx. */
+export const NEST_REVALIDATE_SECONDS = 3600;
+
+const FETCH_TIMEOUT_MS = 5_000;
 
 export type NestStats = {
     fetchedAt: string;
     source: string;
     vaultCount: number;
-    /** Σ numHolders — NOT unique wallets */
+    /** Σ numHolders across vaults */
     totalHolders: number;
     totalTvl: number;
-    /** compact + "+" suffix required, e.g. "181k+" */
+    /** compact + "+" suffix, e.g. "181k+" */
     totalHoldersLabel: string;
-    /** e.g. "$142M" */
+    /** e.g. "$126M" */
     totalTvlLabel: string;
-    vaults?: Array<{ slug?: string; name?: string; numHolders: number; tvl: number }>;
 };
 
 type NestVault = {
-    slug?: unknown;
-    name?: unknown;
     tvl?: unknown;
     numHolders?: unknown;
 };
@@ -37,6 +42,34 @@ type NestVault = {
 type NestVaultsResponse = {
     data?: unknown;
 };
+
+function formatCompactCount(n: number): string {
+    if (n >= 1_000_000) {
+        const v = n / 1_000_000;
+        return `${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}M`;
+    }
+    if (n >= 1_000) {
+        const v = n / 1_000;
+        return `${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}k`;
+    }
+    return `${Math.round(n)}`;
+}
+
+function formatUsdCompact(n: number): string {
+    if (n >= 1_000_000_000) {
+        const v = n / 1_000_000_000;
+        return `$${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}B`;
+    }
+    if (n >= 1_000_000) {
+        const v = n / 1_000_000;
+        return `$${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}M`;
+    }
+    if (n >= 1_000) {
+        const v = n / 1_000;
+        return `$${v >= 10 ? Math.round(v) : v.toFixed(1).replace(/\.0$/, "")}k`;
+    }
+    return `$${Math.round(n)}`;
+}
 
 function isNonNegativeFiniteNumber(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value) && value >= 0;
@@ -46,14 +79,10 @@ function isNonEmptyString(value: unknown): value is string {
     return typeof value === "string" && value.length > 0;
 }
 
-function optionalString(value: unknown): string | undefined {
-    return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-/** Validate NestStats shape; throws if missing/invalid (K20). */
+/** Validate a NestStats payload; throws when the shape is wrong. */
 export function parseNestStats(value: unknown): NestStats {
     if (!value || typeof value !== "object") {
-        throw new Error("[nest] committed stats missing or not an object");
+        throw new Error("[nest] stats payload missing or not an object");
     }
 
     const v = value as Record<string, unknown>;
@@ -66,10 +95,10 @@ export function parseNestStats(value: unknown): NestStats {
         !isNonEmptyString(v.totalHoldersLabel) ||
         !isNonEmptyString(v.totalTvlLabel)
     ) {
-        throw new Error("[nest] committed stats have invalid shape");
+        throw new Error("[nest] stats payload has invalid shape");
     }
 
-    const stats: NestStats = {
+    return {
         fetchedAt: v.fetchedAt,
         source: v.source,
         vaultCount: v.vaultCount,
@@ -78,55 +107,51 @@ export function parseNestStats(value: unknown): NestStats {
         totalHoldersLabel: v.totalHoldersLabel,
         totalTvlLabel: v.totalTvlLabel,
     };
-
-    if (Array.isArray(v.vaults)) {
-        stats.vaults = v.vaults.map((vault, index) => {
-            if (!vault || typeof vault !== "object") {
-                throw new Error(`[nest] committed stats vault ${index} invalid`);
-            }
-            const row = vault as Record<string, unknown>;
-            if (!isNonNegativeFiniteNumber(row.numHolders) || !isNonNegativeFiniteNumber(row.tvl)) {
-                throw new Error(`[nest] committed stats vault ${index} has invalid holder or TVL data`);
-            }
-            return {
-                slug: optionalString(row.slug),
-                name: optionalString(row.name),
-                numHolders: row.numHolders,
-                tvl: row.tvl,
-            };
-        });
-    }
-
-    return stats;
 }
 
-/** Import / read committed JSON. Throws if missing/invalid (K20). */
+/** Last known-good snapshot committed to the repo. */
 export function getCommittedNestStats(): NestStats {
     return parseNestStats(committedNestStats);
 }
 
-/** Page entry: ALWAYS return getCommittedNestStats(). No live fallback. */
-export function loadNestStatsForPage(): NestStats {
-    return getCommittedNestStats();
-}
-
-/** Sum numHolders + sum tvl across vaults. Throws on empty/invalid input. */
+/** Sum numHolders + sum tvl across every vault. Throws on empty/invalid input. */
 export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().toISOString()): NestStats {
-    return aggregateNestVaultsPure(vaults, { fetchedAt, includeVaults: true }) as NestStats;
+    if (!Array.isArray(vaults) || vaults.length === 0) {
+        throw new Error("[nest] vaults response was empty");
+    }
+
+    let totalTvl = 0;
+    let totalHolders = 0;
+
+    vaults.forEach((vault, index) => {
+        if (!vault || !isNonNegativeFiniteNumber(vault.tvl) || !isNonNegativeFiniteNumber(vault.numHolders)) {
+            throw new Error(`[nest] vault ${index} has invalid holder or TVL data`);
+        }
+
+        totalTvl += vault.tvl;
+        totalHolders += vault.numHolders;
+    });
+
+    return {
+        fetchedAt,
+        source: NEST_STATS_SOURCE_URL,
+        vaultCount: vaults.length,
+        totalHolders,
+        totalTvl,
+        totalHoldersLabel: `${formatCompactCount(totalHolders)}+`,
+        totalTvlLabel: formatUsdCompact(totalTvl),
+    };
 }
 
-/**
- * Live GET /vaults + aggregate.
- * MUST use cache: "no-store" (never next.revalidate for Nest).
- */
+/** Live GET /vaults + aggregate. Throws on transport or shape failure. */
 export async function fetchNestStats(): Promise<NestStats> {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5_000);
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     try {
         const res = await fetch(`${NEST_API_BASE}/vaults`, {
             headers: { Accept: "application/json" },
-            cache: "no-store",
+            next: { revalidate: NEST_REVALIDATE_SECONDS },
             signal: controller.signal,
         });
 
@@ -142,5 +167,18 @@ export async function fetchNestStats(): Promise<NestStats> {
         return aggregateNestVaults(body.data as NestVault[]);
     } finally {
         clearTimeout(timeout);
+    }
+}
+
+/**
+ * Page entry point: live figures when Nest answers, last-known snapshot when
+ * it doesn't. Never throws.
+ */
+export async function loadNestStats(): Promise<NestStats> {
+    try {
+        return await fetchNestStats();
+    } catch (error) {
+        console.warn("[nest] live fetch failed; falling back to committed snapshot", error);
+        return getCommittedNestStats();
     }
 }
