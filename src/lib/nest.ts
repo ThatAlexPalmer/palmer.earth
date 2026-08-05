@@ -35,6 +35,8 @@ export type NestStats = {
 };
 
 type NestVault = {
+    vaultAddress?: unknown;
+    symbol?: unknown;
     tvl?: unknown;
     numHolders?: unknown;
 };
@@ -42,6 +44,20 @@ type NestVault = {
 type NestVaultsResponse = {
     data?: unknown;
 };
+
+/**
+ * `GET /vaults` defaults to `status=active`, which is only the 11 vaults on the
+ * public docs list — it omits partner books like nETHERFI, nBYBIT* and nGRVT*.
+ * Nest Studio's "Live Vaults" total is every vault except the `disabled` ones
+ * (pUSD, test and dust books), so we ask for all and subtract those.
+ */
+type NestVaultStatus = "all" | "disabled";
+
+function vaultKey(vault: NestVault): string {
+    const address = typeof vault.vaultAddress === "string" ? vault.vaultAddress : "";
+    const symbol = typeof vault.symbol === "string" ? vault.symbol : "";
+    return (address || symbol).toLowerCase();
+}
 
 function formatCompactCount(n: number): string {
     if (n >= 1_000_000) {
@@ -143,28 +159,43 @@ export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().
     };
 }
 
-/** Live GET /vaults + aggregate. Throws on transport or shape failure. */
+async function fetchVaults(status: NestVaultStatus, signal: AbortSignal): Promise<NestVault[]> {
+    const res = await fetch(`${NEST_API_BASE}/vaults?status=${status}`, {
+        headers: { Accept: "application/json" },
+        next: { revalidate: NEST_REVALIDATE_SECONDS },
+        signal,
+    });
+
+    if (!res.ok) {
+        throw new Error(`[nest] vaults?status=${status} fetch failed: ${res.status}`);
+    }
+
+    const body = (await res.json()) as NestVaultsResponse;
+    if (!Array.isArray(body.data)) {
+        throw new Error(`[nest] vaults?status=${status} response did not contain an array`);
+    }
+
+    return body.data as NestVault[];
+}
+
+/** Live vault totals across every non-disabled vault. Throws on transport or shape failure. */
 export async function fetchNestStats(): Promise<NestStats> {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     try {
-        const res = await fetch(`${NEST_API_BASE}/vaults`, {
-            headers: { Accept: "application/json" },
-            next: { revalidate: NEST_REVALIDATE_SECONDS },
-            signal: controller.signal,
-        });
+        const [everyVault, disabledVaults] = await Promise.all([fetchVaults("all", controller.signal), fetchVaults("disabled", controller.signal)]);
 
-        if (!res.ok) {
-            throw new Error(`[nest] vaults fetch failed: ${res.status}`);
-        }
+        const disabled = new Set(disabledVaults.map(vaultKey).filter(Boolean));
+        const liveVaults = everyVault.filter((vault) => !disabled.has(vaultKey(vault)));
+        const stats = aggregateNestVaults(liveVaults);
 
-        const body = (await res.json()) as NestVaultsResponse;
-        if (!Array.isArray(body.data)) {
-            throw new Error("[nest] vaults response did not contain an array");
-        }
+        console.info(
+            `[nest] ${stats.vaultCount} live vaults (${everyVault.length} total − ${disabled.size} disabled) · ` +
+                `${stats.totalTvlLabel} TVL · ${stats.totalHoldersLabel} holders`,
+        );
 
-        return aggregateNestVaults(body.data as NestVault[]);
+        return stats;
     } finally {
         clearTimeout(timeout);
     }
