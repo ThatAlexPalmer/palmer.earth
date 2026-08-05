@@ -51,13 +51,15 @@ const Input = styled.input`
         color: ${({ theme }) => theme.colors.g60};
     }
 
+    /* Single hairline edge only — a focus ring on top of the border read as a double border. */
     &:hover:not(:disabled) {
         border-color: ${({ theme }) => theme.colors.form.borderHover};
+        background: ${({ theme }) => theme.colors.form.surfaceHover};
     }
 
     &:focus {
-        border-color: ${({ theme }) => theme.colors.accent};
-        box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.accent};
+        border-color: ${({ theme }) => theme.colors.accentHover};
+        background: ${({ theme }) => theme.colors.form.surfaceHover};
     }
 
     &:disabled {
