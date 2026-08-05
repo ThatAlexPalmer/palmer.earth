@@ -9,11 +9,6 @@ import { buildProducts } from "@/data/products";
 import { loadNestStats } from "@/lib/nest";
 import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
-/**
- * Statically generated, refreshed on visit: once this window lapses the next
- * visitor triggers a background regeneration that re-pulls Nest and Paragraph.
- * Keep in sync with NEST_REVALIDATE_SECONDS.
- */
 export const revalidate = 3600;
 
 export default async function Home() {

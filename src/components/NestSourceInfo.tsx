@@ -4,9 +4,7 @@ import { useEffect, useRef, useState, type FocusEvent } from "react";
 import styled from "styled-components";
 
 /**
- * Footnote marker for the Nest figures: a superscript ⓘ that sits tight
- * against the preceding word, with a disclosure card that always opens
- * downward so it can never collide with the hero slab above.
+ * Footnote marker for the Nest figures: a superscript ⓘ
  */
 const Wrapper = styled.span`
     position: relative;

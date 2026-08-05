@@ -3,12 +3,6 @@
 import { useState, FormEvent } from "react";
 import styled from "styled-components";
 
-/**
- * On-site subscribe form → POST /api/subscribe →
- * Paragraph official API: POST https://public.api.paragraph.com/api/v1/subscribers
- * with Authorization: Bearer $PARAGRAPH_API_KEY
- * @see https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber
- */
 const Form = styled.form`
     display: flex;
     flex-wrap: wrap;

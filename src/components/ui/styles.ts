@@ -3,7 +3,7 @@
 import { css } from "styled-components";
 
 /**
- * Control-style corner brackets: two thin L marks that snap inward on hover.
+ * Two thin L marks that snap inward on hover.
  * `::before` draws the top-left L, `::after` the bottom-right one — two
  * pseudo-elements total, no extra DOM and no layout shift.
  *

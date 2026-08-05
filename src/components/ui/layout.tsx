@@ -48,10 +48,6 @@ const Main = styled.main`
     gap: ${({ theme }) => theme.space(10)};
 `;
 
-/**
- * The slab owns the top of the page; heroGap keeps the following column clear
- * so footnote popovers never have to fight it.
- */
 const Hero = styled.header`
     display: flex;
     flex-direction: column;
@@ -80,7 +76,6 @@ const Prose = styled.div`
     gap: ${({ theme }) => theme.space(4)};
 `;
 
-/** Separated by space alone — no divider rule. */
 const Footer = styled.footer`
     display: flex;
     flex-wrap: wrap;

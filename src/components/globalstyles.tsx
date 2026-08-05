@@ -33,11 +33,6 @@ const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
   }
 
-  /*
-   * No grid / honeycomb — those read as dated UI chrome.
-   * Soft radial depth only: flat black core with a quiet accent bloom
-   * so the RedBlock still owns the page.
-   */
   body::before {
     content: "";
     position: fixed;

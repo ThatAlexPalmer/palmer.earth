@@ -6,8 +6,7 @@ import { chromeLink } from "./styles";
 export type StatusKind = "live" | "work" | "oss";
 
 /**
- * Shallow, irregular flicker — a failing HUD element, not a nightclub sign.
- * Fully disabled under prefers-reduced-motion.
+ * Shallow, irregular flicker — a failing HUD element
  */
 const hudFlicker = keyframes`
     0%, 41%, 43%, 62%, 64%, 100% {

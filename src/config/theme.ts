@@ -2,9 +2,8 @@
 const space = (n: number) => `${n * 4}px`;
 
 /**
- * Palette follows Control (Remedy): near-black concrete, one dominant red,
- * bone-white type, and a restrained warm HUD accent. No 120°-apart neon trio —
- * status colours stay analogous to the accent or fall back to neutrals.
+ * Palette follows: near-black concrete, one dominant red,
+ * bone-white type, and a restrained warm HUD accent.
  */
 export const theme = {
     colors: {
@@ -64,7 +63,6 @@ export const theme = {
             xs: "0.6875rem", // 11px
             sm: "0.75rem", // 12px
             md: "0.875rem", // 14px
-            // slightly smaller so "Regulatory Product Strategy" fits the slab
             heading: "2.25rem",
             headingMobile: "1.45rem",
             paragraph: "1.125rem", // 18px
@@ -94,23 +92,18 @@ export const theme = {
         bracket: "opacity 160ms cubic-bezier(0.22, 1, 0.36, 1), transform 160ms cubic-bezier(0.22, 1, 0.36, 1)",
     },
     layout: {
-        // Live-site scale so RedBlock has the same presence as production
         pageMaxWidth: "1200px",
-        // wider slab for three-word title line without overflow
         headlineWidth: "28rem",
         headlineWidthMobile: "18rem",
         contentMaxWidth: "696px",
-        // breathing room under the slab so footnote popovers never crowd it
         heroGap: "6rem",
         heroGapMobile: "3rem",
     },
     effects: {
-        // corner brackets: each pseudo-element draws one L
         bracketSize: "10px",
         bracketThickness: "1px",
         bracketInset: "4px",
         bracketOffset: "4px",
-        // sharp emissive text: tight core + short halo, no wide bloom
         glowCore: "1px",
         glowHalo: "4px",
         badgeFlickerDuration: "6s",

@@ -2,7 +2,9 @@ import { addSubscriber, isValidEmail } from "@/lib/paragraph";
 
 type Body = { email?: string };
 
-/** POST /api/subscribe { "email": "reader@example.com" } */
+/** POST /api/subscribe { "email": "reader@example.com" }
+ * @see https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber
+ */
 export async function POST(request: Request) {
     let body: Body;
     try {

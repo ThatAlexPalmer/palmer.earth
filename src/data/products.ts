@@ -8,7 +8,6 @@ export type Product = {
     blurb: string;
 };
 
-/** Nest's blurb carries live figures, so products are built per render. */
 export function buildProducts(nest: NestStats): Product[] {
     return [
         {
