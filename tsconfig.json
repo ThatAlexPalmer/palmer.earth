@@ -9,6 +9,7 @@
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": false,
+		"strictNullChecks": true,
 		"forceConsistentCasingInFileNames": true,
 		"noEmit": true,
 		"incremental": true,
@@ -30,6 +31,7 @@
 	"include": [
 		"next-env.d.ts",
 		".next/types/**/*.ts",
+		".next/dev/types/**/*.ts",
 		"**/*.ts",
 		"**/*.tsx"
 	],

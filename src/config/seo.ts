@@ -1,9 +1,10 @@
 export const siteMetadata = {
     title: "Alex Palmer",
     description:
-        "Head of Regulatory Strategy at Plume Network. Launched Nest to let anyone with a wallet earn from real world assets. Building Transfer Agent Protocol to power Plume's transfer agent.",
+        "Head of Regulatory Product Strategy at Plume Network. Launched Nest to let anyone with a wallet earn from real world assets. Building Transfer Agent Protocol to power Plume's transfer agent.",
     url: "https://palmer.earth",
     image: "https://palmer.earth/og-avatar-v4.jpg",
+    // Keep in sync with theme.colors.background
     themeColor: "#08080a",
 };
 
@@ -11,7 +12,7 @@ export const socialLinks = {
     farcaster: "https://farcaster.com/thatalexpalmer.eth",
     twitter: "https://twitter.com/thatalexpalmer",
     github: "https://github.com/thatalexpalmer",
-    paragraph: "https://paragraph.xyz/@thatalexpalmer",
+    paragraph: "https://paragraph.com/@thatalexpalmer",
     linkedin: "https://linkedin.com/in/thatalexpalmer",
 };
 
@@ -21,7 +22,7 @@ export const jsonLdData = {
     name: "Alex Palmer",
     url: siteMetadata.url,
     image: siteMetadata.image,
-    jobTitle: "Head of Regulatory Strategy",
+    jobTitle: "Head of Regulatory Product Strategy",
     worksFor: {
         "@type": "Organization",
         name: "Plume Network",

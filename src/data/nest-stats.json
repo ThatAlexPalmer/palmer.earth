@@ -1,0 +1,9 @@
+{
+    "fetchedAt": "2026-08-05T10:58:33.426Z",
+    "source": "https://api.nest.credit/v1/vaults",
+    "vaultCount": 22,
+    "totalHolders": 180884,
+    "totalTvl": 176579760.5235496,
+    "totalHoldersLabel": "181k+",
+    "totalTvlLabel": "$177M"
+}

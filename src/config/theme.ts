@@ -1,28 +1,58 @@
-import { Oswald, Noto_Sans } from "next/font/google";
+/** 4px base spacing scale */
+const space = (n: number) => `${n * 4}px`;
 
-export const oswald = Oswald({
-    weight: ["400", "600", "700"],
-    style: "normal",
-    display: "swap",
-    subsets: ["latin"],
-});
-
-export const noto = Noto_Sans({
-    weight: ["300", "400", "500", "600"],
-    style: "normal",
-    display: "swap",
-    subsets: ["latin"],
-});
-
+/**
+ * Palette follows Control (Remedy): near-black concrete, one dominant red,
+ * bone-white type, and a restrained warm HUD accent. No 120°-apart neon trio —
+ * status colours stay analogous to the accent or fall back to neutrals.
+ */
 export const theme = {
     colors: {
         background: "#08080a",
         text: "#dcdcdc",
         accent: "#a32d15",
+        accentHover: "#d94a2e",
+        // white-opacity gray ramp (concrete chrome)
+        g12: "rgba(255,255,255,0.12)",
+        g60: "rgba(255,255,255,0.60)",
+        g68: "rgba(255,255,255,0.68)",
+        g76: "rgba(255,255,255,0.76)",
+        g90: "rgba(255,255,255,0.90)",
+        // status chips: HUD amber (signal on), bone (institutional), steel (cool neutral)
+        status: {
+            live: "#f0a93b",
+            work: "#e8e3d9",
+            oss: "#93a4ad",
+        },
+        // hairline chip edges — same hues, held back so the glow stays sharp
+        statusEdge: {
+            live: "rgba(240,169,59,0.45)",
+            work: "rgba(232,227,217,0.38)",
+            oss: "rgba(147,164,173,0.45)",
+        },
+        feedback: {
+            ok: "#f0a93b",
+            error: "#d94a2e",
+        },
+        form: {
+            surface: "rgba(255,255,255,0.06)",
+            surfaceHover: "rgba(255,255,255,0.10)",
+            border: "rgba(255,255,255,0.22)",
+            borderHover: "rgba(255,255,255,0.38)",
+            buttonText: "#f5f5f5",
+            // disabled keeps a readable white label — never opacity-dimmed
+            disabledSurface: "rgba(163,45,21,0.55)",
+            disabledBorder: "rgba(217,74,46,0.45)",
+        },
+        overlay: {
+            surface: "#0d0d10",
+            border: "rgba(255,255,255,0.18)",
+        },
     },
     typography: {
-        fontFamily: noto.style.fontFamily,
-        headingFont: oswald.style.fontFamily,
+        fontFamily: "var(--font-body)",
+        headingFont: "var(--font-heading)",
+        monoFont: "var(--font-mono)",
         fontWeight: {
             light: 300,
             normal: 400,
@@ -31,20 +61,26 @@ export const theme = {
             bold: 700,
         },
         fontSize: {
-            heading: "2.5rem",
-            headingMobile: "1.6rem",
-            paragraph: "1.3rem",
+            xs: "0.6875rem", // 11px
+            sm: "0.75rem", // 12px
+            md: "0.875rem", // 14px
+            // slightly smaller so "Regulatory Product Strategy" fits the slab
+            heading: "2.25rem",
+            headingMobile: "1.45rem",
+            paragraph: "1.125rem", // 18px
             paragraphMobile: "1rem",
-            uiCopy: "1.5rem",
-            uiCopyMobile: "1rem",
+            display: "2.75rem",
+            displayMobile: "1.85rem",
         },
         lineHeight: {
-            heading: "1.3",
-            paragraph: "1.6",
+            heading: "1.2",
+            paragraph: "1.65",
+            tight: "1.3",
         },
         letterSpacing: {
             normal: "0",
             wide: "0.05em",
+            mono: "0.1em",
         },
     },
     breakpoints: {
@@ -53,16 +89,39 @@ export const theme = {
         smallLaptop: "820px",
     },
     transitions: {
-        fast: "120ms ease-in-out",
-        link: "color 120ms ease-in-out, text-underline-offset 120ms ease-in-out",
+        base: "180ms cubic-bezier(0.22, 1, 0.36, 1)",
+        link: "color 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
+        bracket: "opacity 160ms cubic-bezier(0.22, 1, 0.36, 1), transform 160ms cubic-bezier(0.22, 1, 0.36, 1)",
     },
     layout: {
-        containerMaxWidth: "1200px",
-        mainMaxWidth: "1600px",
-        headlineWidth: "24rem",
-        headlineWidthMobile: "16rem",
+        // Live-site scale so RedBlock has the same presence as production
+        pageMaxWidth: "1200px",
+        // wider slab for three-word title line without overflow
+        headlineWidth: "28rem",
+        headlineWidthMobile: "18rem",
         contentMaxWidth: "696px",
-        footerHeight: "8rem",
+        // breathing room under the slab so footnote popovers never crowd it
+        heroGap: "6rem",
+        heroGapMobile: "3rem",
+    },
+    effects: {
+        // corner brackets: each pseudo-element draws one L
+        bracketSize: "10px",
+        bracketThickness: "1px",
+        bracketInset: "4px",
+        bracketOffset: "4px",
+        // sharp emissive text: tight core + short halo, no wide bloom
+        glowCore: "1px",
+        glowHalo: "4px",
+        badgeFlickerDuration: "6s",
+    },
+    layers: {
+        slab: 2,
+        popover: 50,
+    },
+    space,
+    radius: {
+        sm: "2px",
     },
 };
 
