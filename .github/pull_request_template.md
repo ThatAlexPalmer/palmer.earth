@@ -1,7 +1,3 @@
-## What
+# what?
 
-<!-- Short summary of the change -->
-
-## Why
-
-<!-- Motivation / context -->
+# why?
