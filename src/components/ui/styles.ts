@@ -2,14 +2,6 @@
 
 import { css } from "styled-components";
 
-/**
- * Two thin L marks that snap inward on hover.
- * `::before` draws the top-left L, `::after` the bottom-right one — two
- * pseudo-elements total, no extra DOM and no layout shift.
- *
- * Geometry is exposed as custom properties so a caller can tighten the marks
- * around small targets, e.g. `--bracket-size: 6px; --bracket-inset: -3px;`.
- */
 const bracketChrome = css`
     position: relative;
     --bracket-size: ${({ theme }) => theme.effects.bracketSize};
@@ -44,7 +36,6 @@ const bracketChrome = css`
         transform: translate(var(--bracket-offset), var(--bracket-offset));
     }
 
-    /* Pointer devices only, so touch never leaves brackets stuck on. */
     @media (hover: hover) and (pointer: fine) {
         &:hover::before,
         &:hover::after {
@@ -62,14 +53,12 @@ const bracketChrome = css`
     }
 `;
 
-/** Hard accent snap + hairline underline — the single link hover language. */
 const linkHover = css`
     color: ${({ theme }) => theme.colors.accentHover};
     text-decoration: underline;
     text-decoration-thickness: 1px;
 `;
 
-/** Standalone chrome links (nav, footer, "read all"). Bracketed on hover. */
 const chromeLink = css`
     ${bracketChrome}
     --bracket-size: 6px;

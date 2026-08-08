@@ -3,9 +3,6 @@
 import { useEffect, useRef, useState, type FocusEvent } from "react";
 import styled from "styled-components";
 
-/**
- * Footnote marker for the Nest figures: a superscript ⓘ
- */
 const Wrapper = styled.span`
     position: relative;
     display: inline;
@@ -130,7 +127,6 @@ export default function NestSourceInfo({ fetchedAt, sourceUrl }: { fetchedAt: st
             >
                 ⓘ
             </Trigger>
-            {/* Disclosure, not a dialog: hover/click card with one link — no focus trap */}
             <Popover id={popoverId} role="region" aria-label="Nest data source" aria-hidden={!open} $open={open}>
                 <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                     Nest API

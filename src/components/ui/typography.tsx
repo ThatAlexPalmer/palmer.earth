@@ -21,7 +21,6 @@ const H1 = styled.h1`
     }
 `;
 
-/** Live-site RedBlock headline — keep offset; width/size from theme for title fit */
 const H2 = styled.h2`
     z-index: ${({ theme }) => theme.layers.slab};
     position: relative;
@@ -47,7 +46,6 @@ const H2 = styled.h2`
     }
 `;
 
-/** Live-site signature slab — 83% height so type hangs below the red */
 const RedBlock = styled.span`
     position: relative;
     display: flex;
@@ -96,10 +94,6 @@ const P = styled.p`
     font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
     color: ${({ theme }) => theme.colors.text};
 
-    /*
-     * Inline links stay unbracketed on purpose: an inline anchor that wraps
-     * across two lines would draw broken, disjoint corners.
-     */
     a {
         color: ${({ theme }) => theme.colors.accent};
         font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};

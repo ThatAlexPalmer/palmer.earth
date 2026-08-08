@@ -11,7 +11,6 @@ const PostList = styled.ul`
     ${listReset}
 `;
 
-/** Shared row shell: no fill, no divider — brackets carry the affordance. */
 const rowChrome = css`
     ${bracketChrome}
     padding: ${({ theme }) => theme.space(4)} ${({ theme }) => theme.space(3)};
@@ -39,10 +38,6 @@ const PostItem = styled.li`
     gap: ${({ theme }) => theme.space(1)};
 `;
 
-/**
- * Row heading link. The transparent ::before overlay makes the whole row
- * clickable while the anchor stays the single semantic link.
- */
 const RowTitle = styled.a`
     position: static;
     width: fit-content;
@@ -71,7 +66,6 @@ const RowTitle = styled.a`
     }
 `;
 
-/** Supporting copy under a row title (product blurb / post subtitle). */
 const RowText = styled.p`
     grid-column: 1 / -1;
     margin: 0;
