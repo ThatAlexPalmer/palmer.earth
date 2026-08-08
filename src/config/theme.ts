@@ -1,29 +1,20 @@
-/** 4px base spacing scale */
 const space = (n: number) => `${n * 4}px`;
-
-/**
- * Palette follows: near-black concrete, one dominant red,
- * bone-white type, and a restrained warm HUD accent.
- */
 export const theme = {
     colors: {
         background: "#08080a",
         text: "#dcdcdc",
         accent: "#a32d15",
         accentHover: "#d94a2e",
-        // white-opacity gray ramp (concrete chrome)
         g12: "rgba(255,255,255,0.12)",
         g60: "rgba(255,255,255,0.60)",
         g68: "rgba(255,255,255,0.68)",
         g76: "rgba(255,255,255,0.76)",
         g90: "rgba(255,255,255,0.90)",
-        // status chips: HUD amber (signal on), bone (institutional), steel (cool neutral)
         status: {
             live: "#f0a93b",
             work: "#e8e3d9",
             oss: "#93a4ad",
         },
-        // hairline chip edges — same hues, held back so the glow stays sharp
         statusEdge: {
             live: "rgba(240,169,59,0.45)",
             work: "rgba(232,227,217,0.38)",
@@ -39,7 +30,6 @@ export const theme = {
             border: "rgba(255,255,255,0.22)",
             borderHover: "rgba(255,255,255,0.38)",
             buttonText: "#f5f5f5",
-            // disabled keeps a readable white label — never opacity-dimmed
             disabledSurface: "rgba(163,45,21,0.55)",
             disabledBorder: "rgba(217,74,46,0.45)",
         },
@@ -60,12 +50,12 @@ export const theme = {
             bold: 700,
         },
         fontSize: {
-            xs: "0.6875rem", // 11px
-            sm: "0.75rem", // 12px
-            md: "0.875rem", // 14px
+            xs: "0.6875rem",
+            sm: "0.75rem",
+            md: "0.875rem",
             heading: "2.25rem",
             headingMobile: "1.45rem",
-            paragraph: "1.125rem", // 18px
+            paragraph: "1.125rem",
             paragraphMobile: "1rem",
             display: "2.75rem",
             displayMobile: "1.85rem",

@@ -45,7 +45,6 @@ const Input = styled.input`
         color: ${({ theme }) => theme.colors.g60};
     }
 
-    /* Single hairline edge only — a focus ring on top of the border read as a double border. */
     &:hover:not(:disabled) {
         border-color: ${({ theme }) => theme.colors.form.borderHover};
         background: ${({ theme }) => theme.colors.form.surfaceHover};
@@ -75,7 +74,6 @@ const Button = styled.button`
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
     text-transform: uppercase;
-    /* Near-white on accent — readable cypherpunk CTA */
     color: ${({ theme }) => theme.colors.form.buttonText};
     cursor: pointer;
     transition: ${({ theme }) => theme.transitions.base};
@@ -88,7 +86,6 @@ const Button = styled.button`
         color: ${({ theme }) => theme.colors.form.buttonText};
     }
 
-    /* Never opacity-dimmed — the label stays fully legible while disabled. */
     &:disabled {
         background: ${({ theme }) => theme.colors.form.disabledSurface};
         border-color: ${({ theme }) => theme.colors.form.disabledBorder};

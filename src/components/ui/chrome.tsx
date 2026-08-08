@@ -5,9 +5,6 @@ import { chromeLink } from "./styles";
 
 export type StatusKind = "live" | "work" | "oss";
 
-/**
- * Shallow, irregular flicker — a failing HUD element
- */
 const hudFlicker = keyframes`
     0%, 41%, 43%, 62%, 64%, 100% {
         opacity: 1;
@@ -20,7 +17,6 @@ const hudFlicker = keyframes`
     }
 `;
 
-/** Hairline HUD chip: hard corners, tight glow, no bloom. */
 const StatusBadge = styled.span<{ $kind: StatusKind }>`
     align-self: center;
     padding: 2px ${({ theme }) => theme.space(2)};
