@@ -1,12 +1,3 @@
-/**
- * Paragraph integration for @thatalexpalmer
- *
- * Public posts: GET /v1/publications/{id}/posts (no auth)
- * Subscribe:    POST /v1/subscribers with Bearer API key
- * @see https://paragraph.com/docs/api-reference/subscribers/add-a-new-subscriber
- * @see https://public.api.paragraph.com/api  (OpenAPI server)
- */
-
 export const PARAGRAPH_PUBLICATION_ID = "CYbcj5aaaKn4zqXpKysG";
 export const PARAGRAPH_SLUG = "thatalexpalmer";
 export const PARAGRAPH_PUBLICATION_URL = `https://paragraph.com/@${PARAGRAPH_SLUG}`;
@@ -20,7 +11,6 @@ export type ParagraphPost = {
     url: string;
     publishedAt: string | null;
     publishedAtLabel: string;
-    /** Present when fetched with PARAGRAPH_API_KEY via GET /v1/posts */
     views: number | null;
     viewsLabel: string | null;
 };
@@ -49,7 +39,6 @@ function formatDate(epochMs: string | undefined): { iso: string | null; label: s
     };
 }
 
-/** Compact view count for mono meta, e.g. "273" / "1.2k". */
 export function formatViews(n: number): string {
     if (n >= 1_000_000) {
         const v = n / 1_000_000;
@@ -80,11 +69,6 @@ function mapPosts(items: ApiPost[]): ParagraphPost[] {
     });
 }
 
-/**
- * Fetch recent posts. Prefers authenticated GET /v1/posts when PARAGRAPH_API_KEY
- * is set (includes `views`). Falls back to public publication posts without views.
- * Never throws — returns [] on failure so the homepage still builds.
- */
 export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
     const apiKey = process.env.PARAGRAPH_API_KEY;
 
@@ -104,8 +88,8 @@ export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
             } else {
                 console.warn(`[paragraph] auth posts fetch failed: ${res.status}`);
             }
-        } catch (err) {
-            console.warn("[paragraph] auth posts fetch error", err);
+        } catch (error) {
+            console.warn("[paragraph] auth posts fetch error", error);
         }
     }
 
@@ -124,31 +108,19 @@ export async function fetchRecentPosts(limit = 5): Promise<ParagraphPost[]> {
         const data = (await res.json()) as ApiListResponse;
         const items = Array.isArray(data.items) ? data.items : [];
         return mapPosts(items);
-    } catch (err) {
-        console.warn("[paragraph] posts fetch error", err);
+    } catch (error) {
+        console.warn("[paragraph] posts fetch error", error);
         return [];
     }
 }
 
-export type SubscribeResult = { ok: true } | { ok: false; error: string; status?: number };
+export type SubscribeResult = { ok: true } | { ok: false; status?: number };
 
-/**
- * Add a subscriber via Paragraph's official API.
- * Publication is identified by the API key (not the publication id in the body).
- *
- *   curl -X POST "https://public.api.paragraph.com/api/v1/subscribers" \
- *     -H "Authorization: Bearer $PARAGRAPH_API_KEY" \
- *     -H "Content-Type: application/json" \
- *     -d '{"email": "reader@example.com"}'
- */
 export async function addSubscriber(email: string): Promise<SubscribeResult> {
     const apiKey = process.env.PARAGRAPH_API_KEY;
     if (!apiKey) {
-        return {
-            ok: false,
-            error: "Missing PARAGRAPH_API_KEY on the server.",
-            status: 503,
-        };
+        console.error("[paragraph] subscription unavailable: missing server configuration");
+        return { ok: false, status: 503 };
     }
 
     const controller = new AbortController();
@@ -170,25 +142,14 @@ export async function addSubscriber(email: string): Promise<SubscribeResult> {
             return { ok: true };
         }
 
-        let msg = "Could not subscribe. Try again later.";
-        try {
-            const body = (await res.json()) as { msg?: string; message?: string; success?: boolean };
-            msg = body.msg || body.message || msg;
-        } catch {
-            // ignore parse errors
+        console.warn(`[paragraph] subscription request failed: ${res.status}`);
+        return { ok: false, status: res.status };
+    } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+            return { ok: false, status: 504 };
         }
-
-        // Map auth failures to a clearer server-config message
-        if (res.status === 401 || res.status === 403) {
-            return { ok: false, error: "Subscribe is misconfigured (invalid API key).", status: res.status };
-        }
-
-        return { ok: false, error: msg, status: res.status };
-    } catch (err) {
-        if (err instanceof Error && err.name === "AbortError") {
-            return { ok: false, error: "Subscribe timed out. Try again later.", status: 504 };
-        }
-        return { ok: false, error: "Network error. Try again later.", status: 502 };
+        console.error("[paragraph] subscription request failed", error);
+        return { ok: false, status: 502 };
     } finally {
         clearTimeout(timeout);
     }
