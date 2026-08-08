@@ -1,5 +1,4 @@
 {
-    // Extensions recommended for users of this workspace.
     "recommendations": [
         "dbaeumer.vscode-eslint",
 		"mikestead.dotenv",

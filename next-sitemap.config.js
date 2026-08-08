@@ -1,7 +1,6 @@
-/** @type {import('next-sitemap').IConfig} */
 const config = {
     siteUrl: "https://palmer.earth",
-    generateRobotsTxt: true, // (optional)
+    generateRobotsTxt: true,
     exclude: ["/app*", "/_next/*"],
     robotsTxtOptions: {
         policies: [
@@ -16,7 +15,6 @@ const config = {
             },
         ],
     },
-    // ...other options
 };
 
 module.exports = config;
