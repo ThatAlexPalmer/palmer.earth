@@ -26,8 +26,10 @@ const ProductItem = styled.li`
     align-items: baseline;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        grid-template-columns: 1fr;
-        gap: ${({ theme }) => theme.space(1)};
+        grid-template-columns: max-content max-content;
+        justify-content: start;
+        column-gap: ${({ theme }) => theme.space(2)};
+        row-gap: ${({ theme }) => theme.space(1)};
     }
 `;
 

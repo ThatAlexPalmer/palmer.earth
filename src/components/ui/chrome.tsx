@@ -19,6 +19,8 @@ const hudFlicker = keyframes`
 
 const StatusBadge = styled.span<{ $kind: StatusKind }>`
     align-self: center;
+    justify-self: start;
+    width: max-content;
     padding: 2px ${({ theme }) => theme.space(2)};
     border: 1px solid ${({ theme, $kind }) => theme.colors.statusEdge[$kind]};
     font-family: ${({ theme }) => theme.typography.monoFont};
