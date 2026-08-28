@@ -20,16 +20,28 @@ const rowChrome = css`
 
 const ProductItem = styled.li`
     ${rowChrome}
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
-    align-items: baseline;
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.space(2)};
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        grid-template-columns: max-content max-content;
-        justify-content: start;
-        column-gap: ${({ theme }) => theme.space(2)};
-        row-gap: ${({ theme }) => theme.space(1)};
+        gap: ${({ theme }) => theme.space(1)};
+    }
+`;
+
+const ProductHeading = styled.div`
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
+    width: 100%;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        justify-content: flex-start;
+        width: max-content;
+        max-width: 100%;
+        gap: ${({ theme }) => theme.space(2)};
     }
 `;
 
@@ -91,4 +103,4 @@ const RowMeta = styled.span`
     color: ${({ theme }) => theme.colors.g68};
 `;
 
-export { ProductList, PostList, ProductItem, PostItem, RowTitle, RowText, RowMetaBar, RowMeta };
+export { ProductList, PostList, ProductItem, ProductHeading, PostItem, RowTitle, RowText, RowMetaBar, RowMeta };
