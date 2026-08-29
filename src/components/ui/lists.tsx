@@ -34,15 +34,9 @@ const ProductHeading = styled.div`
     flex-wrap: nowrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
-    width: 100%;
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        justify-content: flex-start;
-        width: max-content;
-        max-width: 100%;
-        gap: ${({ theme }) => theme.space(2)};
-    }
+    width: auto;
+    max-width: 100%;
+    gap: ${({ theme }) => theme.space(2)};
 `;
 
 const PostItem = styled.li`
