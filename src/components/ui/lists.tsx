@@ -20,15 +20,23 @@ const rowChrome = css`
 
 const ProductItem = styled.li`
     ${rowChrome}
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: ${({ theme }) => theme.space(2)} ${({ theme }) => theme.space(4)};
-    align-items: baseline;
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.space(2)};
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
-        grid-template-columns: 1fr;
         gap: ${({ theme }) => theme.space(1)};
     }
+`;
+
+const ProductHeading = styled.div`
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: space-between;
+    width: auto;
+    max-width: 100%;
+    gap: ${({ theme }) => theme.space(2)};
 `;
 
 const PostItem = styled.li`
@@ -89,4 +97,4 @@ const RowMeta = styled.span`
     color: ${({ theme }) => theme.colors.g68};
 `;
 
-export { ProductList, PostList, ProductItem, PostItem, RowTitle, RowText, RowMetaBar, RowMeta };
+export { ProductList, PostList, ProductItem, ProductHeading, PostItem, RowTitle, RowText, RowMetaBar, RowMeta };
