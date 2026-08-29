@@ -9,8 +9,6 @@ import { buildProducts } from "@/data/products";
 import { loadNestStats } from "@/lib/nest";
 import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
-export const revalidate = 3600;
-
 export default async function Home() {
     const [nest, posts] = await Promise.all([loadNestStats(), fetchRecentPosts(5)]);
     const products = buildProducts(nest);

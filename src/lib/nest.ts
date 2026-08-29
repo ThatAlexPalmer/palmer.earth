@@ -4,8 +4,6 @@ export const NEST_API_BASE = process.env.NEST_API_BASE_URL || "https://api.nest.
 export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults";
 export const NEST_URL = "https://nest.credit";
 
-export const NEST_REVALIDATE_SECONDS = 3600;
-
 const FETCH_TIMEOUT_MS = 5_000;
 
 export type NestStats = {
@@ -137,7 +135,7 @@ export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().
 async function fetchVaults(status: NestVaultStatus, signal: AbortSignal): Promise<NestVault[]> {
     const res = await fetch(`${NEST_API_BASE}/vaults?status=${status}`, {
         headers: { Accept: "application/json" },
-        next: { revalidate: NEST_REVALIDATE_SECONDS },
+        cache: "no-store",
         signal,
     });
 
