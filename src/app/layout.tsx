@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         url: siteMetadata.url,
         title: siteMetadata.title,
         description: siteMetadata.description,
-        images: [{ url: siteMetadata.image, type: "image/jpeg", width: 279, height: 279 }],
+        images: [{ url: siteMetadata.image, type: "image/jpeg", width: 1264, height: 1264 }],
     },
     icons: {
         icon: [

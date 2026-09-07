@@ -3,7 +3,7 @@ export const siteMetadata = {
     description:
         "Head of Regulatory Product Strategy at Plume Network. Launched Nest (now Plume Vaults) to let anyone with a wallet earn from real world assets. Building Transfer Agent Protocol to power Plume's transfer agent.",
     url: "https://palmer.earth",
-    image: "https://palmer.earth/og-avatar-v4.jpg",
+    image: "https://palmer.earth/og-avatar-v5.jpg",
     themeColor: "#08080a",
 };
 
