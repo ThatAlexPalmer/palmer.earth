@@ -132,7 +132,9 @@ export default function NestSourceInfo({ fetchedAt, sourceUrl }: { fetchedAt: st
                     Nest API
                 </a>{" "}
                 · as of {formatUtcDateTime(fetchedAt)}
-                <span className="caption">Unique wallets that have balances across our vaults.</span>
+                <span className="caption">
+                    Holders across live Nest vaults, deduped per vault across chains — a wallet in two vaults counts twice.
+                </span>
             </Popover>
         </Wrapper>
     );
