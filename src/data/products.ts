@@ -1,5 +1,4 @@
 import type { StatusKind } from "@/components/ui";
-import type { NestStats } from "@/lib/nest";
 
 export type Product = {
     name: string;
@@ -8,7 +7,7 @@ export type Product = {
     blurb: string;
 };
 
-export function buildProducts(nest: NestStats): Product[] {
+export function buildProducts(): Product[] {
     return [
         {
             name: "Plume",
@@ -20,7 +19,7 @@ export function buildProducts(nest: NestStats): Product[] {
             name: "Nest",
             href: "https://nest.credit",
             status: "live",
-            blurb: `Anyone with a wallet can earn from RWAs — now ${nest.totalHoldersLabel} wallets and ${nest.totalTvlLabel} TVL across Nest. Helped make Plume top chain by RWA holders.`,
+            blurb: "Anyone with a wallet can earn from RWAs. Helped make Plume the top chain by RWA holders.",
         },
         {
             name: "Visualize Laws",

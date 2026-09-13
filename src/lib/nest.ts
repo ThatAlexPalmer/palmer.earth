@@ -1,7 +1,7 @@
 import committedNestStats from "@/data/nest-stats.json";
 
 export const NEST_API_BASE = process.env.NEST_API_BASE_URL || "https://api.nest.credit/v1";
-export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults";
+export const NEST_STATS_SOURCE_URL = "https://api.nest.credit/v1/vaults/stats";
 export const NEST_URL = "https://nest.credit";
 
 const FETCH_TIMEOUT_MS = 5_000;
@@ -9,31 +9,22 @@ const FETCH_TIMEOUT_MS = 5_000;
 export type NestStats = {
     fetchedAt: string;
     source: string;
-    vaultCount: number;
     totalHolders: number;
     totalTvl: number;
     totalHoldersLabel: string;
     totalTvlLabel: string;
 };
 
-type NestVault = {
-    vaultAddress?: unknown;
-    symbol?: unknown;
-    tvl?: unknown;
-    numHolders?: unknown;
+export type NestVaultTotals = {
+    totalHolders: number;
+    totalTvl: number;
 };
 
-type NestVaultsResponse = {
+type NestStatsResponse = {
     data?: unknown;
 };
 
 type NestVaultStatus = "all" | "disabled";
-
-function vaultKey(vault: NestVault): string {
-    const address = typeof vault.vaultAddress === "string" ? vault.vaultAddress : "";
-    const symbol = typeof vault.symbol === "string" ? vault.symbol : "";
-    return (address || symbol).toLowerCase();
-}
 
 function formatCompactCount(n: number): string {
     if (n >= 1_000_000) {
@@ -80,7 +71,6 @@ export function parseNestStats(value: unknown): NestStats {
     if (
         !isNonEmptyString(v.fetchedAt) ||
         !isNonEmptyString(v.source) ||
-        !isNonNegativeFiniteNumber(v.vaultCount) ||
         !isNonNegativeFiniteNumber(v.totalHolders) ||
         !isNonNegativeFiniteNumber(v.totalTvl) ||
         !isNonEmptyString(v.totalHoldersLabel) ||
@@ -92,7 +82,6 @@ export function parseNestStats(value: unknown): NestStats {
     return {
         fetchedAt: v.fetchedAt,
         source: v.source,
-        vaultCount: v.vaultCount,
         totalHolders: v.totalHolders,
         totalTvl: v.totalTvl,
         totalHoldersLabel: v.totalHoldersLabel,
@@ -104,27 +93,17 @@ export function getCommittedNestStats(): NestStats {
     return parseNestStats(committedNestStats);
 }
 
-export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().toISOString()): NestStats {
-    if (!Array.isArray(vaults) || vaults.length === 0) {
-        throw new Error("[nest] vaults response was empty");
+export function liveNestStats(everyVault: NestVaultTotals, disabledVaults: NestVaultTotals, fetchedAt = new Date().toISOString()): NestStats {
+    const totalHolders = everyVault.totalHolders - disabledVaults.totalHolders;
+    const totalTvl = everyVault.totalTvl - disabledVaults.totalTvl;
+
+    if (!isNonNegativeFiniteNumber(totalHolders) || !isNonNegativeFiniteNumber(totalTvl)) {
+        throw new Error("[nest] live totals resolved to invalid numbers");
     }
-
-    let totalTvl = 0;
-    let totalHolders = 0;
-
-    vaults.forEach((vault, index) => {
-        if (!vault || !isNonNegativeFiniteNumber(vault.tvl) || !isNonNegativeFiniteNumber(vault.numHolders)) {
-            throw new Error(`[nest] vault ${index} has invalid holder or TVL data`);
-        }
-
-        totalTvl += vault.tvl;
-        totalHolders += vault.numHolders;
-    });
 
     return {
         fetchedAt,
         source: NEST_STATS_SOURCE_URL,
-        vaultCount: vaults.length,
         totalHolders,
         totalTvl,
         totalHoldersLabel: `${formatCompactCount(totalHolders)}+`,
@@ -132,23 +111,28 @@ export function aggregateNestVaults(vaults: NestVault[], fetchedAt = new Date().
     };
 }
 
-async function fetchVaults(status: NestVaultStatus, signal: AbortSignal): Promise<NestVault[]> {
-    const res = await fetch(`${NEST_API_BASE}/vaults?status=${status}`, {
+async function fetchTotals(status: NestVaultStatus, signal: AbortSignal): Promise<NestVaultTotals> {
+    const res = await fetch(`${NEST_API_BASE}/vaults/stats?status=${status}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
         signal,
     });
 
     if (!res.ok) {
-        throw new Error(`[nest] vaults?status=${status} fetch failed: ${res.status}`);
+        throw new Error(`[nest] vaults/stats?status=${status} fetch failed: ${res.status}`);
     }
 
-    const body = (await res.json()) as NestVaultsResponse;
-    if (!Array.isArray(body.data)) {
-        throw new Error(`[nest] vaults?status=${status} response did not contain an array`);
+    const body = (await res.json()) as NestStatsResponse;
+    if (!body.data || typeof body.data !== "object") {
+        throw new Error(`[nest] vaults/stats?status=${status} response did not contain stats`);
     }
 
-    return body.data as NestVault[];
+    const { totalHolders, totalTvl } = body.data as Record<string, unknown>;
+    if (!isNonNegativeFiniteNumber(totalHolders) || !isNonNegativeFiniteNumber(totalTvl)) {
+        throw new Error(`[nest] vaults/stats?status=${status} response had invalid totals`);
+    }
+
+    return { totalHolders, totalTvl };
 }
 
 export async function fetchNestStats(): Promise<NestStats> {
@@ -156,15 +140,12 @@ export async function fetchNestStats(): Promise<NestStats> {
     const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     try {
-        const [everyVault, disabledVaults] = await Promise.all([fetchVaults("all", controller.signal), fetchVaults("disabled", controller.signal)]);
-
-        const disabled = new Set(disabledVaults.map(vaultKey).filter(Boolean));
-        const liveVaults = everyVault.filter((vault) => !disabled.has(vaultKey(vault)));
-        const stats = aggregateNestVaults(liveVaults);
+        const [everyVault, disabledVaults] = await Promise.all([fetchTotals("all", controller.signal), fetchTotals("disabled", controller.signal)]);
+        const stats = liveNestStats(everyVault, disabledVaults);
 
         console.info(
-            `[nest] ${stats.vaultCount} live vaults (${everyVault.length} total − ${disabled.size} disabled) · ` +
-                `${stats.totalTvlLabel} TVL · ${stats.totalHoldersLabel} holders`,
+            `[nest] live totals = all − disabled · ${stats.totalTvlLabel} TVL · ${stats.totalHoldersLabel} holders ` +
+                `(all ${everyVault.totalHolders} − disabled ${disabledVaults.totalHolders})`,
         );
 
         return stats;

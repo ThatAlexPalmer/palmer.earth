@@ -11,7 +11,7 @@ import { fetchRecentPosts, PARAGRAPH_PUBLICATION_URL } from "@/lib/paragraph";
 
 export default async function Home() {
     const [nest, posts] = await Promise.all([loadNestStats(), fetchRecentPosts(5)]);
-    const products = buildProducts(nest);
+    const products = buildProducts();
 
     return (
         <Shell>
@@ -45,11 +45,12 @@ export default async function Home() {
                                 Nest
                             </a>
                             <NestSourceInfo fetchedAt={nest.fetchedAt} sourceUrl={nest.source} /> to let anyone with a wallet earn from RWAs — now{" "}
-                            <Stat>{nest.totalHoldersLabel}</Stat> wallets and <Stat>{nest.totalTvlLabel}</Stat> TVL across Nest. That made Plume the{" "}
+                            <Stat>{nest.totalHoldersLabel}</Stat> vault holders and <Stat>{nest.totalTvlLabel}</Stat> TVL across Nest. That made Plume
+                            the{" "}
                             <a href="https://app.rwa.xyz/networks/plume" target="_blank" rel="noopener noreferrer">
                                 top chain by RWA holders
-                            </a>{" "}
-                            (60k before we launched, 200k+ as of now). Building{" "}
+                            </a>
+                            . Building{" "}
                             <a href="https://transferagentprotocol.xyz" target="_blank" rel="noopener noreferrer">
                                 Transfer Agent Protocol
                             </a>
