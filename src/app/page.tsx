@@ -3,7 +3,7 @@ import NestSourceInfo from "@/components/NestSourceInfo";
 import PostRow from "@/components/PostRow";
 import ProductRow from "@/components/ProductRow";
 import SubscribeForm from "@/components/SubscribeForm";
-import { Footer, H1, H2, Hero, Main, MoreLink, Nav, P, PostList, ProductList, Prose, RedBlock, Shell, Stat } from "@/components/ui";
+import { Footer, H1, H2, Hero, Main, MoreLink, NameRow, P, PostList, ProductList, Prose, RedBlock, Shell, Stat } from "@/components/ui";
 import { jsonLdData, siteMetadata, socialLinks } from "@/config/seo";
 import { buildProducts } from "@/data/products";
 import { loadNestStats } from "@/lib/nest";
@@ -20,18 +20,17 @@ export default async function Home() {
                 If you&apos;re seeing this message, that means <strong>JavaScript has been disabled in your browser</strong>.
             </noscript>
 
-            <Nav aria-label="Social">
-                <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
-                    GitHub
-                </a>
-                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-                    X
-                </a>
-            </Nav>
-
             <Main>
                 <Hero>
-                    <H1>{siteMetadata.title}</H1>
+                    <NameRow>
+                        <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
+                            GitHub
+                        </a>
+                        <H1>{siteMetadata.title}</H1>
+                        <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+                            X
+                        </a>
+                    </NameRow>
                     <RedBlock>
                         <H2>— Head of Regulatory Product Strategy at Plume, a public blockchain for scaling RWAs</H2>
                     </RedBlock>

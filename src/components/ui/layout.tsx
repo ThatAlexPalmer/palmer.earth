@@ -20,22 +20,36 @@ const Shell = styled.div`
     }
 `;
 
-const Nav = styled.nav`
+const NameRow = styled.div`
     display: flex;
+    flex-flow: row nowrap;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
-    padding-bottom: ${({ theme }) => theme.space(4)};
-    margin-bottom: ${({ theme }) => theme.space(8)};
-    font-family: ${({ theme }) => theme.typography.monoFont};
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-    text-transform: uppercase;
 
     a {
         ${chromeLink}
-        display: inline-block;
+        flex: 1 1 0;
+        min-width: 0;
+        font-family: ${({ theme }) => theme.typography.monoFont};
         font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
         font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
+        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    a:first-of-type {
+        text-align: start;
+    }
+
+    a:last-of-type {
+        text-align: end;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
+        a {
+            font-size: ${({ theme }) => theme.typography.fontSize.sm};
+        }
     }
 `;
 
@@ -105,4 +119,4 @@ const Footer = styled.footer`
     }
 `;
 
-export { Shell, Nav, Main, Hero, Section, Prose, Footer };
+export { Shell, NameRow, Main, Hero, Section, Prose, Footer };
