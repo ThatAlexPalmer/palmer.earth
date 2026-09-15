@@ -94,9 +94,7 @@ export const theme = {
         bracketThickness: "1px",
         bracketInset: "4px",
         bracketOffset: "4px",
-        glowCore: "1px",
-        glowHalo: "4px",
-        badgeFlickerDuration: "6s",
+        hairline: "1px",
     },
     layers: {
         slab: 2,
