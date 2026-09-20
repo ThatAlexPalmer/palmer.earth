@@ -6,7 +6,8 @@ import { linkHover } from "./styles";
 const H1 = styled.h1`
     position: relative;
     display: block;
-    margin: 0 auto;
+    flex: 0 1 auto;
+    margin: 0;
     max-width: ${({ theme }) => theme.layout.headlineWidth};
     font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.display};
