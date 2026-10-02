@@ -87,8 +87,6 @@ export const theme = {
         pageMaxWidth: "1200px",
         headlineWidth: "28rem",
         headlineWidthMobile: "18rem",
-        heroOffset: "12.5rem",
-        heroSlabPad: "2.5rem",
         contentMaxWidth: "696px",
         heroGap: "6rem",
         heroGapMobile: "3rem",
