@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import { chromeLink } from "./styles";
+import { chromeLink, headingFace } from "./styles";
 
 const Shell = styled.div`
     display: flex;
@@ -20,21 +20,20 @@ const Shell = styled.div`
     }
 `;
 
-const NameRow = styled.div`
+const NameRow = styled.nav`
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: baseline;
+    justify-content: space-between;
     width: 100%;
 
     a {
         ${chromeLink}
+        ${headingFace}
         flex: 1 1 0;
-        min-width: 0;
-        font-family: ${({ theme }) => theme.typography.monoFont};
-        font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
-        font-size: ${({ theme }) => theme.typography.fontSize.paragraph};
-        letter-spacing: ${({ theme }) => theme.typography.letterSpacing.mono};
-        text-transform: uppercase;
+        min-width: max-content;
+        font-size: ${({ theme }) => theme.typography.fontSize.nameLink};
+        line-height: 1.15;
         white-space: nowrap;
     }
 
@@ -48,7 +47,7 @@ const NameRow = styled.div`
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         a {
-            font-size: ${({ theme }) => theme.typography.fontSize.sm};
+            font-size: ${({ theme }) => theme.typography.fontSize.nameLinkMobile};
         }
     }
 `;

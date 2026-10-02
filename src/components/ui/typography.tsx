@@ -1,21 +1,19 @@
 "use client";
 
 import styled from "styled-components";
-import { linkHover } from "./styles";
+import { headingFace, linkHover } from "./styles";
 
 const H1 = styled.h1`
+    ${headingFace}
     position: relative;
     display: block;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     margin: 0;
     max-width: ${({ theme }) => theme.layout.headlineWidth};
-    font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.display};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     line-height: 1.15;
     text-align: center;
-    text-transform: uppercase;
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
+    white-space: nowrap;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         font-size: ${({ theme }) => theme.typography.fontSize.displayMobile};
@@ -35,7 +33,7 @@ const H2 = styled.h2`
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     text-align: justify;
-    margin: 12.5rem auto 0;
+    margin: 0 auto;
     text-transform: uppercase;
 
     @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -54,14 +52,18 @@ const RedBlock = styled.span`
     align-self: center;
     width: 100%;
     height: auto;
+    padding-top: ${({ theme }) => theme.layout.heroOffset};
+    padding-bottom: ${({ theme }) => theme.layout.heroSlabPad};
 
     &::before {
         content: "";
         z-index: 1;
         display: block;
         position: absolute;
-        width: 100%;
-        height: 83%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         background-color: ${({ theme }) => theme.colors.accent};
     }
 

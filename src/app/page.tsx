@@ -22,7 +22,7 @@ export default async function Home() {
 
             <Main>
                 <Hero>
-                    <NameRow>
+                    <NameRow aria-label="Social">
                         <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
                             GitHub
                         </a>
