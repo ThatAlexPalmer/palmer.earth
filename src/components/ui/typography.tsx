@@ -33,7 +33,7 @@ const H2 = styled.h2`
     font-size: ${({ theme }) => theme.typography.fontSize.heading};
     font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
     text-align: justify;
-    margin: 12.5rem auto 0;
+    margin: 0 auto;
     text-transform: uppercase;
 
     @media only screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -52,7 +52,8 @@ const RedBlock = styled.span`
     align-self: center;
     width: 100%;
     height: auto;
-    padding-bottom: ${({ theme }) => theme.space(4)};
+    padding-top: ${({ theme }) => theme.layout.heroOffset};
+    padding-bottom: ${({ theme }) => theme.layout.heroSlabPad};
 
     &::before {
         content: "";
@@ -60,8 +61,9 @@ const RedBlock = styled.span`
         display: block;
         position: absolute;
         top: 0;
-        width: 100%;
-        height: ${({ theme }) => theme.layout.heroSlab};
+        right: 0;
+        bottom: 0;
+        left: 0;
         background-color: ${({ theme }) => theme.colors.accent};
     }
 

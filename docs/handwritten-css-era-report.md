@@ -173,4 +173,4 @@ Computed on main:
 
 The row stays flex. GitHub, the name, and X share `headingFace`: Oswald, weight 700, `letter-spacing: wide` (`0.05em`), uppercase, color `#dcdcdc`. Size is the only step: links use restored handwritten ui-copy sizes (`nameLink` `1.5rem`, `nameLinkMobile` `1rem`); the name stays `display` / `displayMobile`.
 
-The slab token `layout.heroSlab` is `100%`, with `padding-bottom: space(4)` (16px) on `RedBlock`, so the rust field includes the type instead of a fixed 83% of the offset box. The 12.5rem top offset and the accent color stay. After the change, the lowest hero glyph on the 390×844 screenshot is about 20px above the bottom of the slab.
+The 12.5rem offset moves from `H2` margin (which inflated the box the 83% slab was measured against) to `RedBlock` padding (`layout.heroOffset`). `RedBlock::before` stretches to that padding box (`top`/`right`/`bottom`/`left`: 0) instead of a percentage height, and `layout.heroSlabPad` (`2.5rem`) is rust under the heading. The accent color stays.
