@@ -53,6 +53,14 @@ const bracketChrome = css`
     }
 `;
 
+const headingFace = css`
+    font-family: ${({ theme }) => theme.typography.headingFont};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.colors.text};
+`;
+
 const linkHover = css`
     color: ${({ theme }) => theme.colors.accentHover};
     text-decoration: underline;
@@ -84,4 +92,4 @@ const listReset = css`
     flex-direction: column;
 `;
 
-export { bracketChrome, chromeLink, linkHover, listReset };
+export { bracketChrome, chromeLink, headingFace, linkHover, listReset };

@@ -1,21 +1,19 @@
 "use client";
 
 import styled from "styled-components";
-import { linkHover } from "./styles";
+import { headingFace, linkHover } from "./styles";
 
 const H1 = styled.h1`
+    ${headingFace}
     position: relative;
     display: block;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     margin: 0;
     max-width: ${({ theme }) => theme.layout.headlineWidth};
-    font-family: ${({ theme }) => theme.typography.headingFont};
     font-size: ${({ theme }) => theme.typography.fontSize.display};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
     line-height: 1.15;
     text-align: center;
-    text-transform: uppercase;
-    letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
+    white-space: nowrap;
 
     @media (max-width: ${({ theme }) => theme.breakpoints.phone}) {
         font-size: ${({ theme }) => theme.typography.fontSize.displayMobile};
@@ -54,14 +52,16 @@ const RedBlock = styled.span`
     align-self: center;
     width: 100%;
     height: auto;
+    padding-bottom: ${({ theme }) => theme.space(4)};
 
     &::before {
         content: "";
         z-index: 1;
         display: block;
         position: absolute;
+        top: 0;
         width: 100%;
-        height: 83%;
+        height: ${({ theme }) => theme.layout.heroSlab};
         background-color: ${({ theme }) => theme.colors.accent};
     }
 
