@@ -171,6 +171,6 @@ Computed on main:
 
 ## 5. What this branch changes
 
-The row stays flex. GitHub, the name, and X share `headingFace`: Oswald, weight 700, `letter-spacing: wide` (`0.05em`), uppercase, color `#dcdcdc`. Size is the only step: links use restored handwritten ui-copy sizes (`nameLink` `1.5rem`, `nameLinkMobile` `1rem`); the name stays `display` / `displayMobile`.
+The row stays flex. GitHub, the name, and X share `headingFace`: Oswald, weight 700, `letter-spacing: wide` (`0.05em`), uppercase, color `#dcdcdc`. Sizes match the earliest pre-Paragraph peer nav (`7007f4b`, 2023-06-11, `src/components/mainstyles.tsx`): name `2rem` / `1.2rem` on phone, links `1.2rem` / `1rem` on phone. Those rem values were unchanged through `762b379` (2024-02-13), the commit before Paragraph (`c1a5e22`, 2024-02-25).
 
 The 12.5rem offset moves from `H2` margin (which inflated the box the 83% slab was measured against) to `RedBlock` padding (`layout.heroOffset`). `RedBlock::before` stretches to that padding box (`top`/`right`/`bottom`/`left`: 0) instead of a percentage height, and `layout.heroSlabPad` (`2.5rem`) is rust under the heading. The accent color stays.
